@@ -79,13 +79,15 @@ public abstract class BasePiece : EventTrigger
         //int i = Random.Range(0, mHighlightedCells.Count);
         try
         {
+            ClearCells();
+            CheckPathing();
             mTargetCell = mHighlightedCells[0];
-
             // Move to new cell
             Move();
 
             // End turn
-            mPieceManager.SwitchSides(mColor);
+
+            //mPieceManager.SwitchSides(mColor);
         }
         catch (System.Exception)
         {
@@ -96,7 +98,7 @@ public abstract class BasePiece : EventTrigger
     }
 
     #region Movement
-    private void CreateCellPath(int xDirection, int yDirection, int movement)
+    public void CreateCellPath(int xDirection, int yDirection, int movement)
     {
         // Target position
         int currentX = mCurrentCell.mBoardPosition.x;
@@ -234,7 +236,13 @@ public abstract class BasePiece : EventTrigger
         Move();
 
         // End turn
-        mPieceManager.SwitchSides(mColor);
+        if (mColor == Color.white)
+        {
+            mPieceManager.SwitchSides(mColor);
+            mPieceManager.EnemyMove();
+
+
+        }
     }
     #endregion
 }

@@ -15,13 +15,16 @@ public class PieceManager : MonoBehaviour
     public List<BasePiece> mAllBlackPieces = null;
 
     public List<BasePiece> mPromotedPieces = new List<BasePiece>();
-
+    Board board;
     int countEnemies = 5;
     private string[] mPieceOrder = new string[6]
     {
         "K","P",  "Q",  "B", "KN", "R"
     };
-
+    private void Start()
+    {
+        //Invoke("EnemyMove", 5f);
+    }
     private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
     {
         {"P",  typeof(Pawn)},
@@ -32,85 +35,73 @@ public class PieceManager : MonoBehaviour
         {"Q",  typeof(Queen)}
     };
 
-    public void Setup(Board board)
+    public void Setup(Board _board)
     {
-        // Create white pieces
+        board = _board;
         mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1,0);
 
-        // Create place pieces
         mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
         mAllBlackPieces.AddRange(mBlackPieces);
-        // Place pieces   UnityEngine.Random.Range(1, mPieceOrder.Length)
         PlacePieces(1, 0, mWhitePieces, board,1);
-        PlacePieces(Board.cellY-2, Board.cellY - 1, mBlackPieces, board,countEnemies);
+        PlacePieces(Board.cellY-2, Board.cellY - 1, mBlackPieces, board,countEnemies-1);
 
-        // White goes first
-        SwitchSides(Color.black);
-        SetupNewEnemies(board);
+        SetupNewEnemies();
     }
-    public void SetupNewEnemies(Board board)
+    public void SetupNewEnemies()
     {
-        // Create white pieces
 
-        // Create place pieces
         mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
         mAllBlackPieces.AddRange(mBlackPieces);
 
-        // Place pieces
-        PlacePieces(Board.cellY - 1, Board.cellY - 1, mBlackPieces, board, countEnemies);
-        SwitchSides(Color.black);
-        //MoveRandomPiece();
-
-        //MoveRandomPiece();
-        //MoveRandomPiece();
-        foreach (var piece in mAllBlackPieces) { 
-            //piece.ComputerMove();
-
-        }
-        for (int i =0; i < mAllBlackPieces.Count; i++)
-        {
-            Debug.Log("Moving piece: " + i + "  /");
-            try
-            {
-                mAllBlackPieces[i].ComputerMove();
-
-
-            }
-            catch (Exception)
-            {
-
-               // throw;
-            }
-        }
-        // White goes first
+        PlacePieces(Board.cellY - 1, Board.cellY - 1, mBlackPieces, board, countEnemies-1);
+        
+        //EnemyMove();
     }
+
+    public void EnemyMove()
+    {
+       // SwitchSides(Color.black);
+
+        for (int i = 0; i < mAllBlackPieces.Count; i++)
+        {
+            if (!mAllBlackPieces[i].HasMove())
+                continue;
+            if (mAllBlackPieces[i].gameObject.activeInHierarchy)
+                mAllBlackPieces[i].ComputerMove();
+        }
+        SwitchSides(Color.black);
+    }
+
     private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,int enemyType)
     {
         List<BasePiece> newPieces = new List<BasePiece>();
 
         for (int i = 0; i < pieceCount; i++)
         {
+            if(i!=2) {
+                string key = mPieceOrder[enemyType];
+                Type pieceType = mPieceLibrary[key];
+
+                // Create
+                BasePiece newPiece = CreatePiece(pieceType, i);
+                newPieces.Add(newPiece);
+
+                // Setup
+                newPiece.Setup(teamColor, spriteColor, this);
+            }
             // Get the type
-            string key = mPieceOrder[enemyType];
-            Type pieceType = mPieceLibrary[key];
-
-            // Create
-            BasePiece newPiece = CreatePiece(pieceType);
-            newPieces.Add(newPiece);
-
-            // Setup
-            newPiece.Setup(teamColor, spriteColor, this);
+            
         }
 
         return newPieces;
     }
 
-    private BasePiece CreatePiece(Type pieceType)
+    private BasePiece CreatePiece(Type pieceType,int n)
     {
         // Create new object
         GameObject newPieceObject = Instantiate(mPiecePrefab);
         newPieceObject.transform.SetParent(transform);
-
+        newPieceObject.name=n.ToString() + pieceType.Name;
         // Set scale and position
         newPieceObject.transform.localScale = new Vector3(1, 1, 1);
         newPieceObject.transform.localRotation = Quaternion.identity;
@@ -224,16 +215,16 @@ public class PieceManager : MonoBehaviour
     public void PromotePiece(Pawn pawn, Cell cell, Color teamColor, Color spriteColor)
     {
         // Kill Pawn
-        pawn.Kill();
+        //pawn.Kill();
 
-        // Create
-        BasePiece promotedPiece = CreatePiece(typeof(Queen));
-        promotedPiece.Setup(teamColor, spriteColor, this);
+        //// Create
+        //BasePiece promotedPiece = CreatePiece(typeof(Queen));
+        //promotedPiece.Setup(teamColor, spriteColor, this);
 
-        // Place piece
-        promotedPiece.Place(cell);
+        //// Place piece
+        //promotedPiece.Place(cell);
 
-        // Add
-        mPromotedPieces.Add(promotedPiece);
+        //// Add
+        //mPromotedPieces.Add(promotedPiece);
     }
 }

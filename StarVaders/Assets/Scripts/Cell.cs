@@ -5,11 +5,11 @@ public class Cell : MonoBehaviour
 {
     public Image mOutlineImage;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Vector2Int mBoardPosition = Vector2Int.zero;
-    [HideInInspector]
+    //[HideInInspector]
     public Board mBoard = null;
-    [HideInInspector]
+    //[HideInInspector]
     public RectTransform mRectTransform = null;
 
     //[HideInInspector]
