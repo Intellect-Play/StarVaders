@@ -7,9 +7,9 @@ public class EnemySpawner : MonoBehaviour
 
     public PieceManager mPieceManager;
     public Board mBoard;
-    private string[] mPieceOrder = new string[5]
+    private string[] mPieceOrder = new string[2]
   {
-        "P",  "Q",  "B", "KN", "R"
+        "KN", "B"////, "P" ,"Q",   "R"
   };
     public void GetBP(PieceManager pieceManager, Board board)
     {

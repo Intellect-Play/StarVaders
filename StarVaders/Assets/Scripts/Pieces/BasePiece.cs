@@ -25,7 +25,7 @@ public abstract class BasePiece : EventTrigger
         mPieceManager = newPieceManager;
 
         mColor = newTeamColor;
-        GetComponent<Image>().color = newSpriteColor;
+        //GetComponent<Image>().color = newSpriteColor;
         mRectTransform = GetComponent<RectTransform>();
     }
 

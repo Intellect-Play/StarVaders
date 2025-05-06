@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         mEnemySpawner = GetComponent<EnemySpawner>();
         mBoard.Create();
         mEnemySpawner.GetBP(mPieceManager, mBoard);
+        mPieceManager.board = mBoard;
     }
     void Start()
     {

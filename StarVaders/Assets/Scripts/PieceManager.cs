@@ -15,11 +15,8 @@ public class PieceManager : MonoBehaviour
     public List<BasePiece> mAllBlackPieces = null;
 
     public List<BasePiece> mPromotedPieces = new List<BasePiece>();
-    Board board;
-    private string[] mPieceOrder = new string[6]
-    {
-        "K","P",  "Q",  "B", "KN", "R"
-    };
+    public Board board;
+   
  
     private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
     {
@@ -34,24 +31,16 @@ public class PieceManager : MonoBehaviour
     public void Setup(Board _board)
     {
         board = _board;
-        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, mPieceOrder[0].ToString());
+        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "K");
 
-       // mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
-       // mAllBlackPieces.AddRange(mBlackPieces);
-        PlacePieces(1, 0, mWhitePieces, board,1);
-       // PlacePieces(Board.cellY-2, Board.cellY - 1, mBlackPieces, board,countEnemies-1);
-
-       // SetupNewEnemies();
+        PlacePiece(1, 3, mWhitePieces[0]);       
     }
     public void SetupNewEnemies(string enemyType, int countEnemies)
     {
-        Debug.Log(countEnemies+ " countEnemies");
         mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, enemyType);
         mAllBlackPieces.AddRange(mBlackPieces);
 
-        PlacePieces(Board.cellY - 1, Board.cellY - 1, mBlackPieces, board, countEnemies);
-        
-        //EnemyMove();
+        PlacePieces(Board.cellY - 1,  mBlackPieces,countEnemies);        
     }
 
     public void EnemyMove()
@@ -109,20 +98,40 @@ public class PieceManager : MonoBehaviour
         return newPiece;
     }
 
-    private void PlacePieces(int pawnRow, int royaltyRow, List<BasePiece> pieces, Board board,int countPieces)
+    private void PlacePieces(int pawnRow, List<BasePiece> pieces, int countPieces)
     {
+        // Mövcud sütunların siyahısı (0, 1, 2, ..., cellX-1)
+        List<int> availableColumns = new List<int>();
+
+        for (int x = 0; x < Board.cellX; x++)
+        {
+            availableColumns.Add(x);
+        }
+
+        // Təsadüfi qarışdır
+        ShuffleList(availableColumns);
+
+        // countPieces sayda düşməni yerləşdir
         for (int i = 0; i < countPieces; i++)
         {
-
-           // Debug.Log("Placing piece: " + i+"  "+pieces[i].gameObject.name);
-            // Place pawns    
-            pieces[i].Place(board.mAllCells[i+1, pawnRow]);
-
-            // Place royalty
-            //pieces[i + Board.cellY].Place(board.mAllCells[i, royaltyRow]);
+            int randomX = availableColumns[i]; // təkrarsız x (sütun)
+            PlacePiece(pawnRow, randomX, pieces[i]);
         }
     }
 
+    private void PlacePiece(int pawnRow, int x, BasePiece piece)
+    {
+        piece.Place(board.mAllCells[x, pawnRow]); // [x, y] = [sütun, sıra]
+    }
+
+    private void ShuffleList(List<int> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+    }
     private void SetInteractive(List<BasePiece> allPieces, bool value)
     {
         foreach (BasePiece piece in allPieces)

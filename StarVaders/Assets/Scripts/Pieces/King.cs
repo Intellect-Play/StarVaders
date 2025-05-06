@@ -20,7 +20,7 @@ public class King : BasePiece
     {
         base.Kill();
 
-        //mPieceManager.mIsKingAlive = false;
+        mPieceManager.mIsKingAlive = false;
     }
 
 
