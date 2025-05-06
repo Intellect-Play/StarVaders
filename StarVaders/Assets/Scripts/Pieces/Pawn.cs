@@ -13,12 +13,6 @@ public class Pawn : BasePiece
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy3");
     }
 
-    protected override void Move()
-    {
-        base.Move();
-
-        //CheckForPromotion();
-    }
 
     protected override void CheckPathing()
     {

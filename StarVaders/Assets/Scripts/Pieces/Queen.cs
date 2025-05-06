@@ -8,8 +8,16 @@ public class Queen : BasePiece
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        // Queen stuff
-        mMovement = new Vector3Int(7, 7, 7);
+        // Pawn Stuff
+        mMovement = new Vector3Int(0, 2, 0);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy5");
+    }
+
+
+    protected override void CheckPathing()
+    {
+        // Horizontal
+        CreateCellPath(0, -1, mMovement.y);
+
     }
 }

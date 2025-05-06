@@ -365,6 +365,7 @@
 "Assets/Scripts/Board.cs"
 "Assets/Scripts/Cell.cs"
 "Assets/Scripts/CustomCursor.cs"
+"Assets/Scripts/EnemySpawner.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/PieceManager.cs"
 "Assets/Scripts/Pieces/BasePiece.cs"

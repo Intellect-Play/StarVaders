@@ -52,11 +52,10 @@ public abstract class BasePiece : EventTrigger
 
     public virtual void Kill()
     {
-        Debug.Log("Killing piece: " + gameObject.name);
         // Clear current cell
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
-
+       
         // Remove piece
         gameObject.SetActive(false);
     }
@@ -79,15 +78,14 @@ public abstract class BasePiece : EventTrigger
         //int i = Random.Range(0, mHighlightedCells.Count);
         try
         {
+            CheckEnemyKillCase();
             ClearCells();
             CheckPathing();
             mTargetCell = mHighlightedCells[0];
-            // Move to new cell
+
             Move();
 
-            // End turn
-
-            //mPieceManager.SwitchSides(mColor);
+          
         }
         catch (System.Exception)
         {
@@ -95,6 +93,14 @@ public abstract class BasePiece : EventTrigger
            // throw;
         }
         
+    }
+
+    private void CheckEnemyKillCase()
+    {
+        if (mColor == Color.black && mCurrentCell.mBoardPosition.y == 0)
+        {
+            Kill();
+        }
     }
 
     #region Movement
@@ -165,6 +171,7 @@ public abstract class BasePiece : EventTrigger
 
     protected virtual void Move()
     {
+       
         // First move switch
         mIsFirstMove = false;
 
@@ -239,8 +246,7 @@ public abstract class BasePiece : EventTrigger
         if (mColor == Color.white)
         {
             mPieceManager.SwitchSides(mColor);
-            mPieceManager.EnemyMove();
-
+           // mPieceManager.EnemyMove();
 
         }
     }

@@ -16,15 +16,11 @@ public class PieceManager : MonoBehaviour
 
     public List<BasePiece> mPromotedPieces = new List<BasePiece>();
     Board board;
-    int countEnemies = 5;
     private string[] mPieceOrder = new string[6]
     {
         "K","P",  "Q",  "B", "KN", "R"
     };
-    private void Start()
-    {
-        //Invoke("EnemyMove", 5f);
-    }
+ 
     private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
     {
         {"P",  typeof(Pawn)},
@@ -38,22 +34,22 @@ public class PieceManager : MonoBehaviour
     public void Setup(Board _board)
     {
         board = _board;
-        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1,0);
+        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, mPieceOrder[0].ToString());
 
-        mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
-        mAllBlackPieces.AddRange(mBlackPieces);
+       // mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
+       // mAllBlackPieces.AddRange(mBlackPieces);
         PlacePieces(1, 0, mWhitePieces, board,1);
-        PlacePieces(Board.cellY-2, Board.cellY - 1, mBlackPieces, board,countEnemies-1);
+       // PlacePieces(Board.cellY-2, Board.cellY - 1, mBlackPieces, board,countEnemies-1);
 
-        SetupNewEnemies();
+       // SetupNewEnemies();
     }
-    public void SetupNewEnemies()
+    public void SetupNewEnemies(string enemyType, int countEnemies)
     {
-
-        mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, 1);
+        Debug.Log(countEnemies+ " countEnemies");
+        mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, enemyType);
         mAllBlackPieces.AddRange(mBlackPieces);
 
-        PlacePieces(Board.cellY - 1, Board.cellY - 1, mBlackPieces, board, countEnemies-1);
+        PlacePieces(Board.cellY - 1, Board.cellY - 1, mBlackPieces, board, countEnemies);
         
         //EnemyMove();
     }
@@ -72,22 +68,23 @@ public class PieceManager : MonoBehaviour
         SwitchSides(Color.black);
     }
 
-    private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,int enemyType)
+    private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,string enemyType)
     {
         List<BasePiece> newPieces = new List<BasePiece>();
 
         for (int i = 0; i < pieceCount; i++)
         {
-            if(i!=2) {
-                string key = mPieceOrder[enemyType];
-                Type pieceType = mPieceLibrary[key];
+            string key = enemyType;
+            Type pieceType = mPieceLibrary[key];
 
-                // Create
-                BasePiece newPiece = CreatePiece(pieceType, i);
-                newPieces.Add(newPiece);
+            // Create
+            BasePiece newPiece = CreatePiece(pieceType, i);
+            newPieces.Add(newPiece);
 
-                // Setup
-                newPiece.Setup(teamColor, spriteColor, this);
+            // Setup
+            newPiece.Setup(teamColor, spriteColor, this);
+            if (i!=2) {
+                
             }
             // Get the type
             
@@ -116,11 +113,10 @@ public class PieceManager : MonoBehaviour
     {
         for (int i = 0; i < countPieces; i++)
         {
-            Debug.Log("Placing piece: " + i + "  /");
 
-            Debug.Log("Placing piece: " + i+"  "+pieces[i].gameObject.name);
+           // Debug.Log("Placing piece: " + i+"  "+pieces[i].gameObject.name);
             // Place pawns    
-            pieces[i].Place(board.mAllCells[i, pawnRow]);
+            pieces[i].Place(board.mAllCells[i+1, pawnRow]);
 
             // Place royalty
             //pieces[i + Board.cellY].Place(board.mAllCells[i, royaltyRow]);

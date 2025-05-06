@@ -3,50 +3,22 @@ using UnityEngine.UI;
 
 public class Rook : BasePiece
 {
- 
-    public Cell mCastleTriggerCell = null;
-    public Cell mCastleCell = null;
 
     public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        // Rook stuff
-        mMovement = new Vector3Int(11, 11, 0);
+        // Pawn Stuff
+        mMovement = new Vector3Int(0, 2, 0);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy6");
     }
 
-    public override void Place(Cell newCell)
+
+    protected override void CheckPathing()
     {
-        // After being placed, set castle, need current cell
-        base.Place(newCell);
+        // Horizontal
+        CreateCellPath(0, -1, mMovement.y);
 
-        // Trigger cell
-        int triggerOffset = mCurrentCell.mBoardPosition.x < 4 ? 2 : -1;
-        //mCastleTriggerCell = SetCell(triggerOffset);
-
-        // Castle cell
-        int castleOffset = mCurrentCell.mBoardPosition.x < 4 ? 3 : -2;
-       // mCastleCell = SetCell(castleOffset);
-    }
-
-    public void Castle()
-    {
-        // Set new target
-        mTargetCell = mCastleCell;
-
-        // Actually move
-        Move();
-    }
-
-    private Cell SetCell(int offset)
-    {
-        // New position
-        Vector2Int newPosition = mCurrentCell.mBoardPosition;
-        newPosition.x += offset;
-
-        // Return
-        return mCurrentCell.mBoard.mAllCells[newPosition.x, newPosition.y];
     }
 }

@@ -8,46 +8,16 @@ public class Knight : BasePiece
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        // Knight stuff
+        // Pawn Stuff
+        mMovement = new Vector3Int(0, 2, 0);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy2");
     }
 
-    private void CreateCellPath(int flipper)
-    {
-        // Target position
-        int currentX = mCurrentCell.mBoardPosition.x;
-        int currentY = mCurrentCell.mBoardPosition.y;
 
-        // Left
-        MatchesState(currentX - 2, currentY + (1 * flipper));
-
-        // Upper left
-        MatchesState(currentX - 1, currentY + (2 * flipper));
-
-        // Upper right
-        MatchesState(currentX + 1, currentY + (2 * flipper));
-
-        // Right
-        MatchesState(currentX + 2, currentY + (1 * flipper));
-    }
-
-    // New
     protected override void CheckPathing()
     {
-        // Draw top half
-        CreateCellPath(1);
+        // Horizontal
+        CreateCellPath(0, -1, mMovement.y);
 
-        // Draw bottom half
-        CreateCellPath(-1);
-    }
-
-    // New
-    private void MatchesState(int targetX, int targetY)
-    {
-        CellState cellState = CellState.None;
-        cellState = mCurrentCell.mBoard.ValidateCell(targetX, targetY, this);
-
-        if (cellState != CellState.Friendly && cellState != CellState.OutOfBounds)
-            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[targetX, targetY]);
     }
 }

@@ -8,8 +8,16 @@ public class Bishop : BasePiece
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        // Bishop stuff
-        mMovement = new Vector3Int(0, 0, 7);
+        // Pawn Stuff
+        mMovement = new Vector3Int(0, 2, 0);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy1");
+    }
+
+
+    protected override void CheckPathing()
+    {
+        // Horizontal
+        CreateCellPath(0, -1, mMovement.y);
+
     }
 }
