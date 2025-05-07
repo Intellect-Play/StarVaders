@@ -224,10 +224,10 @@ public class PieceManager : MonoBehaviour
         mPromotedPieces.Clear();
 
         foreach (BasePiece piece in mWhitePieces)
-            piece.Reset();
+            piece.ResetKill();
 
         foreach (BasePiece piece in mAllBlackPieces)
-            piece.Reset();
+            piece.ResetKill();
     }
 
     public void PromotePiece(Pawn pawn, Cell cell, Color teamColor, Color spriteColor)

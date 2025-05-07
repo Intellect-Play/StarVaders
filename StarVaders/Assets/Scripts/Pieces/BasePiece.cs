@@ -38,7 +38,7 @@ public abstract class BasePiece : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void Reset()
+    public void ResetKill()
     {
         Kill();
         mIsFirstMove = true;

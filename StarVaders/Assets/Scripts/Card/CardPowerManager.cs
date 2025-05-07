@@ -13,6 +13,7 @@ public class CardPowerManager : BasePiece
 
     private void Start()
     {
+        Invoke("SetupCards", 1);
         SetupCards();
     }
     public void GetICard(ICard card)
@@ -27,6 +28,7 @@ public class CardPowerManager : BasePiece
             _SelectedCard.SelectedCard();
         }
     }
+
     public void SetupCards()
     {
         foreach (ICard card in mCards)
@@ -39,7 +41,7 @@ public class CardPowerManager : BasePiece
 public enum CardType
 {
     Bomb3x3,
-    But,
+    Bat,
     DoubleFire,
     LinearFire,
     Pyramide,
