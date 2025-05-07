@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Card
 {
-    public interface ICard: IPointerDownHandler, IPointerUpHandler
+    public interface ICard
     {
         GameObject GetGameObject();
         CardType _CardType { get; }

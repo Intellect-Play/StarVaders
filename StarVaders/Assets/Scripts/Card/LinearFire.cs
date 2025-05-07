@@ -4,6 +4,8 @@ using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CardClick))]
+
 public class Bomb3x3 : BasePiece , ICard
 {
     public BasePiece mKing;
@@ -14,8 +16,9 @@ public class Bomb3x3 : BasePiece , ICard
     public List<Cell> Enemies = new List<Cell>();
     Cell cell;
 
-    private void Awake()
+    private void Start()
     {
+        cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.mCards.Add(this);
     }
     public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
@@ -30,8 +33,8 @@ public class Bomb3x3 : BasePiece , ICard
     {
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
-
-        CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
+        if (xDirection == -1) { currentX += 1; }
+        CheckPaths(xDirection, yDirection, movement,  currentX,  currentY+1);
         //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 
@@ -68,15 +71,16 @@ public class Bomb3x3 : BasePiece , ICard
         CreateCellPath(-1, 0, mMovement.x);
 
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ClickGiveManagerSelectedCard();
-    }
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    ClickGiveManagerSelectedCard();
+    //}
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        UseCard();
-    }
+    //public void OnPointerUp(PointerEventData eventData)
+    //{
+    //    UseCard();
+    //    ExitCard();
+    //}
 
     #region CardControlsWithManager
     public void SelectedCard()
@@ -103,6 +107,7 @@ public class Bomb3x3 : BasePiece , ICard
     #region Click
     public void ClickGiveManagerSelectedCard()
     {
+        Debug.Log("ClickGiveManagerSelectedCard");
         cardPowerManager.GetICard(this);
     }
     public GameObject GetGameObject()

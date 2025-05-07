@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
+[RequireComponent(typeof(CardClick))]
 
 public class Bat : BasePiece , ICard
 {
@@ -66,15 +67,7 @@ public class Bat : BasePiece , ICard
     {
         CreateCellPath(0, 1, mMovement.y);
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ClickGiveManagerSelectedCard();
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        UseCard();
-    }
+   
 
     #region CardControlsWithManager
     public void SelectedCard()

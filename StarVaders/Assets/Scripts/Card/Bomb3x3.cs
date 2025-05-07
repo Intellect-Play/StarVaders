@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
+[RequireComponent(typeof(CardClick))]
 
 public class LinearFire : BasePiece , ICard
 {
@@ -14,8 +15,9 @@ public class LinearFire : BasePiece , ICard
     public List<Cell> Enemies = new List<Cell>();
     Cell cell;
 
-    private void Awake()
+    private void Start()
     {
+        cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.mCards.Add(this);
     }
     public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
@@ -66,15 +68,7 @@ public class LinearFire : BasePiece , ICard
     {
         CreateCellPath(0, 1, mMovement.y);
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ClickGiveManagerSelectedCard();
-    }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        UseCard();
-    }
 
     #region CardControlsWithManager
     public void SelectedCard()

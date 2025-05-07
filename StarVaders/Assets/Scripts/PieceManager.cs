@@ -43,18 +43,31 @@ public class PieceManager : MonoBehaviour
         PlacePieces(Board.cellY - 1,  mBlackPieces,countEnemies);        
     }
 
-    public void EnemyMove()
+    public void EnemyMove(int moveDistance,bool down)
     {
-       // SwitchSides(Color.black);
-
-        for (int i = 0; i < mAllBlackPieces.Count; i++)
+        // SwitchSides(Color.black);
+        if (down)
         {
-            if (!mAllBlackPieces[i].HasMove())
-                continue;
-            if (mAllBlackPieces[i].gameObject.activeInHierarchy)
-                mAllBlackPieces[i].ComputerMove();
+            for (int i = 0; i < mAllBlackPieces.Count; i++)
+            {
+                //if (!mAllBlackPieces[i].HasMove())
+                //    continue;
+                if (mAllBlackPieces[i].gameObject.activeInHierarchy)
+                    mAllBlackPieces[i].ComputerMove(moveDistance, down);
+            }
         }
-        SwitchSides(Color.black);
+        else
+        {
+            for (int i = mAllBlackPieces.Count-1; i >-1; i--)
+            {
+                //if (!mAllBlackPieces[i].HasMove())
+                //    continue;
+                if (mAllBlackPieces[i].gameObject.activeInHierarchy)
+                    mAllBlackPieces[i].ComputerMove(moveDistance, down);
+            }
+        }
+
+            SwitchSides(Color.black);
     }
 
     private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,string enemyType)
@@ -139,27 +152,27 @@ public class PieceManager : MonoBehaviour
     }
 
     
-    private void MoveRandomPiece()
-    {
-        BasePiece finalPiece = null;
+    //private void MoveRandomPiece()
+    //{
+    //    BasePiece finalPiece = null;
 
-        while (!finalPiece)
-        {
-            // Get piece
-            int i = UnityEngine.Random.Range(0, mAllBlackPieces.Count);
-            BasePiece newPiece = mAllBlackPieces[i];
+    //    while (!finalPiece)
+    //    {
+    //        // Get piece
+    //        int i = UnityEngine.Random.Range(0, mAllBlackPieces.Count);
+    //        BasePiece newPiece = mAllBlackPieces[i];
 
-            // Does this piece have any moves?
-            if (!newPiece.HasMove())
-                continue;
+    //        // Does this piece have any moves?
+    //        if (!newPiece.HasMove())
+    //            continue;
 
-            // Is piece active?
-            if (newPiece.gameObject.activeInHierarchy)
-                finalPiece = newPiece;
-        }
+    //        // Is piece active?
+    //        if (newPiece.gameObject.activeInHierarchy)
+    //            finalPiece = newPiece;
+    //    }
 
-        finalPiece.ComputerMove();
-    }
+    //    finalPiece.ComputerMove();
+    //}
     
 
     public void SwitchSides(Color color)

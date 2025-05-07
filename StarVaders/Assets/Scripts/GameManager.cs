@@ -10,7 +10,14 @@ public class GameManager : MonoBehaviour
     public CardPowerManager mCardPowerManager;
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         mEnemySpawner = GetComponent<EnemySpawner>();
         mBoard.Create();
         mEnemySpawner.GetBP(mPieceManager, mBoard);

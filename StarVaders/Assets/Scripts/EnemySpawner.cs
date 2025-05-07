@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance;
 
     public PieceManager mPieceManager;
     public Board mBoard;
@@ -11,6 +12,17 @@ public class EnemySpawner : MonoBehaviour
   {
         "KN", "B"////, "P" ,"Q",   "R"
   };
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void GetBP(PieceManager pieceManager, Board board)
     {
         mPieceManager = pieceManager;
@@ -19,7 +31,13 @@ public class EnemySpawner : MonoBehaviour
 
     public void EnemyMoveF()
     {
-       mPieceManager.EnemyMove();
+       mPieceManager.EnemyMove(0, true);
+    }
+    public void EnemyBackMoveF()
+    {
+        mPieceManager.EnemyMove(0,false);
+        mPieceManager.EnemyMove(0, false);
+
     }
     public void EnemySpawnF()
     {
@@ -34,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            mPieceManager.EnemyMove();
+            mPieceManager.EnemyMove(0,true);
         }
     }
     string GetRandomPieceType()

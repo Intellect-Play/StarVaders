@@ -18,10 +18,12 @@ public abstract class BasePiece : MonoBehaviour
     public List<Cell> mHighlightedCells = new List<Cell>();
 
     private bool isDragging = false;
+    public bool down=true;
 
-   
+
     public virtual void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
+        down = true;
         mPieceManager = newPieceManager;
         mColor = newTeamColor;
         mRectTransform = GetComponent<RectTransform>();
@@ -47,7 +49,7 @@ public abstract class BasePiece : MonoBehaviour
     {
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
-
+        Debug.Log("Kill");
         gameObject.SetActive(false);
     }
 
@@ -57,14 +59,18 @@ public abstract class BasePiece : MonoBehaviour
         return mHighlightedCells.Count > 0;
     }
 
-    public void ComputerMove()
+    public void ComputerMove(int moveDistance, bool _down)
     {
         try
         {
+            Debug.Log(_down);
+            down = _down;
+            if (!HasMove()) return;
+                //    continue;
             CheckEnemyKillCase();
             ClearCells();
             CheckPathing();
-            mTargetCell = mHighlightedCells[0];
+            mTargetCell = mHighlightedCells[moveDistance];
             Move();
         }
         catch { }
@@ -114,13 +120,13 @@ public abstract class BasePiece : MonoBehaviour
         CreateCellPath(1, -1, mMovement.z);
     }
 
-    protected void ShowCells()
+    public virtual void ShowCells()
     {
         foreach (Cell cell in mHighlightedCells)
             cell.mOutlineImage.enabled = true;
     }
 
-    protected void ClearCells()
+    public virtual void ClearCells()
     {
         foreach (Cell cell in mHighlightedCells)
             cell.mOutlineImage.enabled = false;
