@@ -14,7 +14,7 @@ public class Queen : BasePiece
     }
 
 
-    protected override void CheckPathing()
+    public override void CheckPathing()
     {
         // Horizontal
         CreateCellPath(0, -1, mMovement.y);

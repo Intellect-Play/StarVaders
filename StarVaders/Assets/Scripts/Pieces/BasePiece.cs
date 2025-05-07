@@ -1,42 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public abstract class BasePiece : EventTrigger
+public abstract class BasePiece : MonoBehaviour
 {
-    //[HideInInspector]
     public Color mColor = Color.clear;
     public bool mIsFirstMove = true;
 
-    [SerializeField]protected Cell mOriginalCell = null;
-    [SerializeField] protected Cell mCurrentCell = null;
+    [SerializeField] public Cell mOriginalCell = null;
+    [SerializeField] public Cell mCurrentCell = null;
 
-    protected RectTransform mRectTransform = null;
-    protected PieceManager mPieceManager;
+    public RectTransform mRectTransform = null;
+    public PieceManager mPieceManager;
 
-    protected Cell mTargetCell = null;
+    public Cell mTargetCell = null;
+    public Vector3Int mMovement = Vector3Int.one;
+    public List<Cell> mHighlightedCells = new List<Cell>();
 
-    protected Vector3Int mMovement = Vector3Int.one;
-    protected List<Cell> mHighlightedCells = new List<Cell>();
+    private bool isDragging = false;
 
+   
     public virtual void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         mPieceManager = newPieceManager;
-
         mColor = newTeamColor;
-        //GetComponent<Image>().color = newSpriteColor;
         mRectTransform = GetComponent<RectTransform>();
     }
 
     public virtual void Place(Cell newCell)
     {
-        // Cell stuff
         mCurrentCell = newCell;
         mOriginalCell = newCell;
         mCurrentCell.mCurrentPiece = this;
-
-        // Object stuff
         transform.position = newCell.transform.position;
         gameObject.SetActive(true);
     }
@@ -44,113 +39,77 @@ public abstract class BasePiece : EventTrigger
     public void Reset()
     {
         Kill();
-
         mIsFirstMove = true;
-
         Place(mOriginalCell);
     }
 
     public virtual void Kill()
     {
-        // Clear current cell
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
-       
-        // Remove piece
+
         gameObject.SetActive(false);
     }
 
     public bool HasMove()
     {
         CheckPathing();
-
-        // If no moves
-        if (mHighlightedCells.Count == 0)
-            return false;
-
-        // If moves available
-        return true;
+        return mHighlightedCells.Count > 0;
     }
 
     public void ComputerMove()
     {
-        // Get random cell
-        //int i = Random.Range(0, mHighlightedCells.Count);
         try
         {
             CheckEnemyKillCase();
             ClearCells();
             CheckPathing();
             mTargetCell = mHighlightedCells[0];
-
             Move();
-
-          
         }
-        catch (System.Exception)
-        {
-
-           // throw;
-        }
-        
+        catch { }
     }
 
     private void CheckEnemyKillCase()
     {
         if (mColor == Color.black && mCurrentCell.mBoardPosition.y == 0)
-        {
             Kill();
-        }
     }
 
     #region Movement
-    public void CreateCellPath(int xDirection, int yDirection, int movement)
+    public virtual void CreateCellPath(int xDirection, int yDirection, int movement)
     {
-        // Target position
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
 
-        // Check each cell
         for (int i = 1; i <= movement; i++)
         {
             currentX += xDirection;
             currentY += yDirection;
 
-            // Get the state of the target cell
-            CellState cellState = CellState.None;
-            cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
+            CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
 
-            // If enemy, add to list, break
             if (cellState == CellState.Enemy)
             {
                 mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
                 break;
             }
 
-            // If the cell is not free, break
             if (cellState != CellState.Free)
                 break;
 
-            // Add to list
             mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
         }
     }
 
-    protected virtual void CheckPathing()
+    public virtual void CheckPathing()
     {
-        // Horizontal
         CreateCellPath(1, 0, mMovement.x);
         CreateCellPath(-1, 0, mMovement.x);
-
-        // Vertical 
         CreateCellPath(0, 1, mMovement.y);
         CreateCellPath(0, -1, mMovement.y);
-
-        // Upper diagonal
         CreateCellPath(1, 1, mMovement.z);
         CreateCellPath(-1, 1, mMovement.z);
-
-        // Lower diagonal
         CreateCellPath(-1, -1, mMovement.z);
         CreateCellPath(1, -1, mMovement.z);
     }
@@ -169,85 +128,99 @@ public abstract class BasePiece : EventTrigger
         mHighlightedCells.Clear();
     }
 
-    protected virtual void Move()
+    public virtual void Move()
     {
-       
-        // First move switch
         mIsFirstMove = false;
 
-        // If there is an enemy piece, remove it
         mTargetCell.RemovePiece();
-
-        // Clear current
         mCurrentCell.mCurrentPiece = null;
 
-        // Switch cells
         mCurrentCell = mTargetCell;
         mCurrentCell.mCurrentPiece = this;
 
-        // Move on board
         transform.position = mCurrentCell.transform.position;
         mTargetCell = null;
     }
     #endregion
-   
-    #region Events
-    public override void OnBeginDrag(PointerEventData eventData)
+
+    #region Cross-Platform Input
+    void Update()
     {
-        base.OnBeginDrag(eventData);
+        Vector2 pointerPosition = Vector2.zero;
+        bool begin = false, move = false, end = false;
 
-        // Test for cells
-        CheckPathing();
-
-        // Show valid cells
-        ShowCells();
-    }
-
-    public override void OnDrag(PointerEventData eventData)
-    {
-        base.OnDrag(eventData);
-
-        // Follow pointer
-        transform.position += (Vector3)eventData.delta;
-
-        // Check for overlapping available squares
-        foreach (Cell cell in mHighlightedCells)
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
+        if (Input.GetMouseButtonDown(0))
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(cell.mRectTransform, Input.mousePosition))
+            pointerPosition = Input.mousePosition;
+            begin = true;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            pointerPosition = Input.mousePosition;
+            move = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            pointerPosition = Input.mousePosition;
+            end = true;
+        }
+#else
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            pointerPosition = touch.position;
+            begin = touch.phase == TouchPhase.Began;
+            move = touch.phase == TouchPhase.Moved;
+            end = touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
+        }
+#endif
+
+        if (begin)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(mRectTransform, pointerPosition))
             {
-                // If the mouse is within a valid cell, get it, and break.
-                mTargetCell = cell;
-                break;
+                CheckPathing();
+                ShowCells();
+                isDragging = true;
             }
+        }
 
-            // If the mouse is not within any highlighted cell, we don't have a valid move.
+        if (move && isDragging)
+        {
+            Vector3 worldPos;
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(mRectTransform, pointerPosition, null, out worldPos);
+            transform.position = worldPos;
+
             mTargetCell = null;
-        }
-    }
-
-    public override void OnEndDrag(PointerEventData eventData)
-    {
-        base.OnEndDrag(eventData);
-
-        // Hide
-        ClearCells();
-
-        // Return to original position
-        if (!mTargetCell)
-        {
-            transform.position = mCurrentCell.gameObject.transform.position;
-            return;
+            foreach (Cell cell in mHighlightedCells)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(cell.mRectTransform, pointerPosition))
+                {
+                    mTargetCell = cell;
+                    break;
+                }
+            }
         }
 
-        // Move to new cell
-        Move();
-
-        // End turn
-        if (mColor == Color.white)
+        if (end && isDragging)
         {
-            mPieceManager.SwitchSides(mColor);
-           // mPieceManager.EnemyMove();
+            ClearCells();
+            isDragging = false;
 
+            if (mTargetCell != null)
+            {
+                Move();
+
+                if (mColor == Color.white)
+                {
+                    mPieceManager.SwitchSides(mColor);
+                }
+            }
+            else
+            {
+                transform.position = mCurrentCell.transform.position;
+            }
         }
     }
     #endregion

@@ -87,4 +87,26 @@ public class Board : MonoBehaviour
 
         return CellState.Free;
     }
+    public CellState ValidateCellforCards(int targetX, int targetY, BasePiece checkingPiece)
+    {
+        // Bounds check
+        if (targetX < 0 || targetX > cellX - 1)
+            return CellState.OutOfBounds;
+
+        if (targetY < 0 || targetY > cellY - 1)
+            return CellState.OutOfBounds;
+        Cell targetCell = mAllCells[targetX, targetY];
+
+        // Get cell
+        if (targetCell.mCurrentPiece != null)
+        {
+            
+
+            // If enemy
+            if (checkingPiece.mColor != targetCell.mCurrentPiece.mColor)
+                return CellState.Enemy;
+        }
+
+        return CellState.Free;
+    }
 }

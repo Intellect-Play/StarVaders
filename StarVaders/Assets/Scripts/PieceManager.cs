@@ -37,7 +37,7 @@ public class PieceManager : MonoBehaviour
     }
     public void SetupNewEnemies(string enemyType, int countEnemies)
     {
-        mBlackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), countEnemies, enemyType);
+        mBlackPieces = CreatePieces(Color.black, Color.white, countEnemies, enemyType);
         mAllBlackPieces.AddRange(mBlackPieces);
 
         PlacePieces(Board.cellY - 1,  mBlackPieces,countEnemies);        

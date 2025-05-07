@@ -7,15 +7,20 @@ public class GameManager : MonoBehaviour
     public Board mBoard;
     public PieceManager mPieceManager;
     public EnemySpawner mEnemySpawner;
+    public CardPowerManager mCardPowerManager;
     private void Awake()
     {
+        Instance = this;
         mEnemySpawner = GetComponent<EnemySpawner>();
         mBoard.Create();
         mEnemySpawner.GetBP(mPieceManager, mBoard);
         mPieceManager.board = mBoard;
+        mPieceManager.Setup(mBoard);
+        mCardPowerManager.mKing = mPieceManager.mWhitePieces[0];
     }
     void Start()
     {
-        mPieceManager.Setup(mBoard);
+        
+
     }
 }
