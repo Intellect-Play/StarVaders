@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class Bomb3x3 : BasePiece , ICard
+public class Bomb3x3 : CardBase
+
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.Bomb3x3;
-    public CardType _CardType => cardType;
+    
+    public override CardType _CardType => CardType.Bomb3x3;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
+    
     Cell cell;
 
-    private void Start()
-    {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
+
+    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
@@ -70,37 +64,6 @@ public class Bomb3x3 : BasePiece , ICard
     }
 
 
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
-    }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
+   
 
 }

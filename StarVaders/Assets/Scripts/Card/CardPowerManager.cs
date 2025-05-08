@@ -7,8 +7,8 @@ public class CardPowerManager : BasePiece
 {
     public BasePiece mKing;
 
-    public List<ICard> mCards = new List<ICard>();
-    public ICard _SelectedCard;
+    public List<CardBase> mCards = new List<CardBase>();
+    public CardBase _SelectedCard;
 
 
     private void Start()
@@ -16,7 +16,7 @@ public class CardPowerManager : BasePiece
         Invoke("SetupCards", 1);
         SetupCards();
     }
-    public void GetICard(ICard card)
+    public void GetICard(CardBase card)
     {
         
         if (true)
@@ -31,7 +31,7 @@ public class CardPowerManager : BasePiece
 
     public void SetupCards()
     {
-        foreach (ICard card in mCards)
+        foreach (CardBase card in mCards)
         {
             card.CardSetup(mKing, this);
         }
@@ -40,13 +40,13 @@ public class CardPowerManager : BasePiece
 
 public enum CardType
 {
+    Move,
     Bomb3x3,
     Bat,
     DoubleFire,
     LinearFire,
     Pyramide,
-    PushBack,
-    Move,
+    PushBack,    
     StrongStrike,
     BombDouble,
     PoisonAttack,

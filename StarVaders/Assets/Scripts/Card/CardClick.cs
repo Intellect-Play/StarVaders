@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    ICard mCard;
+    CardBase mCard;
     [SerializeField] private TextMeshProUGUI mCardNameText;
     void OnEnable()
     {
-        mCard = GetComponent<ICard>();
-        mCardNameText.text = mCard._CardType.ToString();
+        mCard = GetComponent<CardBase>();
+       // mCardNameText.text = mCard._CardType.ToString();
     }
 
     public void OnPointerDown(PointerEventData eventData)

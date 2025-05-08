@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void EnemySpawnF()
     {
-        mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1,4));
+        mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1,5));
     }
 
     private void Update()

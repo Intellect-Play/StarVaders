@@ -1,61 +1,49 @@
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
-using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class PushBack : BasePiece , ICard
+public class PushBack : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.PushBack;
-    public CardType _CardType => cardType;
+    public override CardType _CardType => CardType.PushBack;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
-    Cell cell;
+  
 
-    private void Start()
+    public override void CardSetup(BasePiece king, CardPowerManager manager)
     {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
+        mKing = king;
+        cardPowerManager = manager;
         mMovement = new Vector3Int(0, 15, 0);
         mColor = Color.white;
     }
 
-   
-
-
-    #region CardControlsWithManager
-    public void SelectedCard()
+    public override void SelectedCard()
     {
-       
+        mCurrentCell = mKing.mCurrentCell;
+        ShowCells(); // optional, depending on visual feedback
     }
-    public void UseCard()
+
+    public override void UseCard()
     {
         EnemySpawner.Instance.EnemyBackMoveF();
     }
-  
-    public void ExitCard()
-    {
-       
-    }
-    #endregion
 
-    #region Click
-    public void ClickGiveManagerSelectedCard()
+    public override void ExitCard()
     {
-        cardPowerManager.GetICard(this);
+        ClearCells();
     }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
 
+    public override void CheckPathing()
+    {
+        // This card doesn’t need pathing logic (AOE / global effect)
+    }
+
+    public override void ShowCells()
+    {
+        // optional visual effect if needed
+    }
+
+    public override void ClearCells()
+    {
+        HighlightedCells.Clear();
+    }
 }

@@ -4,24 +4,17 @@ using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(CardClick))]
 
-public class Pyramide : BasePiece , ICard
+public class Pyramide : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.Pyramide;
-    public CardType _CardType => cardType;
+   
+    public override CardType _CardType => CardType.Pyramide;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
+ 
     Cell cell;
 
-    private void Start()
-    {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
+  
+    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
@@ -73,49 +66,6 @@ public class Pyramide : BasePiece , ICard
         //CreateCellPath(-1, 0, mMovement.x);
 
     }
-    //public void OnPointerDown(PointerEventData eventData)
-    //{
-    //    ClickGiveManagerSelectedCard();
-    //}
-
-    //public void OnPointerUp(PointerEventData eventData)
-    //{
-    //    UseCard();
-    //    ExitCard();
-    //}
-
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
-    }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
   
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        Debug.Log("ClickGiveManagerSelectedCard");
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
 
 }

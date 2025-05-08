@@ -1,106 +1,60 @@
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class DoubleFire : BasePiece , ICard
+public class DoubleFire : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.DoubleFire;
-    public CardType _CardType => cardType;
+    public override CardType _CardType => CardType.DoubleFire;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
-    Cell cell;
-
-    private void Start()
+ 
+    public override void CheckPathing()
     {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 15, 0);
-        mColor = Color.white;
+        CreateCellPathD(0, 1, mMovement.y);
     }
 
-    public override void CreateCellPath(int xDirection, int yDirection, int movement)
+    private void CreateCellPathD(int xDir, int yDir, int movement)
     {
-        int currentX = mCurrentCell.mBoardPosition.x;
-        int currentY = mCurrentCell.mBoardPosition.y;
+        int curX = mCurrentCell.mBoardPosition.x;
+        int curY = mCurrentCell.mBoardPosition.y;
 
-        //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
-        CheckPaths(xDirection, yDirection, movement,  currentX+1,  currentY);
-        CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
-
+        CheckPaths(xDir, yDir, movement, curX + 1, curY);
+        CheckPaths(xDir, yDir, movement, curX - 1, curY);
     }
 
-    private void CheckPaths(int xDirection, int yDirection, int movement,  int currentX,  int currentY)
+    private void CheckPaths(int xDir, int yDir, int movement, int x, int y)
     {
         for (int i = 1; i <= movement; i++)
         {
-            currentX += xDirection;
-            currentY += yDirection;
+            x += xDir;
+            y += yDir;
 
-            CellState cellState = CellState.None;
-            cellState =mCurrentCell.mBoard.ValidateCellforCards(currentX, currentY,this);
+            var cellState = mCurrentCell.mBoard.ValidateCellforCards(x, y, this);
 
             if (cellState == CellState.Enemy)
             {
-
-                cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
+                var cell = mCurrentCell.mBoard.mAllCells[x, y];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                HighlightedCells.Add(cell);
                 continue;
             }
 
-            if (cellState != CellState.Free)
-                continue;
+            if (cellState != CellState.Free) continue;
 
-            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+            HighlightedCells.Add(mCurrentCell.mBoard.mAllCells[x, y]);
         }
     }
-        public override void CheckPathing()
+
+    public override void ShowCells()
     {
-        CreateCellPath(0, 1, mMovement.y);
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = true;
     }
 
-
-    #region CardControlsWithManager
-    public void SelectedCard()
+    public override void ClearCells()
     {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = false;
+        HighlightedCells.Clear();
     }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
-
 }

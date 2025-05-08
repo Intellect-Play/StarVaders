@@ -3,35 +3,17 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class StrongStrike : BasePiece , ICard
+public class StrongStrike : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.StrongStrike;
-    public CardType _CardType => cardType;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
+    public override CardType _CardType => CardType.StrongStrike;
+
+   
     Cell cell;
 
-    private void Start()
-    {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
 
-        cardPowerManager.mCards.Add(this);
-
-    }
-    private void OnEnable()
-    {
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 15, 0);
-        mColor = Color.white;
-    }
+  
 
     public override void CreateCellPath(int xDirection, int yDirection, int movement)
     {
@@ -75,37 +57,5 @@ public class StrongStrike : BasePiece , ICard
     }
 
 
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
-    }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
 
 }

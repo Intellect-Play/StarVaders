@@ -3,37 +3,24 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class LinearFire : BasePiece , ICard
+public class LinearFire : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.LinearFire;
-    public CardType _CardType => cardType;
+    
+    public override CardType _CardType => CardType.LinearFire;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
+    
     Cell cell;
-    private void Awake()
-    {
 
-    }
-    private void Start()
-    {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
 
-        cardPowerManager.mCards.Add(this);
 
-        gameObject.name=this.name;
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
+    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
         mMovement = new Vector3Int(9, 0, 0);
         mColor = Color.white;
     }
-
     public override void CreateCellPath(int xDirection, int yDirection, int movement)
     {
         int currentX = mCurrentCell.mBoardPosition.x;
@@ -76,6 +63,7 @@ public class LinearFire : BasePiece , ICard
         CreateCellPath(-1, 0, mMovement.x);
 
     }
+   
     //public void OnPointerDown(PointerEventData eventData)
     //{
     //    ClickGiveManagerSelectedCard();
@@ -87,38 +75,6 @@ public class LinearFire : BasePiece , ICard
     //    ExitCard();
     //}
 
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
-    }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
 
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        Debug.Log("ClickGiveManagerSelectedCard");
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
 
 }

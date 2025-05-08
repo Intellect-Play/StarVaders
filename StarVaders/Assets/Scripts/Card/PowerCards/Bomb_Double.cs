@@ -1,151 +1,84 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Card;
 using UnityEngine;
-using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class Bomb_Double : BasePiece , ICard
+public class Bomb_Double : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.BombDouble;
-    public CardType _CardType => cardType;
+    public override CardType _CardType => CardType.BombDouble;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
-    public List<Cell> BombAreas = new List<Cell>();
+    private List<Cell> BombAreas = new();
 
-    Cell cell;
-
-    private void Start()
+ 
+    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
-        cardPowerManager=GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 15, 0);
-        mColor = Color.white;
+        base.CardSetup(basePiece, _cardPowerManager);
         BombAreas = GetRandom2x2Cells(GameManager.Instance.mBoard.mAllCells);
     }
 
-
-    private void CheckPaths()
-    {
-        for (int i = 0; i < BombAreas.Count; i++)
-        {
-
-            cell = BombAreas[i];
-            CellState cellState = CellState.None;
-            cellState = mCurrentCell.mBoard.ValidateCellforCards(cell.mBoardPosition.x, cell.mBoardPosition.y, this);
-
-            if (cellState == CellState.Enemy)
-            {
-
-                Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
-                continue;
-            }
-
-            if (cellState != CellState.Free)
-                continue;
-
-            mHighlightedCells.Add(cell);
-        }
-    }
     public override void CheckPathing()
     {
-        CheckPaths();
+        foreach (var cell in BombAreas)
+        {
+            var state = mCurrentCell.mBoard.ValidateCellforCards(cell.mBoardPosition.x, cell.mBoardPosition.y, this);
+
+            if (state == CellState.Enemy)
+                Enemies.Add(cell);
+
+            if (state == CellState.Enemy || state == CellState.Free)
+                HighlightedCells.Add(cell);
+        }
     }
-    public List<Cell> GetRandom2x2Cells(Cell[,] mAllCells, int count = 3)
+
+    public override void ShowCells()
     {
-        List<Cell> result = new List<Cell>();
-        HashSet<Vector2Int> usedPositions = new HashSet<Vector2Int>();
+        foreach (var cell in BombAreas)
+            cell.mOutlineImage.enabled = true;
+    }
+
+    public override void ClearCells()
+    {
+        foreach (var cell in BombAreas)
+            cell.mOutlineImage.enabled = false;
+
+        HighlightedCells.Clear();
+    }
+
+    private List<Cell> GetRandom2x2Cells(Cell[,] allCells, int count = 3)
+    {
+        var result = new List<Cell>();
+        var usedPositions = new HashSet<Vector2Int>();
 
         int maxX = Board.cellX - 1;
         int maxY = Board.cellY - 1;
 
-        System.Random rng = new System.Random();
-
+        var rng = new System.Random();
         int attempts = 0;
+
         while (result.Count < count * 4 && attempts < 200)
         {
             int x = rng.Next(0, maxX);
             int y = rng.Next(0, maxY);
 
-            // 2x2 blokdakı bütün hüceyrələrin koordinatları
-            Vector2Int[] positions =
+            var positions = new Vector2Int[]
             {
-            new Vector2Int(x, y),
-            new Vector2Int(x + 1, y),
-            new Vector2Int(x, y + 1),
-            new Vector2Int(x + 1, y + 1)
-        };
+                new(x, y), new(x + 1, y),
+                new(x, y + 1), new(x + 1, y + 1)
+            };
 
-            // Əgər hər hansı biri artıq seçilibsə, bu kvadratı keç
-            if (positions.Any(pos => usedPositions.Contains(pos)))
+            if (positions.Any(p => usedPositions.Contains(p)))
             {
                 attempts++;
                 continue;
             }
 
-            // Əlavə et
             foreach (var pos in positions)
             {
                 usedPositions.Add(pos);
-                result.Add(mAllCells[pos.x, pos.y]);
+                result.Add(allCells[pos.x, pos.y]);
             }
         }
 
         return result;
     }
-    public override void ShowCells()
-    {
-        foreach (Cell cell in BombAreas)
-            cell.mOutlineImage.enabled = true;
-    }
-    public override void ClearCells()
-    {
-        foreach (Cell cell in BombAreas)
-            cell.mOutlineImage.enabled = false;
-
-        mHighlightedCells.Clear();
-    }
-
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        ShowCells();
-        CheckPathing();
-    }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
-
 }

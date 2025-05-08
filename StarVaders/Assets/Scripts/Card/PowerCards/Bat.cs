@@ -1,107 +1,76 @@
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
-using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
 
-public class Bat : BasePiece, ICard
+public class Bat : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType = CardType.Bat;
-    public CardType _CardType => cardType;
+    public override CardType _CardType => CardType.Bat;
+    int currentX;
+    int currentY;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
-    Cell cell;
-
-    private void Start()
+    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 0, 15);
-        mColor = Color.white;
+        base.CardSetup(basePiece, _cardPowerManager);
+        mMovement = new Vector3Int(0, 0, 15); // z = distance for diagonal
     }
 
-    public override void CreateCellPath(int xDirection, int yDirection, int movement)
+    public override void CheckPathing()
     {
-        int currentX = mCurrentCell.mBoardPosition.x;
-        int currentY = mCurrentCell.mBoardPosition.y;
-
-        //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
-        CheckPaths(xDirection, yDirection, movement, currentX, currentY);
-        //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
-
+        currentX = mCurrentCell.mBoardPosition.x;
+        currentY = mCurrentCell.mBoardPosition.y;
+        CreateCellPath(1, 1, mMovement.z,true,currentX,currentY,true);   // Diagonal right
+        CreateCellPath(-1, 1, mMovement.z,false, currentX, currentY,true);  // Diagonal left
     }
 
-    private void CheckPaths(int xDirection, int yDirection, int movement, int currentX, int currentY)
+    public override void ShowCells()
     {
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = true;
+    }
+
+    public override void ClearCells()
+    {
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = false;
+
+        HighlightedCells.Clear();
+    }
+
+    private void CreateCellPath(int xDirection, int yDirection, int movement,bool right, int _currentX,int _currentY,bool turn)
+    {
+        
+
         for (int i = 1; i <= movement; i++)
         {
-            currentX += xDirection;
-            currentY += yDirection;
+            _currentX += xDirection;
+            _currentY += yDirection;
 
-            CellState cellState = CellState.None;
-            cellState = mCurrentCell.mBoard.ValidateCellforCards(currentX, currentY, this);
+            var cellState = mCurrentCell.mBoard.ValidateCellforCards(_currentX, _currentY, this);
 
             if (cellState == CellState.Enemy)
             {
-
-                cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
+                var cell = mCurrentCell.mBoard.mAllCells[_currentX, _currentY];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                HighlightedCells.Add(cell);
                 continue;
             }
 
             if (cellState != CellState.Free)
-                continue;
+            {
+                if (turn)
+                {
+                    if (right)
+                        CreateCellPath(-1, 1, mMovement.z, false, _currentX, _currentY-2, false);
+                    else
+                        CreateCellPath(1, 1, mMovement.z, true, _currentX, _currentY-2, false);
+                }
+             
 
-            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+                break;
+
+            }
+
+            HighlightedCells.Add(mCurrentCell.mBoard.mAllCells[_currentX, _currentY]);
         }
     }
-    public override void CheckPathing()
-    {
-        CreateCellPath(1, 1, mMovement.z);
-        CreateCellPath(-1, 1, mMovement.z);
-    }
-
-
-    #region CardControlsWithManager
-    public void SelectedCard()
-    {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
-    }
-    public void UseCard()
-    {
-        foreach (Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
-
 }

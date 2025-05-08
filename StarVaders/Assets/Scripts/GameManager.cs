@@ -25,9 +25,10 @@ public class GameManager : MonoBehaviour
         mPieceManager.Setup(mBoard);
         mCardPowerManager.mKing = mPieceManager.mWhitePieces[0];
     }
-    void Start()
+    public void EndTurn()
     {
-        
-
+        mPieceManager.SwitchSides(Color.white);
+        mEnemySpawner.EnemySpawnF();
+        mEnemySpawner.EnemyMoveF();
     }
 }

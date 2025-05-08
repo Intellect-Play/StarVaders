@@ -3,107 +3,58 @@ using System.Collections.Generic;
 using Assets.Scripts.Card;
 using UnityEngine;
 using UnityEngine.EventSystems;
-[RequireComponent(typeof(CardClick))]
-
-public class Sword : BasePiece , ICard
+public class Sword : CardBase
 {
-    public BasePiece mKing;
-    private CardType cardType=CardType.Sword;
-    public CardType _CardType => cardType;
+    public override CardType _CardType => CardType.Sword;
 
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new List<Cell>();
-    Cell cell;
-
-    private void Start()
+ 
+    public override void CheckPathing()
     {
-        cardPowerManager = GameManager.Instance.mCardPowerManager;
-        cardPowerManager.mCards.Add(this);
-    }
-    public void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 15, 0);
-        mColor = Color.white;
+        CreateCellPathS(0, 1, mMovement.y);
     }
 
-    public override void CreateCellPath(int xDirection, int yDirection, int movement)
+    private void CreateCellPathS(int x, int y, int movement)
     {
-        int currentX = mCurrentCell.mBoardPosition.x;
-        int currentY = mCurrentCell.mBoardPosition.y;
+        int curX = mCurrentCell.mBoardPosition.x;
+        int curY = mCurrentCell.mBoardPosition.y;
 
-        //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
-        CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
-        CheckPaths(xDirection, yDirection, 1, currentX+1, currentY+1);
-        CheckPaths(xDirection, yDirection, 1, currentX-1, currentY+1);
-
-        //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
-
+        CheckPaths(x, y, movement, curX, curY);
+        CheckPaths(x, y, 1, curX + 1, curY + 1);
+        CheckPaths(x, y, 1, curX - 1, curY + 1);
     }
 
-    private void CheckPaths(int xDirection, int yDirection, int movement,  int currentX,  int currentY)
+    private void CheckPaths(int xDir, int yDir, int move, int x, int y)
     {
-        for (int i = 1; i <= movement; i++)
+        for (int i = 1; i <= move; i++)
         {
-            currentX += xDirection;
-            currentY += yDirection;
-
-            CellState cellState = CellState.None;
-            cellState =mCurrentCell.mBoard.ValidateCellforCards(currentX, currentY,this);
+            x += xDir;
+            y += yDir;
+            var cellState = mCurrentCell.mBoard.ValidateCellforCards(x, y, this);
 
             if (cellState == CellState.Enemy)
             {
-
-                cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
+                var cell = mCurrentCell.mBoard.mAllCells[x, y];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                HighlightedCells.Add(cell);
                 continue;
             }
 
-            if (cellState != CellState.Free)
-                continue;
+            if (cellState != CellState.Free) continue;
 
-            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+            HighlightedCells.Add(mCurrentCell.mBoard.mAllCells[x, y]);
         }
     }
-        public override void CheckPathing()
+
+    public override void ShowCells()
     {
-        CreateCellPath(0, 1, mMovement.y);
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = true;
     }
 
-
-    #region CardControlsWithManager
-    public void SelectedCard()
+    public override void ClearCells()
     {
-        mCurrentCell = mKing.mCurrentCell;
-        CheckPathing();
-        ShowCells();
+        foreach (var cell in HighlightedCells)
+            cell.mOutlineImage.enabled = false;
+        HighlightedCells.Clear();
     }
-    public void UseCard()
-    {
-        foreach(Cell c in Enemies)
-        {
-            c.RemovePiece();
-        }
-    }
-  
-    public void ExitCard()
-    {
-        ClearCells();
-        Enemies.Clear();
-    }
-    #endregion
-
-    #region Click
-    public void ClickGiveManagerSelectedCard()
-    {
-        cardPowerManager.GetICard(this);
-    }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-    #endregion
-
 }
