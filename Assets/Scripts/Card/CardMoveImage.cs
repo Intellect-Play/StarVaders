@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ public class CardMoveImage : MonoBehaviour
     [Header("Refences")]
     public GameObject target;
     public GameObject Visual;
-    public Image Icon;
+    public GameObject Shadow;
+    public Transform spawnParent;
 
     //public setting changes to our cards movement
     [Header("Settings")]
@@ -24,33 +26,35 @@ public class CardMoveImage : MonoBehaviour
     private Vector3 movement;
     private float randomRot;
     private bool Hovering;
-
+    private Vector3 originalScale;
+    private bool ActiveCard;
     private void Start()
     {
+        ActiveCard=true;
+        if (Visual != null)
+            originalScale = Visual.transform.localScale;
         randomRot = Random.Range(-rotationAmount, rotationAmount);
     }
 
     void Update()
     {
-        //Hovering = target.GetComponent<Card>().Hovering && target.GetComponent<Card>()._CardState != Card.CardState.Played;
-
-        ////Set Cards visual to the target cards position
-        //transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * movementSpeed);
-        //Visual.transform.position = Vector3.Lerp(Visual.transform.position, (Hovering || target.GetComponent<Card>().cardsManager.SelectedCard == target) ? target.transform.position + offset : target.transform.position, Time.deltaTime * movementSpeed);
-
-        //Make sure our refences are set
+        if (!ActiveCard&& Vector3.Distance(transform.position,target.transform.position)<0.3f)
+        {
+            Debug.Log("Destroying Card");
+            Destroy(gameObject);
+        }
         if (target == null)
             return;
 
         //Set our hovering boolean to the targets hovering
-        Hovering = target.GetComponent<Card>().Hovering && target.GetComponent<Card>()._CardState != Card.CardState.Played;
+        Hovering = target.GetComponent<CardClick>().Hovering && target.GetComponent<CardClick>()._CardState != CardClick.CardState.Played;
 
         //Set Cards visual to the target cards position
         transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * movementSpeed);
-        Visual.transform.position = Vector3.Lerp(Visual.transform.position, (Hovering || target.GetComponent<Card>().cardsManager.SelectedCard == target) ? target.transform.position + offset : target.transform.position, Time.deltaTime * movementSpeed);
+        Visual.transform.position = Vector3.Lerp(Visual.transform.position, (Hovering ) ? target.transform.position + offset : target.transform.position, Time.deltaTime * movementSpeed);
 
         //If Card is not played
-        if (target.GetComponent<Card>()._CardState != Card.CardState.Played)
+        if (target.GetComponent<CardClick>()._CardState != CardClick.CardState.Played)
         {
             // Calculate position offset relative to the camera
             Vector3 localPos = Camera.main.transform.InverseTransformPoint(transform.position) - Camera.main.transform.InverseTransformPoint(target.transform.position);
@@ -70,13 +74,69 @@ public class CardMoveImage : MonoBehaviour
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, randomRot);
         }
 
-        UpdateCardInfo();
+       // UpdateCardInfo();
     }
-
-    public void UpdateCardInfo()
+    public void PlayPopFadeAnimation()
     {
-        CardTypeMove Info = target.GetComponent<Card>().cardType;
+        if (Visual == null || Shadow == null) return;
 
-        Icon.sprite = Info.CardIcon;        
+        // İkisini də aktiv et (əgər əvvəl gizlidirsə)
+        Visual.SetActive(true);
+        Shadow.SetActive(true);
+
+        // Fade və Scale üçün komponentləri al
+        Image visualImage = Visual.GetComponent<Image>();
+        Image shadowImage = Shadow.GetComponent<Image>();
+
+        // Şəffaflığı sıfırdan başlatma
+        if (visualImage != null)
+            visualImage.color = new Color(visualImage.color.r, visualImage.color.g, visualImage.color.b, 1f);
+        if (shadowImage != null)
+            shadowImage.color = new Color(shadowImage.color.r, shadowImage.color.g, shadowImage.color.b, 1f);
+
+        // Ölçünü sıfırla
+        Visual.transform.localScale = originalScale;
+        Shadow.transform.localScale = originalScale;
+
+        // Ölçünü bir az böyüt
+        Visual.transform.DOScale(originalScale * 1.2f, 0.3f).SetEase(Ease.OutBack);
+        Shadow.transform.DOScale(originalScale * 1.2f, 0.3f).SetEase(Ease.OutBack);
+
+        // Fade və disable
+        if (visualImage != null)
+        {
+            visualImage.DOFade(0f, 0.6f)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() => Visual.SetActive(false));
+        }
+
+        if (shadowImage != null)
+        {
+            shadowImage.DOFade(0f, 0.6f)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() => Shadow.SetActive(false));
+        }
     }
+
+    public void CardDestroy()
+    {
+        ActiveCard = false;
+    }
+    public void ReturnParent()
+    {
+        transform.parent = spawnParent;
+    }
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
+        Visual.GetComponent<Image>().sprite = target.GetComponent<Image>().sprite;
+        Shadow.GetComponent<Image>().sprite = target.GetComponent<Image>().sprite;
+
+    }
+    //public void UpdateCardInfo()
+    //{
+    //    CardTypeMove Info = target.GetComponent<Card>().cardType;
+
+    //    //Icon.sprite = Info.CardIcon;        
+    //}
 }

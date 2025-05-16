@@ -17,6 +17,11 @@ public class Move : CardBase
         mKing.ShowCells();
         mKing.moveCard = true;
     }
+    public override void UseForAllCards()
+    {
+        UseCard();
+        mCardMoveImage.PlayPopFadeAnimation();
+    }
     public override void ExitCard()
     {
         base.ExitCard();

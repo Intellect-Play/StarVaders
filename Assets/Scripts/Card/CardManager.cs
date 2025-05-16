@@ -7,7 +7,7 @@ public class CardManager : MonoBehaviour
 {
 
     public static CardManager Instance;
-
+    public CardManagerMove cardManagerMove;
     [SerializeField]private CardPowerManager powerManager;
     private void Awake()
     {
@@ -27,6 +27,6 @@ public class CardManager : MonoBehaviour
 
     public void ExitTurnButton()
     {
-        
+        cardManagerMove.ReturnAllCards();
     }
 }

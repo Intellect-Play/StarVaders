@@ -8,6 +8,7 @@ public abstract class CardBase : BasePiece
     public CardPowerManager cardPowerManager;
     public List<Cell> Enemies = new();
     protected List<Cell> HighlightedCells = new();
+    public CardMoveImage mCardMoveImage;
 
     public abstract CardType _CardType { get; }
 
@@ -39,6 +40,7 @@ public abstract class CardBase : BasePiece
     public virtual void UseForAllCards()
     {
         UseCard();
+        mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);
 
     }
@@ -50,7 +52,6 @@ public abstract class CardBase : BasePiece
         foreach (Cell c in Enemies)
             c.RemovePiece();
         ExitCard();
-        Debug.Log("Card Used " + _CardType);
     }
 
     public virtual void ExitCard()

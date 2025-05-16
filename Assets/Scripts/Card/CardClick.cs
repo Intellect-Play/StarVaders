@@ -2,30 +2,47 @@
 using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
+using static Card;
+using Unity.VisualScripting;
 
-public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler,  IBeginDragHandler,  IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler,  IBeginDragHandler,  IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private CardBase mCard;
+    public CardMoveImage moveImage;
+
     [SerializeField] private TextMeshProUGUI mCardNameText;
     public float TriggerHeight = 150f;
     public float ReturnDuration = 0.5f;
     private float UseDistance=150;
-    private bool isDragging = false;
 
     public Transform spawnParent;
+    public CardTypeMove cardType;
 
     private RectTransform rectTransform;
     private Canvas canvas;
     private float startPosY;
-    public void Initialize(Transform transform, Canvas _canvas)
+    [HideInInspector] public bool Hovering;
+    [HideInInspector] public bool CanDrag;
+
+    [Header("Settings")]
+    public CardState _CardState;
+    public void Initialize(Transform transform, Canvas _canvas,GameObject cardMoveImage)
     {
         canvas = _canvas;
         spawnParent = transform;
-        Debug.Log("CardClick Initialized");
+        moveImage = cardMoveImage.GetComponent<CardMoveImage>();
+        moveImage.SetTarget(this.gameObject);
+        mCard.mCardMoveImage = moveImage;
     }
-
+    
+    public enum CardState
+    {
+        Idle, IsDragging, Played
+    }
     void OnEnable()
     {
+        CanDrag = true;
+
         rectTransform = GetComponent<RectTransform>();
         mCard = GetComponent<CardBase>();
     }
@@ -35,8 +52,7 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         startPosY = transform.position.y;
         Debug.Log(transform.position);
         transform.parent = canvas.transform;
-
-        isDragging = true;
+        moveImage.transform.parent = canvas.transform;
 
         mCard.ClickGiveManagerSelectedCard();
     }
@@ -45,51 +61,51 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     {
         if (transform.position.y - startPosY > UseDistance)
         {
-            Debug.Log("Card Used "+ transform.position.y + "  "+startPosY);
             mCard.UseForAllCards();
             return;
         }
         transform.parent = spawnParent;
+        moveImage.ReturnParent();
         transform.position = Vector3.zero;
-        isDragging = false;
 
        
         mCard.ExitCard();
     }
 
    public void OnDrag(PointerEventData eventData)
-   {
-    if (canvas == null) return;
+    {
+        if (!CanDrag)
+            return;
+        if (canvas == null) return;
 
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (!CanDrag)
+            return;
+        _CardState = CardState.IsDragging;
+
     }
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        _CardState = CardState.Idle;
+
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        Hovering = true || _CardState == CardState.IsDragging;
+
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        Hovering = false;
+
     }
 
-    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
-}
-public enum CardState
-{
-    Idle, IsDragging, Played
+  
 }
