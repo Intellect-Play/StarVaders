@@ -98,8 +98,8 @@ public class CardMoveImage : MonoBehaviour
         Shadow.transform.localScale = originalScale;
 
         // Ölçünü bir az böyüt
-        Visual.transform.DOScale(originalScale * 1.2f, 0.3f).SetEase(Ease.OutBack);
-        Shadow.transform.DOScale(originalScale * 1.2f, 0.3f).SetEase(Ease.OutBack);
+        Visual.transform.DOScale(originalScale * 1.7f, 0.4f).SetEase(Ease.OutBack);
+        Shadow.transform.DOScale(originalScale * 1.7f, 0.4f).SetEase(Ease.OutBack);
 
         // Fade və disable
         if (visualImage != null)

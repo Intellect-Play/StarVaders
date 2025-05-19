@@ -145,6 +145,7 @@ public class PieceManager : MonoBehaviour
 
     private void PlacePiece(int pawnRow, int x, BasePiece piece)
     {
+        Debug.Log("PlacePiece: " + x + ", " + pawnRow+ " "+ board.mAllCells[x, pawnRow].name);
         piece.Place(board.mAllCells[x, pawnRow]); // [x, y] = [sütun, sıra]
     }
 

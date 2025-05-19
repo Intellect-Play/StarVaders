@@ -8,10 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     public PieceManager mPieceManager;
     public Board mBoard;
-    private string[] mPieceOrder = new string[4]
-  {
-        "Queen", "Bishop","Pawn","Rock"////, "P" ,"Q",   "R"
-  };
+    Enemies[] values;
     private void Awake()
     {
         if (Instance == null)
@@ -22,6 +19,8 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        values = (Enemies[])System.Enum.GetValues(typeof(Enemies));
+
     }
     public void GetBP(PieceManager pieceManager, Board board)
     {
@@ -57,7 +56,15 @@ public class EnemySpawner : MonoBehaviour
     }
     string GetRandomPieceType()
     {
-        int randomIndex = Random.Range(0, mPieceOrder.Length);
-        return mPieceOrder[randomIndex];
+        Enemies randomEnemy = values[Random.Range(0, values.Length)];
+        return randomEnemy.ToString();
     }
+
+}
+enum Enemies
+{
+    Queen,
+    Bishop,
+    Pawn,
+    Rock
 }

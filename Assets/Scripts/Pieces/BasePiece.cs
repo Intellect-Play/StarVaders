@@ -34,10 +34,12 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Place(Cell newCell)
     {
+        Debug.Log(newCell.name);
         mCurrentCell = newCell;
         mOriginalCell = newCell;
         mCurrentCell.mCurrentPiece = this;
-        transform.position = newCell.transform.position;
+        transform.position = mCurrentCell.transform.position;
+        Debug.Log(transform.position+ "  "+newCell.transform.position);
         gameObject.SetActive(true);
     }
 

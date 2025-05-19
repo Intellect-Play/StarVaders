@@ -41,6 +41,8 @@ public abstract class CardBase : BasePiece
 
     public virtual void UseForAllCards()
     {
+        CameraShake.Instance.Shake(0.5f, 0.3f, 10, 90f);
+
         UseCard();
         mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);
@@ -51,7 +53,6 @@ public abstract class CardBase : BasePiece
         if (used) return;
         foreach (var cell in Enemies)
             cell.RemovePiece();
-        CameraShake.Instance.Shake(0.5f, 0.3f, 10, 90f);
         ExitCard();
     }
 
