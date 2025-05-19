@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class Sword : CardBase
 {
-    public override CardType _CardType => CardType.Sword;
+    public override CardType _CardType => mCardSO._CardType;
 
  
     public override void CheckPathing()

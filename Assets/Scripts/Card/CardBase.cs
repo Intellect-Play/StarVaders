@@ -1,21 +1,24 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 [RequireComponent(typeof(CardClick))]
 
 public abstract class CardBase : BasePiece
 {
-    public BasePiece mKing;
-    public CardPowerManager cardPowerManager;
-    public List<Cell> Enemies = new();
-    protected List<Cell> HighlightedCells = new();
-    public CardMoveImage mCardMoveImage;
-
+    [NonSerialized] public BasePiece mKing;
+    [NonSerialized] public CardPowerManager cardPowerManager;
+    [NonSerialized] public List<Cell> Enemies = new();
+    [NonSerialized] protected List<Cell> HighlightedCells = new();
+    [NonSerialized] public CardMoveImage mCardMoveImage;
+    public CardSO mCardSO;
     public abstract CardType _CardType { get; }
 
     bool usedCard;
 
     private void Start()
     {
+        GetComponent<Image>().sprite = mCardSO._CardImage;
         usedCard = false;
         cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.SetupThisCard(this);

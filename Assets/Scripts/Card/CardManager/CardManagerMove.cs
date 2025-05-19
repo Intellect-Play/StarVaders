@@ -16,6 +16,7 @@ public class CardManagerMove : MonoBehaviour
     private List<GameObject> spawnedCards = new List<GameObject>();
     [SerializeField] private Canvas canvas;
 
+    public static bool MoveCard = false;
     public void SpawnCards()
     {
         ClearCards();

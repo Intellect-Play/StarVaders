@@ -40,7 +40,6 @@ public class CardMoveImage : MonoBehaviour
     {
         if (!ActiveCard&& Vector3.Distance(transform.position,target.transform.position)<0.3f)
         {
-            Debug.Log("Destroying Card");
             Destroy(gameObject);
         }
         if (target == null)
@@ -126,11 +125,11 @@ public class CardMoveImage : MonoBehaviour
     {
         transform.parent = spawnParent;
     }
-    public void SetTarget(GameObject newTarget)
+    public void SetTarget(GameObject newTarget, Sprite sprite)
     {
         target = newTarget;
-        Visual.GetComponent<Image>().sprite = target.GetComponent<Image>().sprite;
-        Shadow.GetComponent<Image>().sprite = target.GetComponent<Image>().sprite;
+        Visual.GetComponent<Image>().sprite = sprite;
+        Shadow.GetComponent<Image>().sprite = sprite;
 
     }
     //public void UpdateCardInfo()

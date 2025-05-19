@@ -11,7 +11,7 @@ public class PushBack : CardBase
     {
         mKing = king;
         cardPowerManager = manager;
-        mMovement = new Vector3Int(0, 15, 0);
+        mMovement = mCardSO._CardPoweraArea;  //0.15.0
         mColor = Color.white;
     }
 

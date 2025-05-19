@@ -17,7 +17,7 @@ public class Pyramide : CardBase
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(5, 0, 0);
+        mMovement = mCardSO._CardPoweraArea;  //5.0.0
         mColor = Color.white;
     }
 

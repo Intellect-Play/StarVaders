@@ -135,10 +135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90869bfb168f784f846fe7a8e9fa616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveImage: {fileID: 0}
   mCardNameText: {fileID: 1415326169605906834}
   TriggerHeight: 150
   ReturnDuration: 0.5
   spawnParent: {fileID: 0}
+  cardType: {fileID: 0}
+  Hovering: 0
+  CanDrag: 0
+  _CardState: 0
 --- !u!114 &1621123022021935207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,9 +167,7 @@ MonoBehaviour:
   mHighlightedCells: []
   down: 1
   moveCard: 0
-  mKing: {fileID: 0}
-  cardPowerManager: {fileID: 0}
-  Enemies: []
+  mCardSO: {fileID: 11400000, guid: 3517521e452ed69499493fec430dd22a, type: 2}
 --- !u!1 &3004087860625872187
 GameObject:
   m_ObjectHideFlags: 0

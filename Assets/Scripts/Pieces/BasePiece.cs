@@ -133,6 +133,12 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Move()
     {
+        if (mColor == Color.white)
+        {
+            CardManagerMove.MoveCard = false;
+
+        }
+
         mIsFirstMove = false;
 
         mTargetCell.RemovePiece();

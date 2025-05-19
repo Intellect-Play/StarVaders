@@ -11,19 +11,23 @@ public class Move : CardBase
         throw new System.NotImplementedException();
     }
     public override void SelectedCard()
-    {
+    {Debug.Log("SelectedCard");
         mKing.CheckPathing();
-
+        CardManagerMove.MoveCard = true;
         mKing.ShowCells();
         mKing.moveCard = true;
     }
     public override void UseForAllCards()
     {
-        UseCard();
+        Debug.Log("UseForAllCards");
         mCardMoveImage.PlayPopFadeAnimation();
     }
     public override void ExitCard()
     {
+        // UseCard();
+        CardManagerMove.MoveCard = false;
+
+        Debug.Log("ExitCard");
         base.ExitCard();
         mKing.moveCard = false;
         mKing.ClearCells();

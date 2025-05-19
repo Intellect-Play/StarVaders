@@ -10,6 +10,7 @@ public class CardSO : ScriptableObject
     public GameObject _CardCost;
     public int _CardPower;
     public int _CardRange;
+    public Vector3Int _CardPoweraArea;
     //public List<CardEffect> _CardEffects = new List<CardEffect>();
 }
 

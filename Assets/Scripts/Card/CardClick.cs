@@ -31,7 +31,7 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         canvas = _canvas;
         spawnParent = transform;
         moveImage = cardMoveImage.GetComponent<CardMoveImage>();
-        moveImage.SetTarget(this.gameObject);
+        moveImage.SetTarget(this.gameObject,mCard.mCardSO._CardImage);
         mCard.mCardMoveImage = moveImage;
     }
     
@@ -41,14 +41,17 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
     void OnEnable()
     {
-        CanDrag = true;
+        CanDrag = false;
 
         rectTransform = GetComponent<RectTransform>();
         mCard = GetComponent<CardBase>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {
+    {Debug.Log("OnPointerDown");
+        if (CardManagerMove.MoveCard) return;
+        CanDrag = true;
+
         startPosY = transform.position.y;
         Debug.Log(transform.position);
         transform.parent = canvas.transform;
@@ -59,6 +62,11 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!CanDrag)
+            return;
+        CanDrag = false;
+
+        Debug.Log("OnPointerUp");
         if (transform.position.y - startPosY > UseDistance)
         {
             mCard.UseForAllCards();
@@ -74,6 +82,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
    public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("OnDrag");
+
         if (!CanDrag)
             return;
         if (canvas == null) return;
@@ -83,6 +93,10 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("OnBeginDrag");
+        if (!CanDrag) return;
+        if (CardManagerMove.MoveCard) return;
+
         if (!CanDrag)
             return;
         _CardState = CardState.IsDragging;
@@ -91,18 +105,25 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log("OnEndDrag");
+        if (!CanDrag) return;
+
         _CardState = CardState.Idle;
 
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {
+    {Debug.Log("OnPointerEnter");
+        if (CardManagerMove.MoveCard) return;
+
         Hovering = true || _CardState == CardState.IsDragging;
 
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-    {
+    {Debug.Log("OnPointerExit");
+        if (!CanDrag) return;
+
         Hovering = false;
 
     }

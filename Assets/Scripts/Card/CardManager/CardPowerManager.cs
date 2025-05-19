@@ -12,8 +12,8 @@ public class CardPowerManager : BasePiece
 
     private void Start()
     {
-        Invoke("SetupCards", 1);
-        SetupCards();
+        //Invoke("SetupCards", 1);
+        //SetupCards();
     }
     public void GetICard(CardBase card)
     {

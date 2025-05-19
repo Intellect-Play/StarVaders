@@ -17,7 +17,7 @@ public class LinearFire : CardBase
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(9, 0, 0);
+        mMovement = mCardSO._CardPoweraArea; //9.0.0
         mColor = Color.white;
     }
     public override void CreateCellPath(int xDirection, int yDirection, int movement)

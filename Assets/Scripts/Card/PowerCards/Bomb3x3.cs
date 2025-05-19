@@ -17,7 +17,7 @@ public class Bomb3x3 : CardBase
     {
         mKing = basePiece;
         cardPowerManager = _cardPowerManager;
-        mMovement = new Vector3Int(0, 3, 0);
+        mMovement = mCardSO._CardPoweraArea;  // 0.3.0
         mColor = Color.white;
     }
 

@@ -10,7 +10,7 @@ public class Bat : CardBase
     public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         base.CardSetup(basePiece, _cardPowerManager);
-        mMovement = new Vector3Int(0, 0, 15); // z = distance for diagonal
+        mMovement = mCardSO._CardPoweraArea; // z = distance for diagonal   0.0.15
     }
 
     public override void CheckPathing()
