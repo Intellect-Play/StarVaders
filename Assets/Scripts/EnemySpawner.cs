@@ -8,9 +8,9 @@ public class EnemySpawner : MonoBehaviour
 
     public PieceManager mPieceManager;
     public Board mBoard;
-    private string[] mPieceOrder = new string[2]
+    private string[] mPieceOrder = new string[4]
   {
-        "KN", "B"////, "P" ,"Q",   "R"
+        "Queen", "Bishop","Pawn","Rock"////, "P" ,"Q",   "R"
   };
     private void Awake()
     {

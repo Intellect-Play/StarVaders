@@ -3071,6 +3071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f5d47bebde6244292e2eed2bdfbc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySO: {fileID: 0}
   mColor: {r: 0, g: 0, b: 0, a: 0}
   mIsFirstMove: 1
   mOriginalCell: {fileID: 0}
@@ -3425,6 +3426,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 618647812}
     m_Modifications:
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: bf67ea74860a7de4e89e0f376f819e4f,
+        type: 3}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: 2fc7acd63da3e1746ba95d4aec60daf5,
+        type: 3}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: 8c8314ebc1162a3468943eff1ae652d2,
+        type: 3}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: 6542ee424529a3a4a878607b343ff442,
+        type: 3}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: 8ba06cd61a8e1664d9f4761479489ec7,
+        type: 3}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: mPiecePrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1574190171488166, guid: 36180ece45a4e3d4683e7579e17620f2,
+        type: 3}
     - target: {fileID: 224387480397115876, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
         type: 3}
       propertyPath: m_Pivot.x

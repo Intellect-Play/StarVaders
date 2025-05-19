@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public abstract class BasePiece : MonoBehaviour
 {
+    public EnemySO enemySO;
     public Color mColor = Color.clear;
     public bool mIsFirstMove = true;
 
@@ -27,6 +28,8 @@ public abstract class BasePiece : MonoBehaviour
         mPieceManager = newPieceManager;
         mColor = newTeamColor;
         mRectTransform = GetComponent<RectTransform>();
+        if(newTeamColor == Color.black) GetComponent<Image>().sprite = enemySO._EnemyImage;
+
     }
 
     public virtual void Place(Cell newCell)
@@ -85,6 +88,7 @@ public abstract class BasePiece : MonoBehaviour
     {
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
+        Debug.Log("move enemy");
 
         for (int i = 1; i <= movement; i++)
         {
@@ -92,20 +96,50 @@ public abstract class BasePiece : MonoBehaviour
             currentY += yDirection;
 
             CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
-
+            Debug.Log(mColor+" enemy");
             if (cellState == CellState.Enemy)
             {
+                Debug.Log("Enemy");
+                mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+                break;
+            }
+           
+            if (cellState != CellState.Free)
+            {
+                break;
+            }
+
+            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+        }
+    }
+    public virtual void CreateCellPathForEnemy(int xDirection, int yDirection, int movement)
+    {
+        int currentX = mCurrentCell.mBoardPosition.x;
+        int currentY = mCurrentCell.mBoardPosition.y;
+        Debug.Log("move enemy");
+
+        for (int i = 1; i <= movement; i++)
+        {
+            currentX += xDirection;
+            currentY += yDirection;
+
+            CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
+            Debug.Log(mColor + " enemy");
+            if (cellState == CellState.Enemy)
+            {
+                Debug.Log("Enemy");
                 mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
                 break;
             }
 
             if (cellState != CellState.Free)
+            {
                 break;
+            }
 
             mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
         }
     }
-
     public virtual void CheckPathing()
     {
         CreateCellPath(1, 0, mMovement.x);

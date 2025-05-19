@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: 14c7438691997684cb1346239ab2e3f0
-timeCreated: 1512176837
-licenseType: Pro
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - mIcon: {fileID: 21300000, guid: 54ad0c25c7d7cbd4688164fea1812755, type: 3}
+  - enemySO: {fileID: 11400000, guid: 6d03f4716a291f14391b75e3250552ef, type: 2}
+  - mOriginalCell: {instanceID: 0}
+  - mCurrentCell: {instanceID: 0}
+  - mRectTransform: {instanceID: 0}
+  - mPieceManager: {instanceID: 0}
+  - mTargetCell: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

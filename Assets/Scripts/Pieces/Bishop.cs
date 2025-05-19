@@ -10,7 +10,9 @@ public class Bishop : BasePiece
 
         // Pawn Stuff
         mMovement = new Vector3Int(0, 2, 0);
-        GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy1");
+        //GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy1");
+        GetComponent<Image>().sprite = enemySO._EnemyImage;
+
     }
 
 
@@ -18,8 +20,12 @@ public class Bishop : BasePiece
     {
         // Horizontal
         if (down)
-            CreateCellPath(0, -1, mMovement.y);
+        {
+            Debug.Log("Down");
+            CreateCellPathForEnemy(0, -1, mMovement.y);
+
+        }
         else
-            CreateCellPath(0, 1, mMovement.y);
+            CreateCellPathForEnemy(0, 1, mMovement.y);
     }
 }

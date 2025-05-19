@@ -10,7 +10,7 @@ public class Knight : BasePiece
 
         // Pawn Stuff
         mMovement = new Vector3Int(0, 2, 0);
-        GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy2");
+        //GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy2");
     }
 
 
@@ -18,8 +18,8 @@ public class Knight : BasePiece
     {
         // Horizontal
         if (down)
-            CreateCellPath(0, -1, mMovement.y);
+            CreateCellPathForEnemy(0, -1, mMovement.y);
         else
-            CreateCellPath(0, 1, mMovement.y);
+            CreateCellPathForEnemy(0, 1, mMovement.y);
     }
 }

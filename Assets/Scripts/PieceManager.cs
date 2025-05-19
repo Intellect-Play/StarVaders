@@ -12,27 +12,29 @@ public class PieceManager : MonoBehaviour
 
     public List<BasePiece> mWhitePieces = null;
     public List<BasePiece> mBlackPieces = null;
+    public List<GameObject> mPiecePrefabs = null;
+
     public List<BasePiece> mAllBlackPieces = null;
 
     public List<BasePiece> mPromotedPieces = new List<BasePiece>();
     public Board board;
-   
- 
-    private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
-    {
-        {"P",  typeof(Pawn)},
-        {"R",  typeof(Rook)},
-        {"KN", typeof(Knight)},
-        {"B",  typeof(Bishop)},
-        {"K",  typeof(King)},
-        {"Q",  typeof(Queen)}
-    };
+
+    GameObject newPieceObject;
+
+    //private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
+    //{
+    //    {"P",  typeof(Pawn)},
+    //    {"R",  typeof(Rook)},
+    //    {"KN", typeof(Knight)},
+    //    {"B",  typeof(Bishop)},
+    //    {"K",  typeof(King)},
+    //    {"Q",  typeof(Queen)}
+    //};
 
     public void Setup(Board _board)
     {
         board = _board;
-        Debug.Log(_board.mAllCells.Length+ " All Cells");
-        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "K");
+        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "_King");
 
         PlacePiece(1, 3, mWhitePieces[0]);       
     }
@@ -78,10 +80,10 @@ public class PieceManager : MonoBehaviour
         for (int i = 0; i < pieceCount; i++)
         {
             string key = enemyType;
-            Type pieceType = mPieceLibrary[key];
+           // Type pieceType = mPieceLibrary[key];
 
             // Create
-            BasePiece newPiece = CreatePiece(pieceType, i);
+            BasePiece newPiece = CreatePiece(enemyType, i);
             newPieces.Add(newPiece);
 
             // Setup
@@ -96,18 +98,26 @@ public class PieceManager : MonoBehaviour
         return newPieces;
     }
 
-    private BasePiece CreatePiece(Type pieceType,int n)
+    private BasePiece CreatePiece(string pieceType,int n)
     {
+        foreach (GameObject piece in mPiecePrefabs)
+        {
+            if (piece.name == pieceType)
+            {
+                newPieceObject = Instantiate(piece);
+
+                continue;
+            }
+        }   
         // Create new object
-        GameObject newPieceObject = Instantiate(mPiecePrefab);
         newPieceObject.transform.SetParent(transform);
-        newPieceObject.name=n.ToString() + pieceType.Name;
+        //newPieceObject.name=n.ToString() + pieceType;
         // Set scale and position
         newPieceObject.transform.localScale = new Vector3(1, 1, 1);
         newPieceObject.transform.localRotation = Quaternion.identity;
 
         // Store new piece
-        BasePiece newPiece = (BasePiece)newPieceObject.AddComponent(pieceType);
+        BasePiece newPiece = newPieceObject.GetComponent<BasePiece>();
 
         return newPiece;
     }
