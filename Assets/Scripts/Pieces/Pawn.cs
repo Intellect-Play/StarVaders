@@ -16,7 +16,6 @@ public class Pawn : BasePiece
 
     public override void CheckPathing()
     {
-        Debug.Log(down);
         // Horizontal
         if (down)
         CreateCellPath(0, -1, mMovement.y);

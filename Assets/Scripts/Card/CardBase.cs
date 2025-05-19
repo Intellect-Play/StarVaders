@@ -12,29 +12,28 @@ public abstract class CardBase : BasePiece
     [NonSerialized] protected List<Cell> HighlightedCells = new();
     [NonSerialized] public CardMoveImage mCardMoveImage;
     public CardSO mCardSO;
-    public abstract CardType _CardType { get; }
 
-    bool usedCard;
+    private bool used;
 
     private void Start()
     {
         GetComponent<Image>().sprite = mCardSO._CardImage;
-        usedCard = false;
+        used = false;
         cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.SetupThisCard(this);
     }
 
-    public virtual void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
+    public virtual void CardSetup(BasePiece king, CardPowerManager manager)
     {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
+        mKing = king;
+        cardPowerManager = manager;
         mMovement = new Vector3Int(0, 15, 0);
         mColor = Color.white;
     }
 
     public virtual void SelectedCard()
     {
-        if (usedCard) return;
+        if (used) return;
         mCurrentCell = mKing.mCurrentCell;
         CheckPathing();
         ShowCells();
@@ -45,15 +44,14 @@ public abstract class CardBase : BasePiece
         UseCard();
         mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);
-
     }
+
     public virtual void UseCard()
     {
-        if (usedCard) return;
-
-        //usedCard = true;
-        foreach (Cell c in Enemies)
-            c.RemovePiece();
+        if (used) return;
+        foreach (var cell in Enemies)
+            cell.RemovePiece();
+        CameraShake.Instance.Shake(0.5f, 0.3f, 10, 90f);
         ExitCard();
     }
 
@@ -65,13 +63,13 @@ public abstract class CardBase : BasePiece
 
     public void ClickGiveManagerSelectedCard()
     {
-        if (usedCard) return;
-
+        if (used) return;
         cardPowerManager.GetICard(this);
     }
 
     public GameObject GetGameObject() => gameObject;
 
     public abstract override void CheckPathing();
-  
+    public abstract CardType _CardType { get; }
 }
+

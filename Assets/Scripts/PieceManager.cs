@@ -31,6 +31,7 @@ public class PieceManager : MonoBehaviour
     public void Setup(Board _board)
     {
         board = _board;
+        Debug.Log(_board.mAllCells.Length+ " All Cells");
         mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "K");
 
         PlacePiece(1, 3, mWhitePieces[0]);       

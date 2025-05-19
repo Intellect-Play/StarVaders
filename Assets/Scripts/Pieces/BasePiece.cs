@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public abstract class BasePiece : MonoBehaviour
 {
@@ -136,7 +137,6 @@ public abstract class BasePiece : MonoBehaviour
         if (mColor == Color.white)
         {
             CardManagerMove.MoveCard = false;
-
         }
 
         mIsFirstMove = false;
@@ -147,10 +147,14 @@ public abstract class BasePiece : MonoBehaviour
         mCurrentCell = mTargetCell;
         mCurrentCell.mCurrentPiece = this;
 
-        transform.position = mCurrentCell.transform.position;
+        // DOTween ile pozisyonu yumuşakça taşı
+        transform.DOMove(mCurrentCell.transform.position, 0.3f)
+                 .SetEase(Ease.OutCubic);
+
         mTargetCell = null;
     }
+
     #endregion
 
-  
+
 }

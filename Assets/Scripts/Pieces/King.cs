@@ -6,13 +6,12 @@ public class King : BasePiece
 {
     public bool isDragging = false;
 
-
     public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        // King stuff
+        // King setup
         mMovement = new Vector3Int(2, 2, 1);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Player");
     }
@@ -20,14 +19,14 @@ public class King : BasePiece
     public override void Kill()
     {
         base.Kill();
-
         mPieceManager.mIsKingAlive = false;
     }
 
     #region Cross-Platform Input
     void Update()
     {
-        if(!moveCard) return;
+        if (!moveCard) return;
+
         Vector2 pointerPosition = Vector2.zero;
         bool begin = false, move = false, end = false;
 
@@ -58,9 +57,11 @@ public class King : BasePiece
         }
 #endif
 
+        Camera uiCamera = Camera.main;
+
         if (begin)
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(mRectTransform, pointerPosition))
+            if (RectTransformUtility.RectangleContainsScreenPoint(mRectTransform, pointerPosition, uiCamera))
             {
                 CheckPathing();
                 ShowCells();
@@ -71,13 +72,15 @@ public class King : BasePiece
         if (move && isDragging)
         {
             Vector3 worldPos;
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(mRectTransform, pointerPosition, null, out worldPos);
-            transform.position = worldPos;
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(mRectTransform, pointerPosition, uiCamera, out worldPos))
+            {
+                mRectTransform.position = worldPos;
+            }
 
             mTargetCell = null;
             foreach (Cell cell in mHighlightedCells)
             {
-                if (RectTransformUtility.RectangleContainsScreenPoint(cell.mRectTransform, pointerPosition))
+                if (RectTransformUtility.RectangleContainsScreenPoint(cell.mRectTransform, pointerPosition, uiCamera))
                 {
                     mTargetCell = cell;
                     break;
@@ -87,24 +90,26 @@ public class King : BasePiece
 
         if (end && isDragging)
         {
-            ClearCells();
+           // ClearCells();
             isDragging = false;
 
             if (mTargetCell != null)
             {
+                ClearCells();
                 Move();
-               // mPieceManager.SwitchSides(mColor);
                 moveCard = false;
+
                 if (mColor == Color.white)
                 {
+                    // Optionally switch sides or perform other logic
                 }
             }
             else
             {
-                transform.position = mCurrentCell.transform.position;
+                // Return to original position
+                mRectTransform.position = mCurrentCell.transform.position;
             }
         }
     }
     #endregion
-
 }

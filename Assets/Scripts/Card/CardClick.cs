@@ -2,131 +2,108 @@
 using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
-using static Card;
-using Unity.VisualScripting;
+using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
 
-public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler,  IBeginDragHandler,  IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    private CardBase mCard;
-    public CardMoveImage moveImage;
+    [Header("References")]
+    [SerializeField] private TextMeshProUGUI cardNameText;
+    [SerializeField] private float triggerHeight = 150f;
+    [SerializeField] private float returnDuration = 0.5f;
 
-    [SerializeField] private TextMeshProUGUI mCardNameText;
-    public float TriggerHeight = 150f;
-    public float ReturnDuration = 0.5f;
-    private float UseDistance=150;
-
-    public Transform spawnParent;
-    public CardTypeMove cardType;
-
+    private float startPosY;
     private RectTransform rectTransform;
     private Canvas canvas;
-    private float startPosY;
+    private CardBase card;
+
+    public Transform spawnParent;
+    public CardMoveImage moveImage;
+    public CardTypeMove cardType;
+
     [HideInInspector] public bool Hovering;
     [HideInInspector] public bool CanDrag;
 
-    [Header("Settings")]
-    public CardState _CardState;
-    public void Initialize(Transform transform, Canvas _canvas,GameObject cardMoveImage)
+    public CardState _CardState { get; private set; }
+
+    public enum CardState { Idle, IsDragging, Played }
+
+    public void Initialize(Transform parent, Canvas canvasRef, GameObject moveImageObj)
     {
-        canvas = _canvas;
-        spawnParent = transform;
-        moveImage = cardMoveImage.GetComponent<CardMoveImage>();
-        moveImage.SetTarget(this.gameObject,mCard.mCardSO._CardImage);
-        mCard.mCardMoveImage = moveImage;
+        canvas = canvasRef;
+        spawnParent = parent;
+        moveImage = moveImageObj.GetComponent<CardMoveImage>();
+        moveImage.SetTarget(gameObject, card.mCardSO._CardImage);
+        card.mCardMoveImage = moveImage;
     }
-    
-    public enum CardState
-    {
-        Idle, IsDragging, Played
-    }
-    void OnEnable()
+
+    private void OnEnable()
     {
         CanDrag = false;
-
         rectTransform = GetComponent<RectTransform>();
-        mCard = GetComponent<CardBase>();
+        card = GetComponent<CardBase>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {Debug.Log("OnPointerDown");
+    {
         if (CardManagerMove.MoveCard) return;
         CanDrag = true;
-
         startPosY = transform.position.y;
-        Debug.Log(transform.position);
         transform.parent = canvas.transform;
         moveImage.transform.parent = canvas.transform;
-
-        mCard.ClickGiveManagerSelectedCard();
+        card.ClickGiveManagerSelectedCard();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!CanDrag)
-            return;
+        if (!CanDrag) return;
         CanDrag = false;
 
-        Debug.Log("OnPointerUp");
-        if (transform.position.y - startPosY > UseDistance)
+        if (transform.position.y - startPosY > triggerHeight)
         {
-            mCard.UseForAllCards();
+            card.UseForAllCards();
             return;
         }
-        transform.parent = spawnParent;
-        moveImage.ReturnParent();
-        transform.position = Vector3.zero;
 
-       
-        mCard.ExitCard();
+        ResetCardPosition();
+        card.ExitCard();
     }
 
-   public void OnDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("OnDrag");
-
-        if (!CanDrag)
-            return;
-        if (canvas == null) return;
-
+        if (!CanDrag || canvas == null) return;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-   }
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
-        if (!CanDrag) return;
-        if (CardManagerMove.MoveCard) return;
-
-        if (!CanDrag)
-            return;
+        if (!CanDrag || CardManagerMove.MoveCard) return;
         _CardState = CardState.IsDragging;
-
     }
 
-    void IEndDragHandler.OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
         if (!CanDrag) return;
-
         _CardState = CardState.Idle;
-
     }
 
-    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {Debug.Log("OnPointerEnter");
+    public void OnPointerEnter(PointerEventData eventData)
+    {
         if (CardManagerMove.MoveCard) return;
-
-        Hovering = true || _CardState == CardState.IsDragging;
-
+        Hovering = true;
     }
 
-    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-    {Debug.Log("OnPointerExit");
+    public void OnPointerExit(PointerEventData eventData)
+    {
         if (!CanDrag) return;
-
         Hovering = false;
-
     }
 
-  
+    private void ResetCardPosition()
+    {
+        transform.parent = spawnParent;
+        moveImage.ReturnParent();
+        transform.localPosition = Vector3.zero;
+    }
 }
