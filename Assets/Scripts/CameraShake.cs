@@ -1,17 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
 
 public class CameraShake : MonoBehaviour
 {
     public static CameraShake Instance;
-
+    [SerializeField] public CameraSO cameraSO;
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void Shake(float duration = 0.2f, float strength = 0.3f, int vibrato = 10, float randomness = 90f)
+    public void ShakeCardAttack()
     {
-        transform.DOShakePosition(duration, strength, vibrato, randomness);
+        transform.DOShakePosition(cameraSO.duration, cameraSO.strength, cameraSO.vibrato, cameraSO.randomness);
     }
 }

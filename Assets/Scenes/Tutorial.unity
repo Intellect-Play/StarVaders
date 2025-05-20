@@ -657,7 +657,7 @@ Camera:
   m_GameObject: {fileID: 140885060}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -680,7 +680,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 200
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -726,6 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e92c3c2919f4ee4e91b32ae2731fc10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraSO: {fileID: 11400000, guid: d219d4d3c50806f469ccc6f79b5bc1d7, type: 2}
 --- !u!1001 &192532236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2601,6 +2602,11 @@ PrefabInstance:
       objectReference: {fileID: 879330911}
     - target: {fileID: 114516425935054028, guid: 2e7a0cc9f9e9ef44c9fd42e454137e80,
         type: 3}
+      propertyPath: mCardManagerMove
+      value: 
+      objectReference: {fileID: 1021148607}
+    - target: {fileID: 114516425935054028, guid: 2e7a0cc9f9e9ef44c9fd42e454137e80,
+        type: 3}
       propertyPath: mCardPowerManager
       value: 
       objectReference: {fileID: 1021148604}
@@ -3203,7 +3209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 175.7, y: 0}
+  m_AnchoredPosition: {x: 175.70001, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1057707213
@@ -3249,31 +3255,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1057707214}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1057707216}
-        m_TargetAssemblyTypeName: EndTurnClick, Assembly-CSharp
-        m_MethodName: EndTurnButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 997246611}
-        m_TargetAssemblyTypeName: ReturnButton, Assembly-CSharp
-        m_MethodName: OnClickReturn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1057707214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3365,7 +3347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30.909302, y: 67.97272}
+  m_AnchoredPosition: {x: -30.909302, y: 67.97266}
   m_SizeDelta: {x: -395.7808, y: 219.3711}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1099475355
@@ -3689,7 +3671,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 237.34}
+  m_SizeDelta: {x: 0, y: 219.37}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1362037800
 MonoBehaviour:
@@ -3722,7 +3704,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -4037,11 +4019,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1595514213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30.909, y: -782.34}
-  m_SizeDelta: {x: 684.22, y: 219.37}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -30.909302, y: 67.97266}
+  m_SizeDelta: {x: -395.7808, y: 219.3711}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1569241622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4181,7 +4163,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 140885063}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4209,7 +4191,7 @@ RectTransform:
   - {fileID: 1099475354}
   - {fileID: 1569241621}
   - {fileID: 2105640908}
-  m_Father: {fileID: 1814730514}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4364,7 +4346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1814730514
 Transform:
   m_ObjectHideFlags: 0
@@ -4382,7 +4364,6 @@ Transform:
   - {fileID: 1021148605}
   - {fileID: 618647812}
   - {fileID: 441902036}
-  - {fileID: 1595514213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1845069393
@@ -5102,3 +5083,4 @@ SceneRoots:
   - {fileID: 140885064}
   - {fileID: 694242543}
   - {fileID: 1814730514}
+  - {fileID: 1595514213}

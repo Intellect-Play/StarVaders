@@ -123,6 +123,7 @@ public class CardMoveImage : MonoBehaviour
     }
     public void ReturnParent()
     {
+        Debug.Log("ReturnParent");
         transform.parent = spawnParent;
     }
     public void SetTarget(GameObject newTarget, Sprite sprite)

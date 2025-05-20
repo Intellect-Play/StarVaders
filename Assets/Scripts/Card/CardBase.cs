@@ -41,7 +41,7 @@ public abstract class CardBase : BasePiece
 
     public virtual void UseForAllCards()
     {
-        CameraShake.Instance.Shake(0.5f, 0.3f, 10, 90f);
+        CameraShake.Instance.ShakeCardAttack();
 
         UseCard();
         mCardMoveImage.PlayPopFadeAnimation();
