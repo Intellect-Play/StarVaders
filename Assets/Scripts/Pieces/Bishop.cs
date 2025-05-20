@@ -21,7 +21,6 @@ public class Bishop : BasePiece
         // Horizontal
         if (down)
         {
-            Debug.Log("Down");
             CreateCellPathForEnemy(0, -1, mMovement.y);
 
         }

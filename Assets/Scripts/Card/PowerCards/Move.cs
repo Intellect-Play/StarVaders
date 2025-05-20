@@ -11,7 +11,7 @@ public class Move : CardBase
         throw new System.NotImplementedException();
     }
     public override void SelectedCard()
-    {Debug.Log("SelectedCard");
+    {
         mKing.CheckPathing();
         CardManagerMove.MoveCard = true;
         mKing.ShowCells();
@@ -19,7 +19,6 @@ public class Move : CardBase
     }
     public override void UseForAllCards()
     {
-        Debug.Log("UseForAllCards");
         mCardMoveImage.PlayPopFadeAnimation();
     }
     public override void ExitCard()

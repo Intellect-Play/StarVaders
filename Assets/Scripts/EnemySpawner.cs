@@ -40,18 +40,20 @@ public class EnemySpawner : MonoBehaviour
     }
     public void EnemySpawnF()
     {
+        //WaveManager.Instance.StartLevel(1);
         mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1,5));
     }
-
-    private void Update()
+    public void SpawnEnemy(string type, int column)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Debug.Log("SpawnEnemy");
+        mPieceManager.SetupNewEnemies(type, column);
+    }
+    public void SpawnWave(List<EnemyData> enemies)
+    {
+        foreach (var enemy in enemies)
         {
-            mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1, 5));
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            mPieceManager.EnemyMove(0,true);
+            Debug.Log($"Spawning enemy: {enemy.type} in column: {enemy.column}");
+            SpawnEnemy(enemy.type, enemy.column);
         }
     }
     string GetRandomPieceType()

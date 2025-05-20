@@ -1,0 +1,79 @@
+{
+  "levels": [
+    {
+      "levelNumber": 1,
+      "waves": [
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Rock", "column": 2 }, { "type": "Rock", "column": 4 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Queen", "column": 3 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 4 } ] }
+      ]
+    },
+    {
+      "levelNumber": 2,
+      "waves": [
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Bishop", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Bishop", "column": 4 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Rock", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 2 }, { "type": "Bishop", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Queen", "column": 1 }, { "type": "Queen", "column": 5 } ] }
+      ]
+    },
+    {
+      "levelNumber": 3,
+      "waves": [
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Rock", "column": 2 }, { "type": "Rock", "column": 4 }, { "type": "Rock", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Queen", "column": 2 }, { "type": "Queen", "column": 4 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 5 } ] }
+      ]
+    },
+    {
+      "levelNumber": 4,
+      "waves": [
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Queen", "column": 1 }, { "type": "Queen", "column": 5 }, { "type": "Pawn", "column": 3 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Bishop", "column": 2 }, { "type": "Bishop", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] }
+      ]
+    },
+    {
+      "levelNumber": 5,
+      "waves": [
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Queen", "column": 2 }, { "type": "Queen", "column": 3 }, { "type": "Queen", "column": 4 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 5 }, { "type": "Pawn", "column": 3 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Rock", "column": 5 } ] },
+        { "delay": 0.0, "enemies": [ 
+          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Queen", "column": 3 } ] }
+      ]
+    }
+  ]
+}

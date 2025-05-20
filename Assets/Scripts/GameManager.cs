@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         mPieceManager.SwitchSides(Color.white);
-        mEnemySpawner.EnemySpawnF();
+        WaveManager.Instance.SpawnNextWave();
+        //mEnemySpawner.EnemySpawnF();
         mEnemySpawner.EnemyMoveF();
     }
 }

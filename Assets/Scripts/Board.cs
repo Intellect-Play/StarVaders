@@ -75,12 +75,10 @@ public class Board : MonoBehaviour
     }
     public void CreateFromChildren()
     {
-        Debug.Log("CreateFromChildren");
         mAllCells = new Cell[cellX, cellY];
 
         // Get all children (assumes they are ordered by rows then columns)
         allCellsInHierarchy = GetComponentsInChildren<Cell>().ToList();
-        Debug.Log(GetComponentsInChildren<Cell>().Length);
         if (allCellsInHierarchy.Count != cellX * cellY)
         {
             Debug.LogError("Child count does not match board size!");

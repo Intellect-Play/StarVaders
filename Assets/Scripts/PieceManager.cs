@@ -38,12 +38,12 @@ public class PieceManager : MonoBehaviour
 
         PlacePiece(1, 3, mWhitePieces[0]);       
     }
-    public void SetupNewEnemies(string enemyType, int countEnemies)
+    public void SetupNewEnemies(string enemyType, int posEnemy)
     {
-        mBlackPieces = CreatePieces(Color.black, Color.white, countEnemies, enemyType);
+        mBlackPieces = CreatePieces(Color.black, Color.white, posEnemy, enemyType);
         mAllBlackPieces.AddRange(mBlackPieces);
 
-        PlacePieces(Board.cellY - 1,  mBlackPieces,countEnemies);        
+        PlacePieces(Board.cellY - 1,  mBlackPieces, posEnemy);        
     }
 
     public void EnemyMove(int moveDistance,bool down)
@@ -145,8 +145,7 @@ public class PieceManager : MonoBehaviour
 
     private void PlacePiece(int pawnRow, int x, BasePiece piece)
     {
-        Debug.Log("PlacePiece: " + x + ", " + pawnRow+ " "+ board.mAllCells[x, pawnRow].name);
-        piece.Place(board.mAllCells[x, pawnRow]); // [x, y] = [sütun, sıra]
+        piece.Place(board.mAllCells[x, pawnRow]); 
     }
 
     private void ShuffleList(List<int> list)
@@ -164,52 +163,22 @@ public class PieceManager : MonoBehaviour
     }
 
     
-    //private void MoveRandomPiece()
-    //{
-    //    BasePiece finalPiece = null;
-
-    //    while (!finalPiece)
-    //    {
-    //        // Get piece
-    //        int i = UnityEngine.Random.Range(0, mAllBlackPieces.Count);
-    //        BasePiece newPiece = mAllBlackPieces[i];
-
-    //        // Does this piece have any moves?
-    //        if (!newPiece.HasMove())
-    //            continue;
-
-    //        // Is piece active?
-    //        if (newPiece.gameObject.activeInHierarchy)
-    //            finalPiece = newPiece;
-    //    }
-
-    //    finalPiece.ComputerMove();
-    //}
-    
-
+  
     public void SwitchSides(Color color)
     {
         if (!mIsKingAlive)
         {
-            // Reset pieces
             ResetPieces();
-
-            // King has risen from the dead
             mIsKingAlive = true;
 
-            // Change color to black, so white can go first again
             color = Color.black;
         }
 
         bool isBlackTurn = color == Color.white ? true : false;
 
-        // Set team interactivity
         SetInteractive(mWhitePieces, !isBlackTurn);
 
-        // Disable this so player can't move pieces
         SetInteractive(mAllBlackPieces, isBlackTurn);
-
-        // Set promoted interactivity
         foreach (BasePiece piece in mPromotedPieces)
         {
             bool isBlackPiece = piece.mColor != Color.white ? true : false;
@@ -218,11 +187,7 @@ public class PieceManager : MonoBehaviour
             piece.enabled = isPartOfTeam;
         }
 
-        // ADDED: Move random piece
-        /*
-        if (isBlackTurn)
-            MoveRandomPiece();
-        */
+
     }
 
     public void ResetPieces()

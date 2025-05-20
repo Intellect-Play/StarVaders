@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
+using System;
 
 public abstract class BasePiece : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public abstract class BasePiece : MonoBehaviour
     public bool down=true;
 
     public bool moveCard=false;
+
+    int deadCase = 0;
+    private void OnEnable()
+    {
+        //deadCase = 0;
+    }
     public virtual void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         down = true;
@@ -34,12 +41,10 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Place(Cell newCell)
     {
-        Debug.Log(newCell.name);
         mCurrentCell = newCell;
         mOriginalCell = newCell;
         mCurrentCell.mCurrentPiece = this;
         transform.position = mCurrentCell.transform.position;
-        Debug.Log(transform.position+ "  "+newCell.transform.position);
         gameObject.SetActive(true);
     }
 
@@ -57,32 +62,36 @@ public abstract class BasePiece : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool HasMove()
+    public void HasMoveTarget(int moveDistance)
     {
-        CheckPathing();
-        return mHighlightedCells.Count > 0;
+        if (mHighlightedCells.Count <= 0) return;
+        if (mHighlightedCells.Count < moveDistance) mTargetCell = mHighlightedCells[mHighlightedCells.Count-1];
+        if (mHighlightedCells.Count >= moveDistance) mTargetCell = mHighlightedCells[moveDistance];
     }
 
     public void ComputerMove(int moveDistance, bool _down)
     {
-        try
-        {
-            down = _down;
-            if (!HasMove()) return;
-                //    continue;
-            CheckEnemyKillCase();
-            ClearCells();
-            CheckPathing();
-            mTargetCell = mHighlightedCells[moveDistance];
-            Move();
-        }
-        catch { }
+        ClearCells();
+        down = _down;
+        CheckPathing();
+
+        HasMoveTarget(moveDistance);
+        Move();
+        CheckEnemyKillCase();
+       
     }
 
     private void CheckEnemyKillCase()
     {
         if (mColor == Color.black && mCurrentCell.mBoardPosition.y == 0)
-            Kill();
+        {
+            Debug.Log("DeadCase: " + deadCase);
+            if (deadCase >= 1)
+            {
+                Kill();
+            }
+            ++deadCase;          
+        }else deadCase = 0;
     }
 
     #region Movement
@@ -90,7 +99,6 @@ public abstract class BasePiece : MonoBehaviour
     {
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
-        Debug.Log("move enemy");
 
         for (int i = 1; i <= movement; i++)
         {
@@ -98,10 +106,8 @@ public abstract class BasePiece : MonoBehaviour
             currentY += yDirection;
 
             CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
-            Debug.Log(mColor+" enemy");
             if (cellState == CellState.Enemy)
             {
-                Debug.Log("Enemy");
                 mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
                 break;
             }
@@ -118,7 +124,6 @@ public abstract class BasePiece : MonoBehaviour
     {
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
-        Debug.Log("move enemy");
 
         for (int i = 1; i <= movement; i++)
         {
@@ -126,17 +131,15 @@ public abstract class BasePiece : MonoBehaviour
             currentY += yDirection;
 
             CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
-            Debug.Log(mColor + " enemy");
             if (cellState == CellState.Enemy)
             {
-                Debug.Log("Enemy");
                 mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
-                break;
+                return;
             }
 
             if (cellState != CellState.Free)
             {
-                break;
+                return;
             }
 
             mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
@@ -170,6 +173,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Move()
     {
+        if (mTargetCell == null) return;
         if (mColor == Color.white)
         {
             CardManagerMove.MoveCard = false;
