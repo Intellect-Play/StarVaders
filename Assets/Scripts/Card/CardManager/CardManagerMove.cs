@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CardManagerMove : MonoBehaviour
 {
+    public static CardManagerMove Instance;
     public List<GameObject> cardPrefabs;
     public Transform spawnParent;
     public Transform spawnButtonTransform;
@@ -16,14 +17,27 @@ public class CardManagerMove : MonoBehaviour
     [SerializeField] private Transform cardExit;
     public int cardCount = 5;
 
-    private List<GameObject> spawnedCards = new List<GameObject>();
+    public List<GameObject> spawnedCards = new List<GameObject>();
     [SerializeField] private Canvas canvas;
     private Mask maskCards;
     private Image imageCards;
+    public int CardLimit = 7;
+    public int MoveCardLimit = 2;
 
     public static bool MoveCard = false;
     float time = 0.1f;
     int cardNumber;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         maskCards = cardFollowPrefabParent.GetComponent<Mask>();
@@ -31,15 +45,27 @@ public class CardManagerMove : MonoBehaviour
     }
     public void SpawnCards()
     {
-        ClearCards();
+        //ClearCards();
         VisualMask(true);
-
-        StartCoroutine(SpawnCardWithTime(time));
+        if(spawnedCards.Count< CardLimit) StartCoroutine(SpawnCardWithTime(time));
     }
     IEnumerator SpawnCardWithTime(float _time)
     {
-        SpawnCard(0);
-        for (int i = 1; i < cardCount; i++)
+        int i = 0;
+
+        int moveCount = 0;
+        foreach (var card in spawnedCards)
+        {
+            if (card.GetComponent<Move>() != null) moveCount++;
+        }
+        if (moveCount < MoveCardLimit)
+        {
+            i = 1;
+            SpawnCard(0);
+        }
+        else i = 0;
+        cardCount = CardLimit - spawnedCards.Count + 1;
+        for (i = 1; i < cardCount; i++)
         {
             cardNumber = Random.Range(0, cardPrefabs.Count);
             SpawnCard(cardNumber);

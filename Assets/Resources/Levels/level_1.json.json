@@ -4,75 +4,75 @@
       "levelNumber": 1,
       "waves": [
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Green_boss", "column": 1 }, { "type": "Green_boss", "column": 3 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Rock", "column": 2 }, { "type": "Rock", "column": 4 } ] },
+          { "type": "Knight", "column": 2 }, { "type": "Knight", "column": 4 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Queen", "column": 3 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 4 } ] }
+          { "type": "Sceleton", "column": 3 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 4 } ] }
       ]
     },
     {
       "levelNumber": 2,
       "waves": [
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Bishop", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Bishop", "column": 4 } ] },
+          { "type": "Green_boss", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Green_boss", "column": 4 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Rock", "column": 5 } ] },
+          { "type": "Knight", "column": 1 }, { "type": "Knight", "column": 3 }, { "type": "Knight", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 2 }, { "type": "Bishop", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 2 }, { "type": "Green_boss", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Queen", "column": 1 }, { "type": "Queen", "column": 5 } ] }
+          { "type": "Sceleton", "column": 1 }, { "type": "Sceleton", "column": 5 } ] }
       ]
     },
     {
       "levelNumber": 3,
       "waves": [
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Green_boss", "column": 1 }, { "type": "Green_boss", "column": 3 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Rock", "column": 2 }, { "type": "Rock", "column": 4 }, { "type": "Rock", "column": 5 } ] },
+          { "type": "Knight", "column": 2 }, { "type": "Knight", "column": 4 }, { "type": "Knight", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Queen", "column": 2 }, { "type": "Queen", "column": 4 } ] },
+          { "type": "Sceleton", "column": 2 }, { "type": "Sceleton", "column": 4 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 5 } ] }
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 5 } ] }
       ]
     },
     {
       "levelNumber": 4,
       "waves": [
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Knight", "column": 1 }, { "type": "Knight", "column": 3 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Queen", "column": 1 }, { "type": "Queen", "column": 5 }, { "type": "Pawn", "column": 3 } ] },
+          { "type": "Sceleton", "column": 1 }, { "type": "Sceleton", "column": 5 }, { "type": "Goblin", "column": 3 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Bishop", "column": 2 }, { "type": "Bishop", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Green_boss", "column": 2 }, { "type": "Green_boss", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] }
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] }
       ]
     },
     {
       "levelNumber": 5,
       "waves": [
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 1 }, { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Pawn", "column": 5 } ] },
+          { "type": "Goblin", "column": 1 }, { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Goblin", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Queen", "column": 2 }, { "type": "Queen", "column": 3 }, { "type": "Queen", "column": 4 } ] },
+          { "type": "Sceleton", "column": 2 }, { "type": "Sceleton", "column": 3 }, { "type": "Sceleton", "column": 4 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Bishop", "column": 1 }, { "type": "Bishop", "column": 5 }, { "type": "Pawn", "column": 3 } ] },
+          { "type": "Green_boss", "column": 1 }, { "type": "Green_boss", "column": 5 }, { "type": "Goblin", "column": 3 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Rock", "column": 1 }, { "type": "Rock", "column": 3 }, { "type": "Rock", "column": 5 } ] },
+          { "type": "Knight", "column": 1 }, { "type": "Knight", "column": 3 }, { "type": "Knight", "column": 5 } ] },
         { "delay": 0.0, "enemies": [ 
-          { "type": "Pawn", "column": 2 }, { "type": "Pawn", "column": 3 }, { "type": "Pawn", "column": 4 }, { "type": "Queen", "column": 3 } ] }
+          { "type": "Goblin", "column": 2 }, { "type": "Goblin", "column": 3 }, { "type": "Goblin", "column": 4 }, { "type": "Sceleton", "column": 3 } ] }
       ]
     }
   ]

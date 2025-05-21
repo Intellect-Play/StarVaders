@@ -13,20 +13,23 @@ public class Move : CardBase
     public override void SelectedCard()
     {
         mKing.CheckPathing();
+        if (mKing.mHighlightedCells.Count <= 0) return;
         CardManagerMove.MoveCard = true;
         mKing.ShowCells();
         mKing.moveCard = true;
     }
     public override void UseForAllCards()
     {
+        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+
         mCardMoveImage.PlayPopFadeAnimation();
+
     }
     public override void ExitCard()
     {
         // UseCard();
         CardManagerMove.MoveCard = false;
 
-        Debug.Log("ExitCard");
         base.ExitCard();
         mKing.moveCard = false;
         mKing.ClearCells();

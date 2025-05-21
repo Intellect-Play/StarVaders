@@ -10,7 +10,6 @@ public class Health : MonoBehaviour
     private void Start()
     {
         HealthPlayer = SaveManager.Instance.saveData.playerData.health;
-        Debug.Log("Health: " + HealthPlayer);
     }
     public void TakeDamage(int damage)
     {

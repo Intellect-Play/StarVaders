@@ -21,7 +21,30 @@ public class King : BasePiece
         base.Kill();
         //mPieceManager.mIsKingAlive = false;
     }
+    public override void CreateCellPath(int xDirection, int yDirection, int movement)
+    {
+        int currentX = mCurrentCell.mBoardPosition.x;
+        int currentY = mCurrentCell.mBoardPosition.y;
 
+        for (int i = 1; i <= movement; i++)
+        {
+            currentX += xDirection;
+            currentY += yDirection;
+
+            CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
+            if (cellState == CellState.Enemy)
+            {
+                break;
+            }
+
+            if (cellState != CellState.Free)
+            {
+                break;
+            }
+
+            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+        }
+    }
     #region Cross-Platform Input
     void Update()
     {

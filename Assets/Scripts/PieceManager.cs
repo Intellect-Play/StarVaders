@@ -155,8 +155,8 @@ public class PieceManager : MonoBehaviour
     }
     private void SetInteractive(List<BasePiece> allPieces, bool value)
     {
-        foreach (BasePiece piece in allPieces)
-            piece.enabled = value;
+        //foreach (BasePiece piece in allPieces)
+        //    piece.enabled = value;
     }
     private void SetInteractiveWhite(BasePiece allPieces, bool value)
     {

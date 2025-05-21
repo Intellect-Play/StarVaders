@@ -21,9 +21,9 @@ public class EndTurnClick : MonoBehaviour
     IEnumerator WaitForEndTurn()
     {
         endTurnButton.interactable = false;
-        CardManager.Instance.ExitTurnButton();
+        //CardManager.Instance.ExitTurnButton();
         GameManager.Instance.EndTurn();
-        CardManager.Instance.cardManagerMove.ReturnAllCards();
+        //CardManager.Instance.cardManagerMove.ReturnAllCards();
         yield return new WaitForSeconds(1);
         CardManager.Instance.cardManagerMove.SpawnCards();
         yield return new WaitForSeconds(1);

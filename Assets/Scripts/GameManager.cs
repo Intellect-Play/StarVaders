@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public CardPowerManager mCardPowerManager;
     public Health mHealth;
     public Coin mCoin;
-
+    bool cardMove;
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        cardMove = true;
         mEnemySpawner = GetComponent<EnemySpawner>();
         mHealth = GetComponent<Health>();
         mCoin = GetComponent<Coin>();
@@ -63,5 +65,25 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
         SaveManager.Instance.Save();
         GameUI.Instance.LoseGame();
+    }
+
+    public void EndTurnButton()
+    {
+        if (!cardMove) return;
+        StartCoroutine(WaitForEndTurn());
+    }
+    IEnumerator WaitForEndTurn()
+    {
+        cardMove = false;
+        yield return new WaitForSeconds(1);
+        //CardManager.Instance.ExitTurnButton();
+        GameManager.Instance.EndTurn();
+        //CardManager.Instance.cardManagerMove.ReturnAllCards();
+        yield return new WaitForSeconds(1);
+        CardManager.Instance.cardManagerMove.SpawnCards();
+        //yield return new WaitForSeconds(1);
+        cardMove = true;
+
+
     }
 }

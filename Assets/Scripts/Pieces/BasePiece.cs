@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using UnityEditor.Animations;
+using UnityEditorInternal;
+using System.Collections;
 
 public abstract class BasePiece : MonoBehaviour
 {
@@ -20,16 +23,19 @@ public abstract class BasePiece : MonoBehaviour
     public Vector3Int mMovement = Vector3Int.one;
     public List<Cell> mHighlightedCells = new List<Cell>();
     public List<Cell> mEnemylightedCells = new List<Cell>();
-
+    public Animator mAnimatorController = null;
     public bool down=true;
 
     public bool moveCard=false;
 
     int deadCase = 0;
 
-    bool kingAttack = false;
+    bool AttackPiece = false;
     private void OnEnable()
     {
+        AttackPiece = false;
+        if (GetComponent<Animator>() != null)
+            mAnimatorController = GetComponent<Animator>();
         //deadCase = 0;
     }
     public virtual void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
@@ -61,12 +67,30 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Kill()
     {
+        
+        if (mAnimatorController != null&&!AttackPiece)
+        {
+            StartCoroutine(KillTime());
+        }
+        else
+        {
+            if (mCurrentCell != null)
+                mCurrentCell.mCurrentPiece = null;
+            GameManager.Instance.ChangeCoin(10);
+            PieceManager.Instance.KillEnemy(this);
+        }
+       
+       
+    }
+    IEnumerator KillTime()
+    {
+        mAnimatorController.SetTrigger("Die");
+        yield return new WaitForSeconds(.3f);
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
         GameManager.Instance.ChangeCoin(10);
         PieceManager.Instance.KillEnemy(this);
     }
-
     public void HasMoveTarget(int moveDistance)
     {
         if (mHighlightedCells.Count <= 0) return;
@@ -164,7 +188,6 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void ShowCells()
     {
-        Debug.Log("ShowCells");
         foreach (Cell cell in mHighlightedCells)
             cell.mOutlineImage.enabled = true;
         foreach (Cell cell in mEnemylightedCells)
@@ -180,12 +203,19 @@ public abstract class BasePiece : MonoBehaviour
         mEnemylightedCells.Clear();
         mHighlightedCells.Clear();
     }
-
+    public IEnumerator  AttackTime()
+    {
+        mAnimatorController.SetTrigger("Attack");
+        yield return new WaitForSeconds(.3f);
+        Kill();
+    }
     public virtual void Move()
     {
         if (mTargetCell == null) return;
         if (mColor == Color.white)
         {
+            GameManager.Instance.EndTurnButton();
+
             CardManagerMove.MoveCard = false;
         }
 
@@ -193,8 +223,12 @@ public abstract class BasePiece : MonoBehaviour
         if(mTargetCell.mCurrentPiece != null&& mTargetCell.mCurrentPiece.mColor==Color.white)
         {
             GameManager.Instance.ChangeHealth(1);
-            Kill();
-            return;
+            if (mAnimatorController != null) {
+                AttackPiece = true;
+                StartCoroutine(AttackTime()); 
+            }
+            else { Kill(); return; }
+            
         }
         else mTargetCell.RemovePiece();
 
@@ -202,9 +236,9 @@ public abstract class BasePiece : MonoBehaviour
 
         mCurrentCell = mTargetCell;
         mCurrentCell.mCurrentPiece = this;
-
+        if (mAnimatorController != null&&!AttackPiece) mAnimatorController.SetTrigger("Jump");
         // DOTween ile pozisyonu yumuşakça taşı
-        transform.DOMove(mCurrentCell.transform.position, 0.3f)
+        transform.DOMove(mCurrentCell.transform.position, 0.7f)
                  .SetEase(Ease.OutCubic);
 
         mTargetCell = null;
