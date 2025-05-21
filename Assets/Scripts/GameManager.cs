@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public PieceManager mPieceManager;
     public EnemySpawner mEnemySpawner;
     public CardPowerManager mCardPowerManager;
+    public Health mHealth;
+    public Coin mCoin;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,11 +22,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         mEnemySpawner = GetComponent<EnemySpawner>();
+        mHealth = GetComponent<Health>();
+        mCoin = GetComponent<Coin>();
         mBoard.Create();
         mEnemySpawner.GetBP(mPieceManager, mBoard);
         mPieceManager.board = mBoard;
         mPieceManager.Setup(mBoard);
-        mCardPowerManager.mKing = mPieceManager.mWhitePieces[0];
+        mCardPowerManager.mKing = mPieceManager.mWhitePiece;
     }
     public void EndTurn()
     {
@@ -31,5 +36,32 @@ public class GameManager : MonoBehaviour
         WaveManager.Instance.SpawnNextWave();
         //mEnemySpawner.EnemySpawnF();
         mEnemySpawner.EnemyMoveF();
+    }
+
+    public void ChangeHealth(int heath)
+    {
+        mHealth.TakeDamage(heath);
+        GameUI.Instance.UpdateHealth(mHealth.HealthPlayer);
+    }
+
+    public void ChangeCoin(int coin)
+    {
+        mCoin.AddCoin(coin);
+        GameUI.Instance.UpdateScore(mCoin.CoinPlayer);
+    }
+
+    public void WinGame()
+    {
+        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
+        SaveManager.Instance.saveData.playerData.currentLevel += 1;
+        SaveManager.Instance.Save();
+        GameUI.Instance.WinGame();
+    }
+
+    public void LoseGame()
+    {
+        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
+        SaveManager.Instance.Save();
+        GameUI.Instance.LoseGame();
     }
 }

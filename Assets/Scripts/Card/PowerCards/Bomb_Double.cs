@@ -22,25 +22,32 @@ public class Bomb_Double : CardBase
             var state = mCurrentCell.mBoard.ValidateCellforCards(cell.mBoardPosition.x, cell.mBoardPosition.y, this);
 
             if (state == CellState.Enemy)
+            {
+                EnemylightedCells.Add(cell);
                 Enemies.Add(cell);
-
-            if (state == CellState.Enemy || state == CellState.Free)
+            }
+            if ( state == CellState.Free)
                 HighlightedCells.Add(cell);
         }
     }
 
     public override void ShowCells()
     {
-        foreach (var cell in BombAreas)
+        foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = true;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = true;
     }
 
     public override void ClearCells()
     {
-        foreach (var cell in BombAreas)
+        foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = false;
-
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = false;
         HighlightedCells.Clear();
+        EnemylightedCells.Clear();
+
     }
 
     private List<Cell> GetRandom2x2Cells(Cell[,] allCells, int count = 3)

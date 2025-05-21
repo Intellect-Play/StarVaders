@@ -25,14 +25,19 @@ public class Bat : CardBase
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = true;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = true;
     }
 
     public override void ClearCells()
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = false;
-
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = false;
         HighlightedCells.Clear();
+        EnemylightedCells.Clear();
+
     }
 
     private void CreateCellPath(int xDirection, int yDirection, int movement,bool right, int _currentX,int _currentY,bool turn)
@@ -50,7 +55,7 @@ public class Bat : CardBase
             {
                 var cell = mCurrentCell.mBoard.mAllCells[_currentX, _currentY];
                 Enemies.Add(cell);
-                HighlightedCells.Add(cell);
+                EnemylightedCells.Add(cell);
                 continue;
             }
 

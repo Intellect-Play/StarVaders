@@ -46,7 +46,7 @@ public class LinearFire : CardBase
 
                 cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                mEnemylightedCells.Add(cell);
                 continue;
             }
 

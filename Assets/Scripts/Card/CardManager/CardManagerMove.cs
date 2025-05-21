@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System.Collections;
+using static Unity.VisualScripting.Member;
+using static UnityEngine.GraphicsBuffer;
 
 public class CardManagerMove : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class CardManagerMove : MonoBehaviour
 
     public static bool MoveCard = false;
     float time = 0.1f;
-
+    int cardNumber;
     private void Start()
     {
         maskCards = cardFollowPrefabParent.GetComponent<Mask>();
@@ -36,19 +38,31 @@ public class CardManagerMove : MonoBehaviour
     }
     IEnumerator SpawnCardWithTime(float _time)
     {
-        for (int i = 0; i < cardCount; i++)
+        SpawnCard(0);
+        for (int i = 1; i < cardCount; i++)
         {
-            GameObject randomPrefab = cardPrefabs[Random.Range(0, cardPrefabs.Count)];
-            GameObject card = Instantiate(randomPrefab, Vector3.zero, Quaternion.identity, spawnParent);
-            GameObject cardFollow = Instantiate(cardFollowPrefab, Vector3.zero, Quaternion.identity, cardFollowPrefabParent);
-            RectTransform cardRect = card.GetComponent<RectTransform>();
-            cardFollow.GetComponent<CardMoveImage>().spawnParent = cardFollowPrefabParent;
-            Vector3 targetPos = Vector3.zero;
-            card.GetComponent<CardClick>().Initialize(spawnParent, canvas, cardFollow);
-            spawnedCards.Add(card);
+            cardNumber = Random.Range(0, cardPrefabs.Count);
+            SpawnCard(cardNumber);
             yield return new WaitForSeconds(_time);
-        }yield return new WaitForSeconds(_time);
+        }
+        yield return new WaitForSeconds(_time);
     }
+
+    private void SpawnCard(int _cardNumber)
+    {
+        GameObject randomPrefab = cardPrefabs[_cardNumber];
+        GameObject card = Instantiate(randomPrefab, Vector3.zero, Quaternion.identity, spawnParent);
+        GameObject cardFollow = Instantiate(cardFollowPrefab, Vector3.zero, Quaternion.identity, cardFollowPrefabParent);
+        RectTransform cardRect = card.GetComponent<RectTransform>();
+        RectTransform cardRectFollow = cardFollow.GetComponent<RectTransform>();
+        cardRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, cardRectFollow.rect.width);
+        cardRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, cardRectFollow.rect.height);
+        cardFollow.GetComponent<CardMoveImage>().spawnParent = cardFollowPrefabParent;
+        Vector3 targetPos = Vector3.zero;
+        card.GetComponent<CardClick>().Initialize(spawnParent, canvas, cardFollow);
+        spawnedCards.Add(card);
+    }
+
     public void ReturnAllCards()
     {
         VisualMask(false);

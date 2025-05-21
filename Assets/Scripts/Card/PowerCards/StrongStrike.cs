@@ -40,7 +40,7 @@ public class StrongStrike : CardBase
 
                 cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                mEnemylightedCells.Add(cell);
                 continue;
             }
 

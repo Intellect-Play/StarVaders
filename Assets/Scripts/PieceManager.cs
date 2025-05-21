@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
+    public static PieceManager Instance { get; private set; }
     [HideInInspector]
     public bool mIsKingAlive = true;
 
     public GameObject mPiecePrefab;
 
-    public List<BasePiece> mWhitePieces = null;
-    public List<BasePiece> mBlackPieces = null;
+    public BasePiece mWhitePiece = null;
+    public BasePiece mBlackPiece = null;
     public List<GameObject> mPiecePrefabs = null;
 
     public List<BasePiece> mAllBlackPieces = null;
@@ -30,20 +30,30 @@ public class PieceManager : MonoBehaviour
     //    {"K",  typeof(King)},
     //    {"Q",  typeof(Queen)}
     //};
-
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void Setup(Board _board)
     {
         board = _board;
-        mWhitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "_King");
+        mWhitePiece = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "_King");
 
-        PlacePiece(1, 3, mWhitePieces[0]);       
+        PlacePiece(1, 3, mWhitePiece);       
     }
     public void SetupNewEnemies(string enemyType, int posEnemy)
     {
-        mBlackPieces = CreatePieces(Color.black, Color.white, posEnemy, enemyType);
-        mAllBlackPieces.AddRange(mBlackPieces);
+        mBlackPiece = CreatePieces(Color.black, Color.white, posEnemy, enemyType);
+        mAllBlackPieces.Add(mBlackPiece);
 
-        PlacePieces(Board.cellY - 1,  mBlackPieces, posEnemy);        
+        PlacePieces(Board.cellY - 1,  mBlackPiece, posEnemy);        
     }
 
     public void EnemyMove(int moveDistance,bool down)
@@ -73,32 +83,22 @@ public class PieceManager : MonoBehaviour
             SwitchSides(Color.black);
     }
 
-    private List<BasePiece> CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,string enemyType)
+    private BasePiece CreatePieces(Color teamColor, Color32 spriteColor,int pieceCount,string enemyType)
     {
-        List<BasePiece> newPieces = new List<BasePiece>();
+        string key = enemyType;
+        // Type pieceType = mPieceLibrary[key];
 
-        for (int i = 0; i < pieceCount; i++)
-        {
-            string key = enemyType;
-           // Type pieceType = mPieceLibrary[key];
+        // Create
+        BasePiece newPiece = CreatePiece(enemyType);
 
-            // Create
-            BasePiece newPiece = CreatePiece(enemyType, i);
-            newPieces.Add(newPiece);
 
-            // Setup
-            newPiece.Setup(teamColor, spriteColor, this);
-            if (i!=2) {
-                
-            }
-            // Get the type
-            
-        }
+        // Setup
+        newPiece.Setup(teamColor, spriteColor, this);
 
-        return newPieces;
+        return newPiece;
     }
 
-    private BasePiece CreatePiece(string pieceType,int n)
+    private BasePiece CreatePiece(string pieceType)
     {
         foreach (GameObject piece in mPiecePrefabs)
         {
@@ -122,7 +122,7 @@ public class PieceManager : MonoBehaviour
         return newPiece;
     }
 
-    private void PlacePieces(int pawnRow, List<BasePiece> pieces, int countPieces)
+    private void PlacePieces(int pawnRow, BasePiece piece, int posEnemy)
     {
         // Mövcud sütunların siyahısı (0, 1, 2, ..., cellX-1)
         List<int> availableColumns = new List<int>();
@@ -134,13 +134,10 @@ public class PieceManager : MonoBehaviour
 
         // Təsadüfi qarışdır
         ShuffleList(availableColumns);
-
+        int randomX = availableColumns[0]; // təkrarsız x (sütun)
+        PlacePiece(pawnRow, posEnemy-1, piece);
         // countPieces sayda düşməni yerləşdir
-        for (int i = 0; i < countPieces; i++)
-        {
-            int randomX = availableColumns[i]; // təkrarsız x (sütun)
-            PlacePiece(pawnRow, randomX, pieces[i]);
-        }
+      
     }
 
     private void PlacePiece(int pawnRow, int x, BasePiece piece)
@@ -161,9 +158,12 @@ public class PieceManager : MonoBehaviour
         foreach (BasePiece piece in allPieces)
             piece.enabled = value;
     }
+    private void SetInteractiveWhite(BasePiece allPieces, bool value)
+    {
+        allPieces.enabled = value;
+    }
 
-    
-  
+
     public void SwitchSides(Color color)
     {
         if (!mIsKingAlive)
@@ -176,7 +176,7 @@ public class PieceManager : MonoBehaviour
 
         bool isBlackTurn = color == Color.white ? true : false;
 
-        SetInteractive(mWhitePieces, !isBlackTurn);
+        SetInteractiveWhite(mWhitePiece, !isBlackTurn);
 
         SetInteractive(mAllBlackPieces, isBlackTurn);
         foreach (BasePiece piece in mPromotedPieces)
@@ -190,6 +190,15 @@ public class PieceManager : MonoBehaviour
 
     }
 
+    public void KillEnemy(BasePiece piece)
+    {
+        mAllBlackPieces.Remove(piece);
+        Destroy(piece.gameObject);
+        if(WaveManager.Instance.levelFinished && mAllBlackPieces.Count == 0)
+        {
+            GameManager.Instance.WinGame();
+        }
+    }
     public void ResetPieces()
     {
         foreach (BasePiece piece in mPromotedPieces)
@@ -200,8 +209,7 @@ public class PieceManager : MonoBehaviour
 
         mPromotedPieces.Clear();
 
-        foreach (BasePiece piece in mWhitePieces)
-            piece.ResetKill();
+        mWhitePiece.ResetKill();
 
         foreach (BasePiece piece in mAllBlackPieces)
             piece.ResetKill();

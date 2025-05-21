@@ -25,7 +25,9 @@ public class Meteor5x : CardBase
             if (state == CellState.Enemy)
                 Enemies.Add(cell);
 
-            if (state == CellState.Free || state == CellState.Enemy)
+            if (state == CellState.Enemy)
+                EnemylightedCells.Add(cell);
+            if (state == CellState.Free)
                 HighlightedCells.Add(cell);
         }
     }
@@ -48,12 +50,18 @@ public class Meteor5x : CardBase
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = true;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = true;
     }
 
     public override void ClearCells()
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = false;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = false;
         HighlightedCells.Clear();
+        EnemylightedCells.Clear();
+
     }
 }

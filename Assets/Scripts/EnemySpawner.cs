@@ -45,14 +45,12 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SpawnEnemy(string type, int column)
     {
-        Debug.Log("SpawnEnemy");
         mPieceManager.SetupNewEnemies(type, column);
     }
     public void SpawnWave(List<EnemyData> enemies)
     {
         foreach (var enemy in enemies)
         {
-            Debug.Log($"Spawning enemy: {enemy.type} in column: {enemy.column}");
             SpawnEnemy(enemy.type, enemy.column);
         }
     }

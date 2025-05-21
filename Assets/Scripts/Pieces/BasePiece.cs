@@ -19,12 +19,15 @@ public abstract class BasePiece : MonoBehaviour
     public Cell mTargetCell = null;
     public Vector3Int mMovement = Vector3Int.one;
     public List<Cell> mHighlightedCells = new List<Cell>();
+    public List<Cell> mEnemylightedCells = new List<Cell>();
 
     public bool down=true;
 
     public bool moveCard=false;
 
     int deadCase = 0;
+
+    bool kingAttack = false;
     private void OnEnable()
     {
         //deadCase = 0;
@@ -50,6 +53,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public void ResetKill()
     {
+        Debug.Log("ResetKill: " + mCurrentCell.mBoardPosition);
         Kill();
         mIsFirstMove = true;
         Place(mOriginalCell);
@@ -59,7 +63,8 @@ public abstract class BasePiece : MonoBehaviour
     {
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
-        gameObject.SetActive(false);
+        GameManager.Instance.ChangeCoin(10);
+        PieceManager.Instance.KillEnemy(this);
     }
 
     public void HasMoveTarget(int moveDistance)
@@ -85,9 +90,9 @@ public abstract class BasePiece : MonoBehaviour
     {
         if (mColor == Color.black && mCurrentCell.mBoardPosition.y == 0)
         {
-            Debug.Log("DeadCase: " + deadCase);
             if (deadCase >= 1)
             {
+                GameManager.Instance.ChangeHealth(1);
                 Kill();
             }
             ++deadCase;          
@@ -108,7 +113,7 @@ public abstract class BasePiece : MonoBehaviour
             CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
             if (cellState == CellState.Enemy)
             {
-                mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+                mEnemylightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
                 break;
             }
            
@@ -159,15 +164,20 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void ShowCells()
     {
+        Debug.Log("ShowCells");
         foreach (Cell cell in mHighlightedCells)
             cell.mOutlineImage.enabled = true;
+        foreach (Cell cell in mEnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = true;
     }
 
     public virtual void ClearCells()
     {
         foreach (Cell cell in mHighlightedCells)
             cell.mOutlineImage.enabled = false;
-
+        foreach (Cell cellx in mEnemylightedCells)
+            cellx.mOutlineEnemyImage.enabled = false;
+        mEnemylightedCells.Clear();
         mHighlightedCells.Clear();
     }
 
@@ -180,8 +190,14 @@ public abstract class BasePiece : MonoBehaviour
         }
 
         mIsFirstMove = false;
+        if(mTargetCell.mCurrentPiece != null&& mTargetCell.mCurrentPiece.mColor==Color.white)
+        {
+            GameManager.Instance.ChangeHealth(1);
+            Kill();
+            return;
+        }
+        else mTargetCell.RemovePiece();
 
-        mTargetCell.RemovePiece();
         mCurrentCell.mCurrentPiece = null;
 
         mCurrentCell = mTargetCell;

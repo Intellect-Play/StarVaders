@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 940, y: -75}
-  m_SizeDelta: {x: 100, y: 150}
+  m_SizeDelta: {x: 150, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2424830553238701546
 CanvasRenderer:
@@ -135,15 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90869bfb168f784f846fe7a8e9fa616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveImage: {fileID: 0}
-  mCardNameText: {fileID: 1415326169605906834}
-  TriggerHeight: 150
-  ReturnDuration: 0.5
+  cardNameText: {fileID: 0}
+  triggerHeight: 150
+  returnDuration: 0.5
   spawnParent: {fileID: 0}
+  moveImage: {fileID: 0}
   cardType: {fileID: 0}
   Hovering: 0
   CanDrag: 0
-  _CardState: 0
 --- !u!114 &1621123022021935207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4deada916bb27bf46bf300a6b68ee310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySO: {fileID: 0}
   mColor: {r: 0, g: 0, b: 0, a: 0}
   mIsFirstMove: 1
   mOriginalCell: {fileID: 0}

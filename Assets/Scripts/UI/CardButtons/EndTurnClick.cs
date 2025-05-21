@@ -11,6 +11,7 @@ public class EndTurnClick : MonoBehaviour
     {
         endTurnButton = GetComponent<Button>();
         endTurnButton.onClick.AddListener(EndTurnButton);
+        EndTurnButton();
     }
     public void EndTurnButton()
     {

@@ -18,9 +18,12 @@ public class WaveManager : MonoBehaviour
         else Destroy(gameObject);
 
         allLevelsData = JsonUtility.FromJson<AllLevelsData>(levelJson.text);
-        StartLevel(1); // Start with level 1
+        //StartLevel(1); // Start with level 1
     }
-
+    private void Start()
+    {
+        StartLevel(SaveManager.Instance.saveData.playerData.currentLevel);
+    }
     public void StartLevel(int levelNumber)
     {
         currentLevel = allLevelsData.levels.FirstOrDefault(l => l.levelNumber == levelNumber);
@@ -35,12 +38,9 @@ public class WaveManager : MonoBehaviour
 
     public void SpawnNextWave()
     {
-        Debug.Log($"Spawning next wave for level {currentLevel?.levelNumber}");
         if (currentLevel == null || levelFinished) return;
-        Debug.Log($"Spawning wave {currentWaveIndex + 1} of level {currentLevel.levelNumber}");
         if (currentWaveIndex < currentLevel.waves.Count)
         {
-            Debug.Log($"Spawning wave {currentWaveIndex + 1}");
             List<EnemyData> wave = currentLevel.waves[currentWaveIndex].enemies;
             EnemySpawner.Instance.SpawnWave(wave);
             currentWaveIndex++;

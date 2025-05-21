@@ -34,7 +34,7 @@ public class DoubleFire : CardBase
             {
                 var cell = mCurrentCell.mBoard.mAllCells[x, y];
                 Enemies.Add(cell);
-                HighlightedCells.Add(cell);
+                EnemylightedCells.Add(cell);
                 continue;
             }
 
@@ -48,12 +48,18 @@ public class DoubleFire : CardBase
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = true;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = true;
     }
 
     public override void ClearCells()
     {
         foreach (var cell in HighlightedCells)
             cell.mOutlineImage.enabled = false;
+        foreach (var cell in EnemylightedCells)
+            cell.mOutlineEnemyImage.enabled = false;
         HighlightedCells.Clear();
+        EnemylightedCells.Clear();
+
     }
 }

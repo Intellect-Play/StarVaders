@@ -19,7 +19,7 @@ public class King : BasePiece
     public override void Kill()
     {
         base.Kill();
-        mPieceManager.mIsKingAlive = false;
+        //mPieceManager.mIsKingAlive = false;
     }
 
     #region Cross-Platform Input

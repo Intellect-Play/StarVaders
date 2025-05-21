@@ -47,14 +47,15 @@ public class Bomb3x3 : CardBase
 
                 cell = mCurrentCell.mBoard.mAllCells[currentX, currentY];
                 Enemies.Add(cell);
-                mHighlightedCells.Add(cell);
+                mEnemylightedCells.Add(cell);
                 continue;
             }
 
             if (cellState != CellState.Free)
                 continue;
 
-            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+            if (cellState == CellState.Free)
+                mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
         }
     }
         public override void CheckPathing()

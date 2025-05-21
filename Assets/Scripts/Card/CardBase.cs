@@ -10,6 +10,8 @@ public abstract class CardBase : BasePiece
     [NonSerialized] public CardPowerManager cardPowerManager;
     [NonSerialized] public List<Cell> Enemies = new();
     [NonSerialized] protected List<Cell> HighlightedCells = new();
+    [NonSerialized] protected List<Cell> EnemylightedCells = new();
+
     [NonSerialized] public CardMoveImage mCardMoveImage;
     public CardSO mCardSO;
 
