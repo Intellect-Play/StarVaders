@@ -21,6 +21,10 @@ public class CardMoveImage : MonoBehaviour
     public float rotationAmount;
     public Vector3 offset;
 
+    [Header("FadeInOut")]
+    private float fadeDuration = 0.3f;
+    private float fadeColor = 0.7f;
+
     //private setting changes to our cards movement
     private Vector3 rotation;
     private Vector3 movement;
@@ -28,6 +32,8 @@ public class CardMoveImage : MonoBehaviour
     private bool Hovering;
     private Vector3 originalScale;
     private bool ActiveCard;
+
+
     private void Start()
     {
         ActiveCard=true;
@@ -74,6 +80,28 @@ public class CardMoveImage : MonoBehaviour
         }
 
        // UpdateCardInfo();
+    }
+    public void FadeOutCard()
+    {
+        if (Visual == null || Shadow == null) return;
+        // Fade out visual and shadow
+        Image visualImage = Visual.GetComponent<Image>();
+        Image shadowImage = Shadow.GetComponent<Image>();
+        if (visualImage != null)
+            visualImage.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
+        if (shadowImage != null)
+            shadowImage.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
+    }
+    public void FadeInCard()
+    {
+        if (Visual == null || Shadow == null) return;
+        // Fade in visual and shadow
+        Image visualImage = Visual.GetComponent<Image>();
+        Image shadowImage = Shadow.GetComponent<Image>();
+        if (visualImage != null)
+            visualImage.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+        if (shadowImage != null)
+            shadowImage.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
     }
     public void PlayPopFadeAnimation()
     {

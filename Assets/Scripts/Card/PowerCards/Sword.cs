@@ -20,6 +20,9 @@ public class Sword : CardBase
         CheckPaths(x, y, movement, curX, curY);
         CheckPaths(x, y, 1, curX + 1, curY + 1);
         CheckPaths(x, y, 1, curX - 1, curY + 1);
+        CheckPaths(x, -y, movement, curX, curY);
+        CheckPaths(x, y, 1, curX + 1, curY - 3);
+        CheckPaths(x, y, 1, curX - 1, curY - 3);
     }
 
     private void CheckPaths(int xDir, int yDir, int move, int x, int y)

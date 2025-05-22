@@ -23,7 +23,7 @@ public class Move : CardBase
         CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
 
         mCardMoveImage.PlayPopFadeAnimation();
-
+        gameObject.SetActive(false);
     }
     public override void ExitCard()
     {

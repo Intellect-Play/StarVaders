@@ -28,7 +28,9 @@ public class Pyramide : CardBase
         CheckPaths(xDirection, yDirection, movement,  currentX,  currentY+1);
         CheckPaths(xDirection, yDirection, movement-2, currentX+1, currentY + 2);
         CheckPaths(xDirection, yDirection, movement-4, currentX+2, currentY + 3);
-
+        CheckPaths(xDirection, yDirection, movement, currentX, currentY - 1);
+        CheckPaths(xDirection, yDirection, movement - 2, currentX + 1, currentY - 2);
+        CheckPaths(xDirection, yDirection, movement - 4, currentX + 2, currentY - 3);
         //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 

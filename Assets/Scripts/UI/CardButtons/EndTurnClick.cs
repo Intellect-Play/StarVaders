@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class EndTurnClick : MonoBehaviour
 {
 
-    Button endTurnButton;
+   // Button endTurnButton;
     private void Start()
     {
-        endTurnButton = GetComponent<Button>();
-        endTurnButton.onClick.AddListener(EndTurnButton);
+       // endTurnButton = GetComponent<Button>();
+       // endTurnButton.onClick.AddListener(EndTurnButton);
         EndTurnButton();
     }
     public void EndTurnButton()
@@ -20,7 +20,7 @@ public class EndTurnClick : MonoBehaviour
 
     IEnumerator WaitForEndTurn()
     {
-        endTurnButton.interactable = false;
+      //  endTurnButton.interactable = false;
         //CardManager.Instance.ExitTurnButton();
         GameManager.Instance.EndTurn();
         //CardManager.Instance.cardManagerMove.ReturnAllCards();
@@ -28,7 +28,7 @@ public class EndTurnClick : MonoBehaviour
         CardManager.Instance.cardManagerMove.SpawnCards();
         yield return new WaitForSeconds(1);
 
-        endTurnButton.interactable = true;
+       // endTurnButton.interactable = true;
 
     }
 }

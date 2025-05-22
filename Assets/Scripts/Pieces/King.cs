@@ -120,12 +120,11 @@ public class King : BasePiece
             {
                 ClearCells();
                 Move();
-                moveCard = false;
+                GameManager.Instance.EndTurnButton();
 
-                if (mColor == Color.white)
-                {
-                    // Optionally switch sides or perform other logic
-                }
+                CardManagerMove.MoveCard = false;
+                moveCard = false;
+               
             }
             else
             {

@@ -25,6 +25,9 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     [HideInInspector] public bool Hovering;
     [HideInInspector] public bool CanDrag;
 
+    Vector3 GetPos;
+    private int originalSiblingIndex;
+
     public CardState _CardState { get; private set; }
 
     public enum CardState { Idle, IsDragging, Played }
@@ -36,6 +39,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         moveImage = moveImageObj.GetComponent<CardMoveImage>();
         moveImage.SetTarget(gameObject, card.mCardSO._CardImage);
         card.mCardMoveImage = moveImage;
+        originalSiblingIndex = transform.GetSiblingIndex();
+
     }
 
     private void OnEnable()
@@ -48,10 +53,13 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (CardManagerMove.MoveCard) return;
+        GetPos = transform.position;
         CanDrag = true;
         startPosY = transform.position.y;
-        transform.parent = canvas.transform;
-        moveImage.transform.parent = canvas.transform;
+        //originalSiblingIndex = transform.GetSiblingIndex();
+
+        //transform.parent = canvas.transform;
+        //moveImage.transform.parent = canvas.transform;
         card.ClickGiveManagerSelectedCard();
     }
 
@@ -102,8 +110,11 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     private void ResetCardPosition()
     {
-        transform.parent = spawnParent;
-        moveImage.ReturnParent();
-        transform.localPosition = Vector3.zero;
+        Debug.Log("Resetting card position");
+        //transform.parent = spawnParent;
+        //transform.SetSiblingIndex(originalSiblingIndex);
+        //moveImage.ReturnParent();
+        //transform.localPosition = Vector3.zero;
+        transform.position = GetPos;
     }
 }

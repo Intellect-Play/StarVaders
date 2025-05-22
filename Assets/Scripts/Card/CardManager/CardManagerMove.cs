@@ -67,7 +67,7 @@ public class CardManagerMove : MonoBehaviour
         cardCount = CardLimit - spawnedCards.Count + 1;
         for (i = 1; i < cardCount; i++)
         {
-            cardNumber = Random.Range(0, cardPrefabs.Count);
+            cardNumber = Random.Range(1, cardPrefabs.Count);
             SpawnCard(cardNumber);
             yield return new WaitForSeconds(_time);
         }
@@ -102,9 +102,32 @@ public class CardManagerMove : MonoBehaviour
                 
         }
     }
+
+    public void FadeOutCards()
+    {
+        foreach (var card in spawnedCards)
+        {
+            if (card != null)
+            {
+                card.GetComponent<CardClick>().moveImage.FadeOutCard();
+                card.GetComponent<CardClick>().enabled = false;
+            }
+        }
+    }
+    public void FadeInCards()
+    {
+        foreach (var card in spawnedCards)
+        {
+            if (card != null)
+            {
+                card.GetComponent<CardClick>().moveImage.FadeInCard();
+                card.GetComponent<CardClick>().enabled = true;
+            }
+        }
+    }
     void VisualMask(bool active)
     {
-        maskCards.enabled = active;
+       // maskCards.enabled = active;
         imageCards.enabled = active;
     }
     private void ClearCards()

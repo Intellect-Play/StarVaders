@@ -26,6 +26,8 @@ public class LinearFire : CardBase
         int currentY = mCurrentCell.mBoardPosition.y;
         if (xDirection == -1) { currentX += 1; }
         CheckPaths(xDirection, yDirection, movement,  currentX,  currentY+1);
+        CheckPaths(xDirection, yDirection, movement, currentX, currentY - 1);
+
         //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 

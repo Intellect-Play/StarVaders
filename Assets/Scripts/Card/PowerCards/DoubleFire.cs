@@ -19,6 +19,8 @@ public class DoubleFire : CardBase
 
         CheckPaths(xDir, yDir, movement, curX + 1, curY);
         CheckPaths(xDir, yDir, movement, curX - 1, curY);
+        CheckPaths(xDir, -yDir, movement, curX + 1, curY+1);
+        CheckPaths(xDir, -yDir, movement, curX - 1, curY+1);
     }
 
     private void CheckPaths(int xDir, int yDir, int movement, int x, int y)

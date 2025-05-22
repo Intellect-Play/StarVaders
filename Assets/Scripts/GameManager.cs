@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Health mHealth;
     public Coin mCoin;
     bool cardMove;
+    bool isGameOver = false;
     private void Awake()
     {
         if (Instance == null)
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        isGameOver = false;
         cardMove = true;
         mEnemySpawner = GetComponent<EnemySpawner>();
         mHealth = GetComponent<Health>();
@@ -54,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
+        if(isGameOver) return;
+        isGameOver = true;
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
         SaveManager.Instance.saveData.playerData.currentLevel += 1;
         SaveManager.Instance.Save();
@@ -62,6 +66,8 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
+        if (isGameOver) return;
+        isGameOver = true;
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
         SaveManager.Instance.Save();
         GameUI.Instance.LoseGame();
@@ -75,14 +81,16 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitForEndTurn()
     {
         cardMove = false;
+        CardManagerMove.Instance.FadeOutCards();
         yield return new WaitForSeconds(1);
         //CardManager.Instance.ExitTurnButton();
-        GameManager.Instance.EndTurn();
+        EndTurn();
         //CardManager.Instance.cardManagerMove.ReturnAllCards();
         yield return new WaitForSeconds(1);
         CardManager.Instance.cardManagerMove.SpawnCards();
         //yield return new WaitForSeconds(1);
         cardMove = true;
+        CardManagerMove.Instance.FadeInCards();
 
 
     }

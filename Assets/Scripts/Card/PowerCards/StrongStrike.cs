@@ -21,6 +21,8 @@ public class StrongStrike : CardBase
 
         //CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
         CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
+        CheckPaths(xDirection, yDirection, movement, currentX, -currentY);
+
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 
     }

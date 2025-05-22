@@ -19,6 +19,8 @@ public class Bat : CardBase
         currentY = mCurrentCell.mBoardPosition.y;
         CreateCellPath(1, 1, mMovement.z,true,currentX,currentY,true);   // Diagonal right
         CreateCellPath(-1, 1, mMovement.z,false, currentX, currentY,true);  // Diagonal left
+        CreateCellPath(1, -1, mMovement.z, true, currentX, currentY, true);   // Diagonal right
+        CreateCellPath(-1, -1, mMovement.z, false, currentX, currentY, true);  // Diagonal left
     }
 
     public override void ShowCells()

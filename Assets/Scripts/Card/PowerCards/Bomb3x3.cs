@@ -29,7 +29,9 @@ public class Bomb3x3 : CardBase
         CheckPaths(xDirection, yDirection, movement,  currentX,  currentY);
         CheckPaths(xDirection, yDirection, movement,  currentX+1,  currentY);
         CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
-
+        //CheckPaths(xDirection, yDirection, movement, currentX, -currentY);
+        //CheckPaths(xDirection, yDirection, movement, currentX + 1, -currentY);
+        //CheckPaths(xDirection, yDirection, movement, currentX - 1, -currentY);
     }
 
     private void CheckPaths(int xDirection, int yDirection, int movement,  int currentX,  int currentY)
@@ -61,9 +63,11 @@ public class Bomb3x3 : CardBase
         public override void CheckPathing()
     {
         CreateCellPath(0, 1, mMovement.y);
+        CreateCellPath(0, -1, mMovement.y);
+
     }
 
 
-   
+
 
 }

@@ -2,9 +2,6 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
-using System;
-using UnityEditor.Animations;
-using UnityEditorInternal;
 using System.Collections;
 
 public abstract class BasePiece : MonoBehaviour
@@ -212,12 +209,7 @@ public abstract class BasePiece : MonoBehaviour
     public virtual void Move()
     {
         if (mTargetCell == null) return;
-        if (mColor == Color.white)
-        {
-            GameManager.Instance.EndTurnButton();
-
-            CardManagerMove.MoveCard = false;
-        }
+     
 
         mIsFirstMove = false;
         if(mTargetCell.mCurrentPiece != null&& mTargetCell.mCurrentPiece.mColor==Color.white)
@@ -230,12 +222,16 @@ public abstract class BasePiece : MonoBehaviour
             else { Kill(); return; }
             
         }
-        else mTargetCell.RemovePiece();
+        else
+        {
+            mTargetCell.RemovePiece();
+            mCurrentCell.mCurrentPiece = null;
 
-        mCurrentCell.mCurrentPiece = null;
+            mCurrentCell = mTargetCell;
+            mCurrentCell.mCurrentPiece = this;
+        }
 
-        mCurrentCell = mTargetCell;
-        mCurrentCell.mCurrentPiece = this;
+       
         if (mAnimatorController != null&&!AttackPiece) mAnimatorController.SetTrigger("Jump");
         // DOTween ile pozisyonu yumuşakça taşı
         transform.DOMove(mCurrentCell.transform.position, 0.7f)

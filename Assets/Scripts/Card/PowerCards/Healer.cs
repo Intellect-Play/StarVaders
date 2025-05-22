@@ -23,6 +23,7 @@ public class Healer : CardBase
     }
     public override void UseCard()
     {
+        GameManager.Instance.ChangeHealth(-1); // Example healing amount
         // Heal the player
         //Health.HealthPlayer += 10; // Example healing amount
     }
