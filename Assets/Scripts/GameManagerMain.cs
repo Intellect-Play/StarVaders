@@ -17,7 +17,7 @@ public class GameManagerMain : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //BattleStartInMainMenu(false);
+        BattleStartInMainMenu(false);
     }
 
     public void BattleStartInMainMenu(bool start)
