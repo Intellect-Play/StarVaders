@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         if(isGameOver) return;
         isGameOver = true;
-        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
+        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayerInPlay;
         SaveManager.Instance.saveData.playerData.currentLevel += 1;
         SaveManager.Instance.Save();
         GameUI.Instance.WinGame();
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
         isGameOver = true;
-        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayer;
+        SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayerInPlay;
         SaveManager.Instance.Save();
         GameUI.Instance.LoseGame();
     }

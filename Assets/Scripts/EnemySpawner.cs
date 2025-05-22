@@ -63,8 +63,9 @@ public class EnemySpawner : MonoBehaviour
 }
 enum Enemies
 {
-    Queen,
-    Bishop,
-    Pawn,
-    Rock
+    Sceleton,
+    Goblin,
+    Green_boss,
+    Rock,
+    Knight
 }

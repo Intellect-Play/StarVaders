@@ -14,8 +14,8 @@ public class SaveManager : MonoBehaviour
             Instance = this;
             savePath = Application.persistentDataPath + "/saveData.json";
             Load();
-            ResetData();
-            if (saveData.playerData.currentLevel>5) saveData.playerData.currentLevel = 1;
+            //ResetData();
+            if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
         }
         else
         {

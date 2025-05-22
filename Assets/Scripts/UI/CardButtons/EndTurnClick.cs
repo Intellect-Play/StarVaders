@@ -7,7 +7,7 @@ public class EndTurnClick : MonoBehaviour
 {
 
    // Button endTurnButton;
-    private void Start()
+    private void OnEnable()
     {
        // endTurnButton = GetComponent<Button>();
        // endTurnButton.onClick.AddListener(EndTurnButton);
@@ -20,7 +20,9 @@ public class EndTurnClick : MonoBehaviour
 
     IEnumerator WaitForEndTurn()
     {
-      //  endTurnButton.interactable = false;
+        yield return new WaitForSeconds(1);
+
+        //  endTurnButton.interactable = false;
         //CardManager.Instance.ExitTurnButton();
         GameManager.Instance.EndTurn();
         //CardManager.Instance.cardManagerMove.ReturnAllCards();
