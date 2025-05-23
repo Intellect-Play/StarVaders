@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,14 @@ public class PushBack : CardBase
 
     public override void UseCard()
     {
-        EnemySpawner.Instance.EnemyBackMoveF();
+
+        //StartCoroutine(PushBackTime());
+        CardEffects.Instance.TornadoEffect();
+
+    }
+    IEnumerator PushBackTime()
+    {
+        yield return new WaitForSeconds(0.2f);
     }
 
     public override void ExitCard()

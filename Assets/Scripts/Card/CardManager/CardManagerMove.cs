@@ -62,6 +62,8 @@ public class CardManagerMove : MonoBehaviour
         {
             i = 1;
             SpawnCard(0);
+            SpawnCard(4);
+
         }
         else i = 0;
         cardCount = CardLimit - spawnedCards.Count + 1;
@@ -77,8 +79,8 @@ public class CardManagerMove : MonoBehaviour
     private void SpawnCard(int _cardNumber)
     {
         GameObject randomPrefab = cardPrefabs[_cardNumber];
-        GameObject card = Instantiate(randomPrefab, Vector3.zero, Quaternion.identity, spawnParent);
-        GameObject cardFollow = Instantiate(cardFollowPrefab, Vector3.zero, Quaternion.identity, cardFollowPrefabParent);
+        GameObject card = Instantiate(randomPrefab, cardExit.localPosition, Quaternion.identity, spawnParent);
+        GameObject cardFollow = Instantiate(cardFollowPrefab, cardExit.localPosition, Quaternion.identity, cardFollowPrefabParent);
         RectTransform cardRect = card.GetComponent<RectTransform>();
         RectTransform cardRectFollow = cardFollow.GetComponent<RectTransform>();
         cardRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, cardRectFollow.rect.width);

@@ -22,7 +22,14 @@ public class DoubleFire : CardBase
         CheckPaths(xDir, -yDir, movement, curX + 1, curY+1);
         CheckPaths(xDir, -yDir, movement, curX - 1, curY+1);
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(EnemylightedCells);
+        CardEffects.Instance.BombEffect(HighlightedCells);
 
+        base.UseCard();
+
+    }
     private void CheckPaths(int xDir, int yDir, int movement, int x, int y)
     {
         for (int i = 1; i <= movement; i++)

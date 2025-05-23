@@ -56,10 +56,7 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         GetPos = transform.position;
         CanDrag = true;
         startPosY = transform.position.y;
-        //originalSiblingIndex = transform.GetSiblingIndex();
 
-        //transform.parent = canvas.transform;
-        //moveImage.transform.parent = canvas.transform;
         card.ClickGiveManagerSelectedCard();
     }
 
@@ -110,7 +107,6 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     private void ResetCardPosition()
     {
-        Debug.Log("Resetting card position");
         //transform.parent = spawnParent;
         //transform.SetSiblingIndex(originalSiblingIndex);
         //moveImage.ReturnParent();
