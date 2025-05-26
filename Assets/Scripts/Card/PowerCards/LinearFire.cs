@@ -32,7 +32,14 @@ public class LinearFire : CardBase
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(mEnemylightedCells);
+        CardEffects.Instance.BombEffect(mHighlightedCells);
 
+        base.UseCard();
+
+    }
     private void CheckPaths(int xDirection, int yDirection, int movement,  int currentX,  int currentY)
     {
         for (int i = 1; i <= movement; i++)

@@ -13,7 +13,14 @@ public class Meteor5x : CardBase
         randomCells = GetRandomCells(GameManager.Instance.mBoard.mAllCells, 5);
 
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(EnemylightedCells);
+        CardEffects.Instance.BombEffect(HighlightedCells);
 
+        base.UseCard();
+
+    }
 
     public override void CheckPathing()
     {

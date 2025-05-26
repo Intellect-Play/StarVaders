@@ -20,7 +20,14 @@ public class Bomb3x3 : CardBase
         mMovement = mCardSO._CardPoweraArea;  // 0.3.0
         mColor = Color.white;
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(mEnemylightedCells);
+        CardEffects.Instance.BombEffect(mHighlightedCells);
 
+        base.UseCard();
+
+    }
     public override void CreateCellPath(int xDirection, int yDirection, int movement)
     {
         int currentX = mCurrentCell.mBoardPosition.x;

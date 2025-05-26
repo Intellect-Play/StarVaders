@@ -14,7 +14,14 @@ public class Bomb_Double : CardBase
         base.CardSetup(basePiece, _cardPowerManager);
         BombAreas = GetRandom2x2Cells(GameManager.Instance.mBoard.mAllCells);
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(EnemylightedCells);
+        CardEffects.Instance.BombEffect(HighlightedCells);
 
+        base.UseCard();
+
+    }
     public override void CheckPathing()
     {
         foreach (var cell in BombAreas)

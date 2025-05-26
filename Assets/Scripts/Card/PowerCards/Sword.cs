@@ -24,7 +24,14 @@ public class Sword : CardBase
         CheckPaths(x, y, 1, curX + 1, curY - 3);
         CheckPaths(x, y, 1, curX - 1, curY - 3);
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(EnemylightedCells);
+        CardEffects.Instance.BombEffect(HighlightedCells);
 
+        base.UseCard();
+
+    }
     private void CheckPaths(int xDir, int yDir, int move, int x, int y)
     {
         for (int i = 1; i <= move; i++)

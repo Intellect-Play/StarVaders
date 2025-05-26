@@ -41,7 +41,14 @@ public class Bat : CardBase
         EnemylightedCells.Clear();
 
     }
+    public override void UseCard()
+    {
+        CardEffects.Instance.BombEffect(EnemylightedCells);
+        CardEffects.Instance.BombEffect(HighlightedCells);
 
+        base.UseCard();
+
+    }
     private void CreateCellPath(int xDirection, int yDirection, int movement,bool right, int _currentX,int _currentY,bool turn)
     {
         
