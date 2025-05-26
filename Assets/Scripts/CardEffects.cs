@@ -33,11 +33,28 @@ public class CardEffects : MonoBehaviour
         }
     }
 
+    public void BombEffect(List<Cell> bombPositions)
+    {
+        List<Cell> clonedList = new List<Cell>(bombPositions);
+        StartCoroutine(BombTime(clonedList));
+    }
+    IEnumerator BombTime(List<Cell> bombPositions)
+    {
+        foreach (var cell in bombPositions)
+        {
+            GameObject bombEffect = Instantiate(BombEffectParticle, Vector3.zero, Quaternion.identity, cell.transform);
+            bombEffect.transform.localPosition = Vector3.zero;
+            Destroy(bombEffect, .4f); yield return new WaitForSeconds(0.1f);
+
+        }
+    }
+
     #region MeteorEffect
     public void MeteorEffect(List<Cell> bombPositions)
     {
         List<Cell> clonedList = new List<Cell>(bombPositions);
         StartCoroutine(SpawnMeteorEffects(clonedList));
+        StartCoroutine(FadeShakeImage());
     }
  
     private IEnumerator SpawnMeteorEffects(List<Cell> bombPositions)
@@ -96,15 +113,7 @@ public class CardEffects : MonoBehaviour
             tornado.SetActive(false);
         }
     }
-    public void BombEffect(List<Cell> bombPositions)
-    {
-        foreach (var cell in bombPositions)
-        {
-            GameObject bombEffect = Instantiate(BombEffectParticle, Vector3.zero, Quaternion.identity, cell.transform);
-            bombEffect.transform.localPosition = Vector3.zero;
-            Destroy(bombEffect, .4f);
-        }
-    }
+   
     #endregion
 
     #region Pyramide
@@ -127,11 +136,9 @@ public class CardEffects : MonoBehaviour
             bombEffect.transform.localPosition = new Vector3(0, 300f, 0);
             bombEffect.transform.parent = canvasParent; // CanvasParent-ə əlavə et
             bombEffect.transform.SetAsLastSibling();
-            Debug.Log("Starting FadeShakeImage coroutine for: " + img.transform.localPosition);
-            Debug.Log("Pyramide effect created at position: " + cell.transform.localPosition);
+
 
            // bombEffect.transform.SetAsLastSibling(); // UI-də ən üstdə göstər
-            Debug.Log("Pyramide effect created at position: " + cell.transform.localPosition);
             Vector3 targetPos = bombEffect.transform.localPosition - new Vector3(0, 300f, 0);
 
             RectTransform rect = bombEffect.GetComponent<RectTransform>();
@@ -144,8 +151,15 @@ public class CardEffects : MonoBehaviour
                .AppendCallback(() => img.color = new Color(img.color.r, img.color.g, img.color.b, 1f)) // görünən et
                .Append(rect.DOShakePosition(shakeDuration, shakeStrength))
                .Append(img.DOFade(0f, fadeOutDuration))
-               .OnComplete(() => Destroy(bombEffect));
+               .OnComplete(() => {  Destroy(bombEffect); });
         }
+        StartCoroutine(FadeShakeImage());
+    }
+
+    IEnumerator FadeShakeImage()
+    {
+        yield return new WaitForSeconds(0.2f); // Gözləmə müddəti, lazım gələrsə dəyişdirin
+        CameraShake.Instance.ShakeCardAttack();
     }
     IEnumerator FadeShakeImage(Image img)
     {

@@ -24,6 +24,7 @@ public abstract class BasePiece : MonoBehaviour
     public bool down=true;
 
     public bool moveCard=false;
+    public GameObject Heal;
 
     int deadCase = 0;
 

@@ -35,6 +35,17 @@ public class Pyramide : CardBase
         //CheckPaths(xDirection, yDirection, movement,  currentX-1,  currentY);
 
     }
+    public override void UseForAllCards()
+    {
+        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+
+       
+        UseCard();
+        mCardMoveImage.PlayPopFadeAnimation();
+        GameManager.Instance.EndTurnButton();
+
+        gameObject.SetActive(false);
+    }
     public override void UseCard()
     {
         CardEffects.Instance.PyramideEffect(mEnemylightedCells);

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class King : BasePiece
 {
     public bool isDragging = false;
-
     public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         // Base setup

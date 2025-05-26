@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public abstract class CardBase : BasePiece
 {
-    [NonSerialized] public BasePiece mKing;
+    public BasePiece mKing;
     [NonSerialized] public CardPowerManager cardPowerManager;
     [NonSerialized] public List<Cell> Enemies = new();
     protected List<Cell> HighlightedCells = new();
@@ -44,8 +44,8 @@ public abstract class CardBase : BasePiece
     public virtual void UseForAllCards()
     {
         CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
-        CameraShake.Instance.ShakeCardAttack();
 
+        CameraShake.Instance.ShakeCardAttack();
         UseCard();
         mCardMoveImage.PlayPopFadeAnimation();
         GameManager.Instance.EndTurnButton();
