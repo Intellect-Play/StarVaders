@@ -8,10 +8,6 @@
           "enemies": [
             {
               "type": "Sceleton",
-              "column": 5
-            },
-            {
-              "type": "Sceleton",
               "column": 4
             },
             {
@@ -32,10 +28,6 @@
           "delay": 0.0,
           "enemies": [
             {
-              "type": "Green_boss",
-              "column": 5
-            },
-            {
               "type": "Sceleton",
               "column": 4
             },
@@ -71,10 +63,6 @@
             },
             {
               "type": "Sceleton",
-              "column": 5
-            },
-            {
-              "type": "Sceleton",
               "column": 1
             }
           ]
@@ -82,10 +70,6 @@
         {
           "delay": 0.0,
           "enemies": [
-            {
-              "type": "Knight",
-              "column": 5
-            },
             {
               "type": "Goblin",
               "column": 3
@@ -119,20 +103,12 @@
             {
               "type": "Sceleton",
               "column": 4
-            },
-            {
-              "type": "Green_boss",
-              "column": 5
             }
           ]
         },
         {
           "delay": 0.0,
           "enemies": [
-            {
-              "type": "Goblin",
-              "column": 5
-            },
             {
               "type": "Green_boss",
               "column": 3
@@ -152,10 +128,6 @@
             },
             {
               "type": "Knight",
-              "column": 5
-            },
-            {
-              "type": "Knight",
               "column": 2
             },
             {
@@ -178,10 +150,6 @@
             {
               "type": "Green_boss",
               "column": 4
-            },
-            {
-              "type": "Knight",
-              "column": 5
             }
           ]
         },
@@ -252,10 +220,6 @@
             {
               "type": "Goblin",
               "column": 2
-            },
-            {
-              "type": "Sceleton",
-              "column": 5
             }
           ]
         },
@@ -265,10 +229,6 @@
             {
               "type": "Sceleton",
               "column": 3
-            },
-            {
-              "type": "Green_boss",
-              "column": 5
             },
             {
               "type": "Sceleton",
@@ -297,10 +257,6 @@
               "column": 1
             },
             {
-              "type": "Green_boss",
-              "column": 5
-            },
-            {
               "type": "Knight",
               "column": 2
             },
@@ -320,10 +276,6 @@
             {
               "type": "Green_boss",
               "column": 3
-            },
-            {
-              "type": "Green_boss",
-              "column": 5
             }
           ]
         },
@@ -358,10 +310,6 @@
             {
               "type": "Knight",
               "column": 3
-            },
-            {
-              "type": "Knight",
-              "column": 5
             }
           ]
         },
@@ -386,10 +334,6 @@
         {
           "delay": 0.0,
           "enemies": [
-            {
-              "type": "Goblin",
-              "column": 5
-            },
             {
               "type": "Goblin",
               "column": 4

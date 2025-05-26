@@ -31,12 +31,17 @@ public class GameManager : MonoBehaviour
         mBoard.Create();
         mEnemySpawner.GetBP(mPieceManager, mBoard);
         mPieceManager.board = mBoard;
+        
+    }
+    private void Start()
+    {
         mPieceManager.Setup(mBoard);
         mCardPowerManager.mKing = mPieceManager.mWhitePiece;
     }
-    public void EndTurn()
+    public void EndTurn(bool move = true)
     {
         mPieceManager.SwitchSides(Color.white);
+        if(!move) return;
         WaveManager.Instance.SpawnNextWave();
         //mEnemySpawner.EnemySpawnF();
         mEnemySpawner.EnemyMoveF();
@@ -73,18 +78,18 @@ public class GameManager : MonoBehaviour
         GameUI.Instance.LoseGame();
     }
 
-    public void EndTurnButton()
+    public void EndTurnButton(bool move = true)
     {
         if (!cardMove) return;
-        StartCoroutine(WaitForEndTurn());
+        StartCoroutine(WaitForEndTurn( move ));
     }
-    IEnumerator WaitForEndTurn()
+    IEnumerator WaitForEndTurn(bool move = true)
     {
         cardMove = false;
         CardManagerMove.Instance.FadeOutCards();
         yield return new WaitForSeconds(1);
         //CardManager.Instance.ExitTurnButton();
-        EndTurn();
+        EndTurn(move);
         //CardManager.Instance.cardManagerMove.ReturnAllCards();
         yield return new WaitForSeconds(1);
         CardManager.Instance.cardManagerMove.SpawnCards();

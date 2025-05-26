@@ -21,7 +21,17 @@ public class PushBack : CardBase
         mCurrentCell = mKing.mCurrentCell;
         ShowCells(); // optional, depending on visual feedback
     }
+    public override void UseForAllCards()
+    {
+        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CameraShake.Instance.ShakeCardAttack();
 
+        UseCard();
+        mCardMoveImage.PlayPopFadeAnimation();
+        GameManager.Instance.EndTurnButton(false);
+
+        gameObject.SetActive(false);
+    }
     public override void UseCard()
     {
 
@@ -29,11 +39,7 @@ public class PushBack : CardBase
         CardEffects.Instance.TornadoEffect();
 
     }
-    IEnumerator PushBackTime()
-    {
-        yield return new WaitForSeconds(0.2f);
-    }
-
+ 
     public override void ExitCard()
     {
         ClearCells();

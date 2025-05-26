@@ -1,15 +1,26 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardEffects : MonoBehaviour
 {
     public static CardEffects Instance { get; private set; }
+    [Header("CanvasParent")]
+    [SerializeField] private Transform canvasParent;
     [Header("Tornado")]
     [SerializeField] private List<GameObject> TornadoEffects;
 
     [Header("BombEffect")]
     [SerializeField] private GameObject BombEffectParticle;
+    [SerializeField] private GameObject MeteorEffectParticle;
+    [SerializeField] private GameObject PyramideEffectParticle;
+    [SerializeField] private List<Sprite> PyramideSprites;
+
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -22,7 +33,49 @@ public class CardEffects : MonoBehaviour
         }
     }
 
+    #region MeteorEffect
+    public void MeteorEffect(List<Cell> bombPositions)
+    {
+        List<Cell> clonedList = new List<Cell>(bombPositions);
+        StartCoroutine(SpawnMeteorEffects(clonedList));
+    }
+ 
+    private IEnumerator SpawnMeteorEffects(List<Cell> bombPositions)
+    {
+        foreach (Cell cell in bombPositions)
+        {
+            GameObject bombEffect = Instantiate(MeteorEffectParticle, Vector3.zero, Quaternion.identity, cell.transform);
+            bombEffect.transform.localPosition = new Vector3(500, 500, 0);
 
+            bombEffect.transform.DOLocalMove(Vector3.zero, 0.4f)
+                .SetEase(Ease.OutCubic).OnComplete(() =>
+                {
+                    Destroy(bombEffect); // 1 saniyə sonra silinir
+                });
+
+            // 0.2 saniyə sonra bombanı yarat
+            StartCoroutine(TriggerBombAfterDelay(cell.transform, 0.2f, bombEffect));
+
+            yield return new WaitForSeconds(0.1f); // Növbəti cell üçün 0.5s gözlə
+        }
+    }
+
+    private IEnumerator TriggerBombAfterDelay(Transform cell, float delay, GameObject meteor)
+    {
+        yield return new WaitForSeconds(delay);
+        BombMeteroid(cell);
+        //Destroy(meteor);
+    }
+
+    void BombMeteroid(Transform cell)
+    {
+        GameObject bombEffect = Instantiate(BombEffectParticle, Vector3.zero, Quaternion.identity, cell);
+        bombEffect.transform.localPosition = Vector3.zero;
+        Destroy(bombEffect, 0.4f);
+    }
+    #endregion
+
+    #region Tornado
     public void TornadoEffect()
     {
         StartCoroutine(TornadoEffectTime());
@@ -52,4 +105,75 @@ public class CardEffects : MonoBehaviour
             Destroy(bombEffect, .4f);
         }
     }
+    #endregion
+
+    #region Pyramide
+
+
+    public float fadeInDuration = 1f;
+    public float fadeOutDuration = 1f;
+    public float shakeDuration = 1f;
+    public float shakeStrength = 10f;
+
+    public void PyramideEffect(List<Cell> transforms)
+    {
+        //int count = Mathf.Min(prefabs.Count, transforms.Count);
+
+        foreach (var cell in transforms)
+        {
+            GameObject bombEffect = Instantiate(PyramideEffectParticle, cell.transform);
+            Image img = bombEffect.GetComponent<Image>();
+            img.sprite = PyramideSprites[Random.Range(0, PyramideSprites.Count)];
+            bombEffect.transform.localPosition = new Vector3(0, 300f, 0);
+            bombEffect.transform.parent = canvasParent; // CanvasParent-ə əlavə et
+            bombEffect.transform.SetAsLastSibling();
+            Debug.Log("Starting FadeShakeImage coroutine for: " + img.transform.localPosition);
+            Debug.Log("Pyramide effect created at position: " + cell.transform.localPosition);
+
+           // bombEffect.transform.SetAsLastSibling(); // UI-də ən üstdə göstər
+            Debug.Log("Pyramide effect created at position: " + cell.transform.localPosition);
+            Vector3 targetPos = bombEffect.transform.localPosition - new Vector3(0, 300f, 0);
+
+            RectTransform rect = bombEffect.GetComponent<RectTransform>();
+           // rect.localPosition = startPos;
+            // Shake + fade zənciri
+            Sequence seq = DOTween.Sequence();
+            rect.localScale = Vector3.one;
+
+            seq.Append(rect.DOLocalMove(targetPos, 0.4f).SetEase(Ease.InFlash))
+               .AppendCallback(() => img.color = new Color(img.color.r, img.color.g, img.color.b, 1f)) // görünən et
+               .Append(rect.DOShakePosition(shakeDuration, shakeStrength))
+               .Append(img.DOFade(0f, fadeOutDuration))
+               .OnComplete(() => Destroy(bombEffect));
+        }
+    }
+    IEnumerator FadeShakeImage(Image img)
+    {
+
+        if (img == null)
+        {
+            Debug.LogWarning("Prefab-da Image komponenti yoxdur: " + img.name);
+            yield break;
+        }
+
+        Color c = img.color;
+        c.a = 0;
+        img.color = c;
+
+        //Tween fadeInTween = img.DOFade(1f, fadeInDuration);
+        Tween shakeTween = img.rectTransform.DOShakePosition(shakeDuration, shakeStrength);
+
+        //fadeInTween.Play();
+        shakeTween.Play();
+
+        //yield return fadeInTween.WaitForCompletion();
+        yield return shakeTween.WaitForCompletion();
+
+        Tween fadeOutTween = img.DOFade(0f, fadeOutDuration);
+        fadeOutTween.Play();
+        yield return fadeOutTween.WaitForCompletion();
+
+       // Destroy(img.gameObject);
+    }
+    #endregion
 }

@@ -15,8 +15,8 @@ public class Meteor5x : CardBase
     }
     public override void UseCard()
     {
-        CardEffects.Instance.BombEffect(EnemylightedCells);
-        CardEffects.Instance.BombEffect(HighlightedCells);
+        CardEffects.Instance.MeteorEffect(EnemylightedCells);
+        CardEffects.Instance.MeteorEffect(HighlightedCells);
 
         base.UseCard();
 

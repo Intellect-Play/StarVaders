@@ -21,8 +21,10 @@ public class Board : MonoBehaviour
     public List<Cell> allCellsInHierarchy;
     [HideInInspector]
     public Cell[,] mAllCells;
-    public static int cellX = 5;
-    public static int cellY = 9;
+    public static int cellX = 4;
+    public static int cellY = 8;
+
+    int rectWidth = 160;
     // We create the board here, no surprise
     private void Awake()
     {
@@ -38,24 +40,24 @@ public class Board : MonoBehaviour
     {
         #region Create
         //SyncFromEditorCells();
-        CreateFromChildren();
-        //mAllCells = new Cell[cellX, cellY];
-        //for (int y = 0; y < cellY; y++)
-        //{
-        //    for (int x = 0; x < cellX; x++)
-        //    {
-        //        // Create the cell
-        //        GameObject newCell = Instantiate(mCellPrefab, transform);
+        //CreateFromChildren();
+        mAllCells = new Cell[cellX, cellY];
+        for (int y = 0; y < cellY; y++)
+        {
+            for (int x = 0; x < cellX; x++)
+            {
+                // Create the cell
+                GameObject newCell = Instantiate(mCellPrefab, transform);
 
-        //        // Position
-        //        RectTransform rectTransform = newCell.GetComponent<RectTransform>();
-        //        rectTransform.anchoredPosition = new Vector2((x * 100) - (cellX * 100 / 2) + 50, (y * 100) - (cellY * 100 / 2) + 50);
+                // Position
+                RectTransform rectTransform = newCell.GetComponent<RectTransform>();
+                rectTransform.anchoredPosition = new Vector2((x * rectWidth) - (cellX * rectWidth / 2) + 50, (y * rectWidth) - (cellY * rectWidth / 2) + 50);
 
-        //        // Setup
-        //        mAllCells[x, y] = newCell.GetComponent<Cell>();
-        //        mAllCells[x, y].Setup(new Vector2Int(x, y), this);
-        //    }
-        //}
+                // Setup
+                mAllCells[x, y] = newCell.GetComponent<Cell>();
+                mAllCells[x, y].Setup(new Vector2Int(x, y), this);
+            }
+        }
         #endregion
 
         #region Color

@@ -62,7 +62,7 @@ public class CardManagerMove : MonoBehaviour
         {
             i = 1;
             SpawnCard(0);
-            SpawnCard(4);
+            SpawnCard(9);
 
         }
         else i = 0;
