@@ -13,6 +13,7 @@ public class King : BasePiece
         // King setup
         mMovement = new Vector3Int(2, 2, 1);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Player");
+        Heal.SetActive(false);
     }
 
     public override void Kill()
@@ -44,6 +45,21 @@ public class King : BasePiece
             mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
         }
     }
+
+    public override void ShowCells()
+    {
+        foreach (Cell cell in mHighlightedCells)
+            cell.MoveActive(true);
+      
+    }
+
+    public override void ClearCells()
+    {
+        foreach (Cell cell in mHighlightedCells)
+            cell.MoveActive(false);     
+        mHighlightedCells.Clear();
+    }
+
     #region Cross-Platform Input
     void Update()
     {
@@ -117,13 +133,8 @@ public class King : BasePiece
 
             if (mTargetCell != null)
             {
-                ClearCells();
-                Move();
-                GameManager.Instance.EndTurnButton();
+                MoveKing(mTargetCell);
 
-                CardManagerMove.MoveCard = false;
-                moveCard = false;
-               
             }
             else
             {
@@ -131,6 +142,19 @@ public class King : BasePiece
                 mRectTransform.position = mCurrentCell.transform.position;
             }
         }
+    }
+
+    public override void MoveKing(Cell targetCell)
+    {
+        isDragging = false;
+        Debug.Log("King Move Called");
+        mTargetCell = targetCell;
+        ClearCells();
+        Move();
+        GameManager.Instance.EndTurnButton();
+
+        CardManagerMove.MoveCard = false;
+        moveCard = false;
     }
     #endregion
 }

@@ -242,6 +242,9 @@ public abstract class BasePiece : MonoBehaviour
     }
 
     #endregion
-
+    public virtual void MoveKing(Cell targetCell)
+    {
+       
+    }
 
 }

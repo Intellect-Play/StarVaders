@@ -22,7 +22,7 @@ public class CardManagerMove : MonoBehaviour
     private Mask maskCards;
     private Image imageCards;
     public int CardLimit = 7;
-    public int MoveCardLimit = 2;
+    int MoveCardLimit = 1;
 
     public static bool MoveCard = false;
     float time = 0.1f;
@@ -62,7 +62,7 @@ public class CardManagerMove : MonoBehaviour
         {
             i = 1;
             SpawnCard(0);
-            //SpawnCard(9);
+            //SpawnCard(8);
 
         }
         else i = 0;

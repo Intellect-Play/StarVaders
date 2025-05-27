@@ -30,7 +30,6 @@ public class CameraShake : MonoBehaviour
         //    vibrato: 10,
         //    randomness: 90
         //); 
-        Debug.Log("ShakeCardAttack called");
         transform.DOShakePosition(cameraSO.duration, cameraSO.strength, cameraSO.vibrato, cameraSO.randomness).OnComplete(()=>transform.localPosition = originalPosition);
     }
 }

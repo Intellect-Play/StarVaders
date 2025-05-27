@@ -176,7 +176,7 @@ public class PieceManager : MonoBehaviour
 
         bool isBlackTurn = color == Color.white ? true : false;
 
-        SetInteractiveWhite(mWhitePiece, !isBlackTurn);
+        //SetInteractiveWhite(mWhitePiece, !isBlackTurn);
 
         SetInteractive(mAllBlackPieces, isBlackTurn);
         foreach (BasePiece piece in mPromotedPieces)
@@ -184,7 +184,8 @@ public class PieceManager : MonoBehaviour
             bool isBlackPiece = piece.mColor != Color.white ? true : false;
             bool isPartOfTeam = isBlackPiece == true ? isBlackTurn : !isBlackTurn;
 
-            piece.enabled = isPartOfTeam;
+            //if(piece.mColor != Color.white)
+            //   piece.enabled = isPartOfTeam;
         }
 
 

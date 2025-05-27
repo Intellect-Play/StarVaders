@@ -1,7 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
@@ -17,6 +19,10 @@ public class GameUI : MonoBehaviour
     [SerializeField]private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI levelText;
 
+
+    [Header("Fade Panel")]
+    public CanvasGroup fadeCanvasGroup;
+    public float fadeDuration = 0.5f;
     private void Awake()
     {
         if (Instance == null)
@@ -27,9 +33,12 @@ public class GameUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
     private void Start()
     {
+        StartCoroutine(FadeThenLoad());
+
         ActivePanel(UIPanelType.GameUI);
 
         healthText.text = SaveManager.Instance.saveData.playerData.health.ToString();
@@ -62,7 +71,17 @@ public class GameUI : MonoBehaviour
         GameUIPanel.gameObject.SetActive(panelType == UIPanelType.GameUI);
         NextGameUIPanel.gameObject.SetActive(panelType == UIPanelType.NextGameUI);
         GameOverUIPanel.gameObject.SetActive(panelType == UIPanelType.GameOverUI);
+        
     }
+
+    private IEnumerator FadeThenLoad()
+    {
+  
+        yield return fadeCanvasGroup.DOFade(0f, 2).SetEase(Ease.InOutQuad).WaitForCompletion();
+
+    }
+
+   
 }
 
 public enum UIPanelType

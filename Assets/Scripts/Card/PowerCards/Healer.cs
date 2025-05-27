@@ -23,7 +23,7 @@ public class Healer : CardBase
     }
     public override void UseCard()
     {
-        mKing.Heal.SetActive(true);
+        if(PieceManager.Instance.mWhitePiece != null) PieceManager.Instance.mWhitePiece.Heal.SetActive(true);
         GameManager.Instance.ChangeHealth(-1); // Example healing amount
         // Heal the player
         //Health.HealthPlayer += 10; // Example healing amount

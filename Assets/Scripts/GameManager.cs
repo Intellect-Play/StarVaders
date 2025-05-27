@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         GameUI.Instance.WinGame();
     }
 
+
     public void LoseGame()
     {
         if (isGameOver) return;

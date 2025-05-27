@@ -10,7 +10,6 @@ public class WorldSpaceCanvasScaler : MonoBehaviour
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
-        Debug.Log(Vector3.Distance(transform.position, mainCamera.transform.position));
         AdjustCanvasWidth();
     }
 
