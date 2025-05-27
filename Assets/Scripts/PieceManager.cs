@@ -46,7 +46,7 @@ public class PieceManager : MonoBehaviour
         board = _board;
         mWhitePiece = CreatePieces(Color.white, new Color32(80, 124, 159, 255),1, "_King");
 
-        PlacePiece(1, 3, mWhitePiece);       
+        PlacePiece(1, 2, mWhitePiece);       
     }
     public void SetupNewEnemies(string enemyType, int posEnemy)
     {

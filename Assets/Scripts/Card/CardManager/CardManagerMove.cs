@@ -16,7 +16,7 @@ public class CardManagerMove : MonoBehaviour
     public Transform cardFollowPrefabParent;
     [SerializeField] private Transform cardExit;
     public int cardCount = 5;
-
+    public bool TutorialBool;
     public List<GameObject> spawnedCards = new List<GameObject>();
     [SerializeField] private Canvas canvas;
     private Mask maskCards;
@@ -37,6 +37,7 @@ public class CardManagerMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        TutorialBool = false;
     }
     private void Start()
     {

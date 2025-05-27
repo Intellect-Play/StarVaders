@@ -25,7 +25,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public bool moveCard=false;
     public GameObject Heal;
-
+    public int HealthEnemy;
     int deadCase = 0;
 
     bool AttackPiece = false;
