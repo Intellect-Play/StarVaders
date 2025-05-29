@@ -99,11 +99,13 @@ public class TutorialManager : MonoBehaviour
     }
     public void HideTutorialMoveHand()
     {
-        if (!IsTutorialActive && tutorialLevel < 3) return;
+        Debug.Log("HideTutorial   Hand"+tutorialLevel);
+        if (!IsTutorialActive || tutorialLevel < 3) return;
         tutorialHandAnimator.HideHandTouch();
     }
     public void HideTutorialHand()
     {
+       
         if (!IsTutorialActive) return;
         tutorialHandAnimator.HideHandTouch();
     }

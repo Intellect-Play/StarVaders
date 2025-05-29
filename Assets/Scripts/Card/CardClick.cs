@@ -66,16 +66,16 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         SelectedPos = new Vector3(transform.position.x, startPosY, transform.position.z);
         transform.position = SelectedPos;
         card.ClickGiveManagerSelectedCard();
-        if (TutorialManager.Instance.IsTutorialActive)
-        {
-            TutorialManager.Instance.TutorialCardSelected(this);
-        }
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-       
-        
+
+        if (TutorialManager.Instance.IsTutorialActive)
+        {
+            TutorialManager.Instance.TutorialCardSelected(this);
+        }
         if (!CanDrag||!onDragBool) return;
         TutorialManager.Instance.HideTutorialMoveHand();
         if (transform.position.y - startPosY > triggerHeight)
