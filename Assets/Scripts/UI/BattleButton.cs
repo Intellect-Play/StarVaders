@@ -14,7 +14,6 @@ public class BattleButton : MonoBehaviour
         endTurnButton = GetComponent<Button>();
         endTurnButton.onClick.AddListener(StartBattle);
         fadeCanvasGroup.alpha = 0;
-        Debug.Log(GetComponent<RectTransform>().position + " " + GetComponent<RectTransform>().localPosition);
         TutorialManager.Instance.TutorialHandClickButton(this.GetComponent<RectTransform>());
     }
 

@@ -119,9 +119,9 @@ public class CardEffects : MonoBehaviour
     #region Pyramide
 
 
-    public float fadeInDuration = 1f;
-    public float fadeOutDuration = 1f;
-    public float shakeDuration = 1f;
+    public float fadeInDuration = .5f;
+    public float fadeOutDuration = .5f;
+    public float shakeDuration = .3f;
     public float shakeStrength = 10f;
 
     public void PyramideEffect(List<Cell> transforms)
@@ -147,8 +147,8 @@ public class CardEffects : MonoBehaviour
             Sequence seq = DOTween.Sequence();
             rect.localScale = Vector3.one;
 
-            seq.Append(rect.DOLocalMove(targetPos, 0.4f).SetEase(Ease.InFlash))
-               .AppendCallback(() => img.color = new Color(img.color.r, img.color.g, img.color.b, 1f)) // görünən et
+            seq.Append(rect.DOLocalMove(targetPos, 0.2f).SetEase(Ease.InFlash))
+               .AppendCallback(() => img.color = new Color(img.color.r, img.color.g, img.color.b, .8f)) // görünən et
                .Append(rect.DOShakePosition(shakeDuration, shakeStrength))
                .Append(img.DOFade(0f, fadeOutDuration))
                .OnComplete(() => {  Destroy(bombEffect); });

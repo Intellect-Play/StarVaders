@@ -15,7 +15,7 @@ public class CardPowerManager : BasePiece
         //Invoke("SetupCards", 1);
         //SetupCards();
     }
-    public void GetICard(CardBase card)
+    public void GetICard(CardBase card, bool moveActive = false)
     {
         
         if (true)
@@ -24,7 +24,7 @@ public class CardPowerManager : BasePiece
            
             _SelectedCard = card;
             //_SelectedCard.GetGameObject();
-            _SelectedCard.SelectedCard();
+            _SelectedCard.SelectedCard(moveActive);
         }
     }
 

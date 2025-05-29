@@ -8,19 +8,10 @@ public class Healer : CardBase
 
     public override void CheckPathing()
     {
-        throw new System.NotImplementedException();
+      
     }
 
-    public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
-    {
-        
-    }
-    public override void SelectedCard()
-    {
-    }
-    public override void ExitCard()
-    {
-    }
+
     public override void UseCard()
     {
         if(PieceManager.Instance.mWhitePiece != null) PieceManager.Instance.mWhitePiece.Heal.SetActive(true);

@@ -50,7 +50,7 @@ public class ScrollToLevel : MonoBehaviour
             Debug.LogWarning("Level not found: " + level);
             return;
         }
-        Debug.Log("Scrolling to level: " + level);
+    
         Canvas.ForceUpdateCanvases();
 
 

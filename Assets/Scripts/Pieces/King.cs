@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class King : BasePiece
 {
+    CardClick cardClick;
     public bool isDragging = false;
     public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
@@ -147,14 +148,23 @@ public class King : BasePiece
     public override void MoveKing(Cell targetCell)
     {
         isDragging = false;
-        Debug.Log("King Move Called");
         mTargetCell = targetCell;
         ClearCells();
         Move();
+        if(cardClick != null)
+        {
+            cardClick.card.UseForMoveCards();
+        }
+     
         GameManager.Instance.EndTurnButton();
 
         CardManagerMove.MoveCard = false;
         moveCard = false;
+    }
+
+    public override void MoveCardCick(CardClick _cardClick)
+    {
+        cardClick = _cardClick;
     }
     #endregion
 }

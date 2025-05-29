@@ -16,7 +16,7 @@ public class PushBack : CardBase
         mColor = Color.white;
     }
 
-    public override void SelectedCard()
+    public override void SelectedCard(bool moveActive = false)
     {
         mCurrentCell = mKing.mCurrentCell;
         ShowCells(); // optional, depending on visual feedback

@@ -10,15 +10,31 @@ public class Move : CardBase
     {
         throw new System.NotImplementedException();
     }
-    public override void SelectedCard()
+    public override void SelectedCard(bool moveActive = false)
     {
         mKing.CheckPathing();
         if (mKing.mHighlightedCells.Count <= 0) return;
-        CardManagerMove.MoveCard = true;
+
+        
         mKing.ShowCells();
         mKing.moveCard = true;
     }
     public override void UseForAllCards()
+    {
+        CardManagerMove.MoveCard = true;
+        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+
+        mCardMoveImage.PlayPopFadeAnimation();
+        gameObject.SetActive(false);
+    }
+    public override void UseForMoveCards()
+    {
+        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+
+        mCardMoveImage.PlayPopFadeAnimation();
+        gameObject.SetActive(false);
+    }
+    public void ExitFormOneTouch()
     {
         CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
 

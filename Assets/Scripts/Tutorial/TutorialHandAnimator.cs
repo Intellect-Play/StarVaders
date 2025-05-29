@@ -23,56 +23,85 @@ public class TutorialHandAnimator : MonoBehaviour
         handImage.gameObject.SetActive(false); // başlanğıcda gizli olsun
     }
 
-    public void ShowHand(Transform target3DObject)
-    {
-        if (target3DObject == null)
-        {
-            HideHand();
-            return;
-        }
-        TweenPlay = true;
-
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(target3DObject.position);
-
-        Vector2 uiPos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            screenPos,
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out uiPos
-        );
-
-        handImage.anchoredPosition = uiPos;
-        handImage.gameObject.SetActive(true);
-
-        currentTween?.Kill();
-        Vector2 endPos = uiPos + new Vector2(0, moveDistance + 100);
-
-        currentTween = handImage.DOAnchorPos(endPos, duration)
-            .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo);
-
-        //AnimateArrows(uiPos);
-    }
-
-    public void ShowTapAnimationUI(RectTransform uiTarget,Vector3 vector3)
+    public void ShowMoveHandAnimationUI(RectTransform uiTarget, Vector3 offset)
     {
         if (uiTarget == null)
         {
             HideHand();
             return;
         }
+
         TweenPlay = true;
 
-        Vector2 uiPos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            RectTransformUtility.WorldToScreenPoint(null, uiTarget.localPosition+vector3),
+        // Dünyadakı mövqe
+        Vector3 worldPos = uiTarget.position + offset;
+
+        // Ekran mövqeyi
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out uiPos
+            worldPos
         );
 
-        handImage.localPosition = uiTarget.localPosition + vector3;
+        // Lokal mövqe
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handImage.parent as RectTransform,
+            screenPos,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            out localPoint
+        );
+
+        // Əsas mövqeyi təyin et
+        handImage.anchoredPosition = localPoint;
+        handImage.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+
+        currentTween?.Kill();
+        handImage.localScale = Vector3.one;
+
+        // ✳️ Animasiya: sağ-yuxarıya sürüş → geri
+        Vector2 targetPos = localPoint + new Vector2(60f, 700f); // sağ-yuxarı offset
+
+        currentTween = handImage
+            .DOAnchorPos(targetPos, duration * 0.8f)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void ShowTapAnimationWorldUI(RectTransform uiTarget, Vector3 offset)
+    {
+        if (uiTarget == null)
+        {
+            HideHand();
+            return;
+        }
+
+        TweenPlay = true;
+
+        bool isWorldCanvas = canvas.renderMode == RenderMode.WorldSpace;
+        bool isSameCanvas = handImage.GetComponentInParent<Canvas>() == uiTarget.GetComponentInParent<Canvas>();
+
+        if (isWorldCanvas && isSameCanvas)
+        {
+            // Hər ikisi World Space canvas-dadırsa, sadəcə pozisiyanı kopyala
+            handImage.position = uiTarget.position + offset;
+        }
+        else
+        {
+            // Ekran mövqeyi ilə konvertasiya
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(uiTarget.position + offset);
+
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                handImage.parent as RectTransform,
+                screenPos,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+                out localPoint
+            );
+
+            handImage.localPosition = localPoint;
+        }
+
         handImage.gameObject.SetActive(true);
         gameObject.SetActive(true);
 
@@ -83,10 +112,49 @@ public class TutorialHandAnimator : MonoBehaviour
             .DOScale(1.3f, duration * 0.5f)
             .SetEase(Ease.OutSine)
             .SetLoops(-1, LoopType.Yoyo);
-
-        //AnimateArrows(uiPos);
     }
+    public void ShowTapAnimationUI(RectTransform uiTarget, Vector3 offset)
+    {
+        if (uiTarget == null)
+        {
+            HideHand();
+            return;
+        }
 
+        TweenPlay = true;
+
+        // 1. Dünyadakı (world space) mövqeni tap
+        Vector3 worldPos = uiTarget.position + offset;
+
+        // 2. Ekran koordinatını al
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            worldPos
+        );
+
+        // 3. UI parent içində lokal mövqe tap
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handImage.parent as RectTransform,
+            screenPos,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            out localPoint
+        );
+
+        // 4. handImage yerləşdir
+        handImage.localPosition = localPoint;
+        handImage.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+
+        // 5. Animasiya təmizlənir və yenidən başlayır
+        currentTween?.Kill();
+        handImage.localScale = Vector3.one;
+
+        currentTween = handImage
+            .DOScale(1.3f, duration * 0.5f)
+            .SetEase(Ease.OutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
     public void HideHandTouch()
     {
         Debug.Log("HideHandTouch");

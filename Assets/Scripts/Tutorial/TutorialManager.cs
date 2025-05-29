@@ -15,6 +15,8 @@ public class TutorialManager : MonoBehaviour
     [Header("Tutorial Settings")]
     [SerializeField] private Vector3 ButtonClickOffset = new Vector3(280,70,0); 
 
+    public bool IsTutorialActive = false;
+    int tutorialLevel;
     private void Awake()
     {
         if (Instance == null)
@@ -26,32 +28,83 @@ public class TutorialManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        if(PlayerPrefs.GetInt("Tutorial", 0) == 0)
         {
-
+            Debug.Log("Tutorial Started");
+            IsTutorialActive = true;
+            tutorialLevel = 0;
         }
         else
         {
-
+            HideTutorialHand();
+            IsTutorialActive = false;
+            
         }
     }
     void Start()
     {
         
     }
-
-    public void ShowTutorialHand(Transform target3DObject)
+    public void SelectCard(int currentCardCount)
     {
-        tutorialHandAnimator.ShowHand(target3DObject);
-    }   
+        if (!IsTutorialActive) return;
+        tutorialLevel++;
+        for (int i = 0;i<CardManagerMove.Instance.spawnedCards.Count; i++)
+        {
+            CardClick card = CardManagerMove.Instance.spawnedCards[i].GetComponent<CardClick>();
+            if (i == 0)
+            {
+                if(tutorialLevel<3)
+                   tutorialHandAnimator.ShowTapAnimationUI(card.gameObject.GetComponent<RectTransform>(), new Vector3(50,0,0));
+                else tutorialHandAnimator.ShowMoveHandAnimationUI(card.gameObject.GetComponent<RectTransform>(), new Vector3(50, 0, 0));
+
+            }
+            else
+            {
+                if (card != null)
+                {
+                    card.moveImage.FadeOutCard();
+                    card.enabled = false;
+                }
+            }
+            
+        }
+        
+    }
+    public void TutorialCardSelected(CardClick cardClick)
+    {
+        if (!IsTutorialActive) return;
+        if (cardClick != null&& tutorialLevel < 3)
+        {
+            Debug.Log("TutorialCardSelected");
+            if (tutorialLevel==1)
+                tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2,3].GetComponent<RectTransform>(),new Vector3(3,-3,0));
+            else tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), Vector3.zero);
+
+        }
+    }
+    public void CardStartClickTutorial()
+    {
+        if (tutorialLevel >= 1)
+        {
+            HideTutorialHand();
+        }
+    }
+ 
 
     public void TutorialHandClickButton(RectTransform rectTransform)
     {
+        if (!IsTutorialActive) return;
         tutorialHandAnimator.ShowTapAnimationUI(rectTransform, ButtonClickOffset);
     }
-
+    public void HideTutorialMoveHand()
+    {
+        if (!IsTutorialActive && tutorialLevel < 3) return;
+        tutorialHandAnimator.HideHandTouch();
+    }
     public void HideTutorialHand()
     {
+        if (!IsTutorialActive) return;
         tutorialHandAnimator.HideHandTouch();
     }
 }

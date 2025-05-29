@@ -104,6 +104,7 @@ MonoBehaviour:
   down: 1
   moveCard: 0
   Heal: {fileID: 0}
+  HealthEnemy: 2
 --- !u!95 &7292175013163407049
 Animator:
   serializedVersion: 5

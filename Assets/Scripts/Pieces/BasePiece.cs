@@ -25,12 +25,16 @@ public abstract class BasePiece : MonoBehaviour
 
     public bool moveCard=false;
     public GameObject Heal;
-    public int HealthEnemy;
+    public int HealthEnemy=1;
     int deadCase = 0;
-
+    [SerializeField] private Image targetImage;
+    [SerializeField] private float duration = 0.5f;
     bool AttackPiece = false;
+    Color softRed = new Color(1f, 0.5f, 0.5f);
     private void OnEnable()
     {
+        if (targetImage == null)
+            targetImage = GetComponent<Image>();
         AttackPiece = false;
         if (GetComponent<Animator>() != null)
             mAnimatorController = GetComponent<Animator>();
@@ -57,7 +61,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public void ResetKill()
     {
-        Debug.Log("ResetKill: " + mCurrentCell.mBoardPosition);
+     
         Kill();
         mIsFirstMove = true;
         Place(mOriginalCell);
@@ -76,9 +80,40 @@ public abstract class BasePiece : MonoBehaviour
                 mCurrentCell.mCurrentPiece = null;
             GameManager.Instance.ChangeCoin(10);
             PieceManager.Instance.KillEnemy(this);
-        }
-       
-       
+        }       
+    }
+    public virtual void TakeDamage()
+    {
+        
+        mAnimatorController.enabled = false;
+        HealthEnemy -=1;
+        if (HealthEnemy <= 0)
+        {
+            Kill();
+        }else StartColorPulse();
+
+    }
+    public void StartColorPulse()
+    {
+      
+        // R=1, G=0.5, B=0.5
+        targetImage.color = softRed;
+
+        targetImage.DOColor(Color.white, .5f)
+           .SetEase(Ease.InOutSine)
+           .OnComplete(() =>
+           {
+               targetImage.DOColor(softRed, .5f)
+                   .SetEase(Ease.InOutSine)
+                   .OnComplete(() =>
+                   {
+                       if (mAnimatorController != null)
+                           mAnimatorController.enabled = true;
+                       targetImage.color = Color.white;
+                   });
+           });
+        
+        
     }
     IEnumerator KillTime()
     {
@@ -204,8 +239,10 @@ public abstract class BasePiece : MonoBehaviour
     public IEnumerator  AttackTime()
     {
         mAnimatorController.SetTrigger("Attack");
+       
+        PieceManager.Instance.mWhitePiece.StartColorPulse();
         yield return new WaitForSeconds(.3f);
-        Kill();
+        //Kill();
     }
     public virtual void Move()
     {
@@ -218,7 +255,8 @@ public abstract class BasePiece : MonoBehaviour
             GameManager.Instance.ChangeHealth(1);
             if (mAnimatorController != null) {
                 AttackPiece = true;
-                StartCoroutine(AttackTime()); 
+                StartCoroutine(AttackTime());
+                return;
             }
             else { Kill(); return; }
             
@@ -246,5 +284,8 @@ public abstract class BasePiece : MonoBehaviour
     {
        
     }
+    public virtual void MoveCardCick(CardClick cardClick)
+    {
 
+    }
 }

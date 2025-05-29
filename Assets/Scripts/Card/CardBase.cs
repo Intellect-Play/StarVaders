@@ -33,7 +33,7 @@ public abstract class CardBase : BasePiece
         mColor = Color.white;
     }
 
-    public virtual void SelectedCard()
+    public virtual void SelectedCard(bool moveActive = false)
     {
         if (used) return;
         mCurrentCell = mKing.mCurrentCell;
@@ -52,7 +52,10 @@ public abstract class CardBase : BasePiece
 
         gameObject.SetActive(false);
     }
-
+    public virtual void UseForMoveCards()
+    {
+       
+    }
     public virtual void UseCard()
     {
         if (used) return;
@@ -67,10 +70,10 @@ public abstract class CardBase : BasePiece
         Enemies.Clear();
     }
 
-    public void ClickGiveManagerSelectedCard()
+    public void ClickGiveManagerSelectedCard(bool moveActive = false)
     {
         if (used) return;
-        cardPowerManager.GetICard(this);
+        cardPowerManager.GetICard(this,moveActive);
     }
 
     public GameObject GetGameObject() => gameObject;

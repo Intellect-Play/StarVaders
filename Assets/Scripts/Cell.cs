@@ -29,7 +29,13 @@ public class Cell : MonoBehaviour
     public void CellButtonClick()
     {
         Debug.Log("Cell Button Clicked");
-        PieceManager.Instance.mWhitePiece.MoveKing(this);
+        if (TutorialManager.Instance.IsTutorialActive) {
+            if (mBoardPosition == new Vector2Int(2, 3))
+            {
+                TutorialManager.Instance.CardStartClickTutorial();
+                PieceManager.Instance.mWhitePiece.MoveKing(this);
+            }
+        }else PieceManager.Instance.mWhitePiece.MoveKing(this);
     }
     public void Setup(Vector2Int newBoardPosition, Board newBoard)
     {
@@ -50,7 +56,7 @@ public class Cell : MonoBehaviour
     {
         if (mCurrentPiece != null)
         {
-            mCurrentPiece.Kill();
+            mCurrentPiece.TakeDamage();
         }
     }
 }
