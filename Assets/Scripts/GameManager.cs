@@ -61,7 +61,9 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        if(isGameOver) return;
+        PlayerPrefs.SetInt("Tutorial", 1);
+
+        if (isGameOver) return;
         isGameOver = true;
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayerInPlay;
         SaveManager.Instance.saveData.playerData.currentLevel += 1;
