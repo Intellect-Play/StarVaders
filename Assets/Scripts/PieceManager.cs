@@ -204,7 +204,7 @@ public class PieceManager : MonoBehaviour
             // DOTween ilə rəng animasiyası: qırmızıya və geri, 2 dəfə
             img.DOColor(flashColor, flashDuration)
                 .SetLoops(3, LoopType.Yoyo)
-                .SetEase(Ease.Linear)
+                .SetEase(Ease.InOutSine)
                 .OnComplete(() => img.color = originalColor);
         }
     }

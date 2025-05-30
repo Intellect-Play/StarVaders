@@ -48,7 +48,6 @@ public class WaveManager : MonoBehaviour
             if (currentWaveIndex >= currentLevel.waves.Count)
             {
                 levelFinished = true;
-                Debug.Log("Level finished!");
             }
         }
     }

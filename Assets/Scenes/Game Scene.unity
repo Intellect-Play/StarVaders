@@ -4374,6 +4374,31 @@ PrefabInstance:
       propertyPath: mCardPowerManager
       value: 
       objectReference: {fileID: 1021148604}
+    - target: {fileID: 2428739968186409664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428739968186409664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428739968186409664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428739968186409664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428739968186409664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3101653746039305958, guid: 6579573481eb94649ba8cc54127a2ae7,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -4470,6 +4495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202252082604461664, guid: 6579573481eb94649ba8cc54127a2ae7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5392840021346149321, guid: 6579573481eb94649ba8cc54127a2ae7,
         type: 3}

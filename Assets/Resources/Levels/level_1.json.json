@@ -102,10 +102,6 @@
               "column": 4
             },
             {
-              "type": "Sceleton",
-              "column": 2
-            },
-            {
               "type": "Goblin",
               "column": 1
             }
@@ -117,10 +113,6 @@
             {
               "type": "Sceleton",
               "column": 1
-            },
-            {
-              "type": "Goblin",
-              "column": 2
             },
             {
               "type": "Goblin",
@@ -168,10 +160,6 @@
             },
             {
               "type": "Sceleton",
-              "column": 2
-            },
-            {
-              "type": "Sceleton",
               "column": 1
             }
           ]
@@ -191,10 +179,6 @@
             {
               "type": "Sceleton",
               "column": 3
-            },
-            {
-              "type": "Sceleton",
-              "column": 1
             }
           ]
         }
@@ -209,10 +193,6 @@
             {
               "type": "Sceleton",
               "column": 1
-            },
-            {
-              "type": "Knight",
-              "column": 2
             },
             {
               "type": "Green_boss",
@@ -256,10 +236,6 @@
             {
               "type": "Sceleton",
               "column": 2
-            },
-            {
-              "type": "Sceleton",
-              "column": 1
             },
             {
               "type": "Knight",
@@ -329,10 +305,6 @@
             {
               "type": "Sceleton",
               "column": 1
-            },
-            {
-              "type": "Sceleton",
-              "column": 3
             },
             {
               "type": "Sceleton",
