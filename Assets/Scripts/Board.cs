@@ -19,23 +19,18 @@ public class Board : MonoBehaviour
     public GameObject mCellPrefab;
     public CellRow[] cellRows;
     public List<Cell> allCellsInHierarchy;
+    public List<Image> allCellsInHierarchyImages;
+    [SerializeField] private Sprite mCellSpriteX;
+    [SerializeField] private Sprite mCellSpriteY;
+    [SerializeField] private Sprite mCellSpriteTower;
+
     [HideInInspector]
     public Cell[,] mAllCells;
     public static int cellX = 4;
     public static int cellY = 8;
 
     int rectWidth = 160;
-    // We create the board here, no surprise
-    private void Awake()
-    {
-        // Create the board
-       // Create();
-    }
-    private void Start()
-    {
-        // Create the board
-        //Create();
-    }
+   
     public void Create()
     {
         #region Create
@@ -56,10 +51,32 @@ public class Board : MonoBehaviour
                 // Setup
                 mAllCells[x, y] = newCell.GetComponent<Cell>();
                 mAllCells[x, y].Setup(new Vector2Int(x, y), this);
+                allCellsInHierarchyImages.Add(newCell.GetComponent<Image>());
+
+                Image img = newCell.GetComponent<Image>();
+                allCellsInHierarchyImages.Add(img);
+
+               
+                if(y==0) img.sprite = mCellSpriteTower;
+                else if ((x + y) % 2 == 0)
+                    img.sprite = mCellSpriteX; 
+                else
+                    img.sprite = mCellSpriteY; 
             }
         }
         #endregion
+        //for(int y = 0; y < allCellsInHierarchyImages.Count; y++)
+        //{
+        //    if(y % 2 == 0)
+        //    {
+        //        allCellsInHierarchyImages[y].sprite = mCellSpriteX;
+        //    }
+        //    else
+        //    {
+        //        allCellsInHierarchyImages[y].sprite = mCellSpriteY;
+        //    }
 
+        //}
         #region Color
         //for (int x = 0; x < cellX; x += 2)
         //{

@@ -45,6 +45,7 @@ public class Pyramide : CardBase
         GameManager.Instance.EndTurnButton();
 
         gameObject.SetActive(false);
+        
     }
     public override void UseCard()
     {

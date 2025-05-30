@@ -44,6 +44,7 @@ public class CardEffects : MonoBehaviour
         {
             GameObject bombEffect = Instantiate(BombEffectParticle, Vector3.zero, Quaternion.identity, cell.transform);
             bombEffect.transform.localPosition = Vector3.zero;
+            CardManager.Instance.VibrateCustom(20);
             Destroy(bombEffect, .4f); yield return new WaitForSeconds(0.1f);
 
         }
@@ -63,10 +64,11 @@ public class CardEffects : MonoBehaviour
         {
             GameObject bombEffect = Instantiate(MeteorEffectParticle, Vector3.zero, Quaternion.identity, cell.transform);
             bombEffect.transform.localPosition = new Vector3(500, 500, 0);
-
+          
             bombEffect.transform.DOLocalMove(Vector3.zero, 0.4f)
                 .SetEase(Ease.OutCubic).OnComplete(() =>
                 {
+                    CardManager.Instance.VibrateCustom(20);
                     Destroy(bombEffect); // 1 saniyə sonra silinir
                 });
 
@@ -103,9 +105,11 @@ public class CardEffects : MonoBehaviour
         {
             tornado.SetActive(true);
         }
+        CardManager.Instance.VibrateCustom(70);
         yield return new WaitForSeconds(.6f);
 
         EnemySpawner.Instance.EnemyBackMoveF();
+        
         yield return new WaitForSeconds(.8f);
 
         foreach (GameObject tornado in TornadoEffects)
@@ -151,7 +155,7 @@ public class CardEffects : MonoBehaviour
                .AppendCallback(() => img.color = new Color(img.color.r, img.color.g, img.color.b, .8f)) // görünən et
                .Append(rect.DOShakePosition(shakeDuration, shakeStrength))
                .Append(img.DOFade(0f, fadeOutDuration))
-               .OnComplete(() => {  Destroy(bombEffect); });
+               .OnComplete(() => {  Destroy(bombEffect);  });
         }
         StartCoroutine(FadeShakeImage());
     }
@@ -160,6 +164,7 @@ public class CardEffects : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f); // Gözləmə müddəti, lazım gələrsə dəyişdirin
         CameraShake.Instance.ShakeCardAttack();
+        CardManager.Instance.VibrateCustom(80);
     }
     IEnumerator FadeShakeImage(Image img)
     {

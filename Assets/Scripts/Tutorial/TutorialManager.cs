@@ -30,7 +30,6 @@ public class TutorialManager : MonoBehaviour
 
         if(PlayerPrefs.GetInt("Tutorial", 0) == 0)
         {
-            Debug.Log("Tutorial Started");
             IsTutorialActive = true;
             tutorialLevel = 0;
         }
@@ -76,7 +75,6 @@ public class TutorialManager : MonoBehaviour
         if (!IsTutorialActive) return;
         if (cardClick != null&& tutorialLevel < 3)
         {
-            Debug.Log("TutorialCardSelected");
             if (tutorialLevel==1)
                 tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2,3].GetComponent<RectTransform>(),new Vector3(3,-3,0));
             else tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), Vector3.zero);
@@ -99,7 +97,6 @@ public class TutorialManager : MonoBehaviour
     }
     public void HideTutorialMoveHand()
     {
-        Debug.Log("HideTutorial   Hand"+tutorialLevel);
         if (!IsTutorialActive || tutorialLevel < 3) return;
         tutorialHandAnimator.HideHandTouch();
     }
@@ -107,6 +104,33 @@ public class TutorialManager : MonoBehaviour
     {
        
         if (!IsTutorialActive) return;
+        tutorialHandAnimator.HideHandTouch();
+    }
+
+    public void CardMoveTutorialinGame()
+    {
+        if ((CardManagerMove.Instance.currentCardClick != null && !CardManagerMove.Instance.currentCardClick.MoveCard)|| CardManagerMove.Instance.currentCardClick == null)
+        {
+            if (CardManagerMove.Instance.spawnedCards[0] != null)
+            {
+                tutorialHandAnimator.ShowMoveHandAnimationUI(CardManagerMove.Instance.spawnedCards[0].GetComponent<RectTransform>(), new Vector3(50, 0, 0));
+
+            }
+
+        }
+    }
+
+    public void MoveCardTutorialinGame()
+    {
+        if (CardManagerMove.Instance.currentCardClick != null && CardManagerMove.Instance.currentCardClick.MoveCard)
+        {
+            tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), new Vector3(3, -3, 0));
+
+        }
+    }
+
+    public void EndGameTutorial()
+    {
         tutorialHandAnimator.HideHandTouch();
     }
 }

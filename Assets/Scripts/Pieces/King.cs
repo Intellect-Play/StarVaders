@@ -159,6 +159,7 @@ public class King : BasePiece
         GameManager.Instance.EndTurnButton();
 
         CardManagerMove.MoveCard = false;
+        CardManagerMove.Instance.currentCardClick = null;
         moveCard = false;
     }
 

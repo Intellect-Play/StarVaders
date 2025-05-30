@@ -76,6 +76,11 @@ public abstract class CardBase : BasePiece
         cardPowerManager.GetICard(this,moveActive);
     }
 
+    public void Vibrate()
+    {
+        Handheld.Vibrate();
+    }
+   
     public GameObject GetGameObject() => gameObject;
 
     public abstract override void CheckPathing();

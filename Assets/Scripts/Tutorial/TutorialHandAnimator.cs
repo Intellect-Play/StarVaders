@@ -157,7 +157,6 @@ public class TutorialHandAnimator : MonoBehaviour
     }
     public void HideHandTouch()
     {
-        Debug.Log("HideHandTouch");
         TweenPlay = false;
         currentTween?.Kill();
         currentTween = null;
@@ -168,7 +167,6 @@ public class TutorialHandAnimator : MonoBehaviour
 
     public void HideHand()
     {
-        Debug.Log("HideHand");
         if (!TweenPlay)
         {
             currentTween?.Kill();
@@ -180,19 +178,6 @@ public class TutorialHandAnimator : MonoBehaviour
     }
   
   
-    public void StartHorizontalAnimation()
-    {
-        if (handImage == null) return;
-        handImage.gameObject.SetActive(true);
 
-        handImage.anchoredPosition = fourArrow.anchoredPosition; // Local pozisiyasından başlasın
-
-        Vector2 endPos = new Vector2(moveDistance * 4, 0);
-
-        currentTween = handImage.DOAnchorPos(endPos, duration)
-            .SetRelative(true)
-            .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo);
-    }
   
 }
