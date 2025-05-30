@@ -61,7 +61,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public void ResetKill()
     {
-     
+     Debug.Log("ResetKill");
         Kill();
         mIsFirstMove = true;
         Place(mOriginalCell);
@@ -72,12 +72,14 @@ public abstract class BasePiece : MonoBehaviour
         
         if (mAnimatorController != null&&!AttackPiece)
         {
+            Debug.Log("Kill with Animator");
             StartCoroutine(KillTime());
         }
         else
         {
             if (mCurrentCell != null)
                 mCurrentCell.mCurrentPiece = null;
+            Debug.Log("Kill without Animator");
             GameManager.Instance.ChangeCoin(10);
             PieceManager.Instance.KillEnemy(this);
         }       
@@ -149,8 +151,11 @@ public abstract class BasePiece : MonoBehaviour
         {
             if (deadCase >= 1)
             {
+                mAnimatorController.SetTrigger("Attack");
+                PieceManager.Instance.DamageTower();
+                Debug.Log("Enemy killed by computer");
                 GameManager.Instance.ChangeHealth(1);
-                Kill();
+                //Kill();
             }
             ++deadCase;          
         }else deadCase = 0;

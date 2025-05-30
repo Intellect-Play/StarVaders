@@ -47,8 +47,8 @@ public class Cell : MonoBehaviour
 
     public void MoveActive(bool active)
     {
-        mOutlineImage.color = active ? mMoveColor : Color.black;
-        mOutlineImage.enabled = active;
+        //mOutlineImage.color = active ? mMoveColor : Color.black;
+        mOutlineMoveImage.enabled = active;
         cellButton.interactable = active;
     }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieceManager : MonoBehaviour
 {
@@ -21,6 +23,8 @@ public class PieceManager : MonoBehaviour
 
     GameObject newPieceObject;
 
+    [SerializeField] private Color flashColor = Color.red;
+    [SerializeField] private float flashDuration = 0.1f;
     //private Dictionary<string, Type> mPieceLibrary = new Dictionary<string, Type>()
     //{
     //    {"P",  typeof(Pawn)},
@@ -191,6 +195,19 @@ public class PieceManager : MonoBehaviour
 
     }
 
+    public void DamageTower()
+    {
+        foreach (Image img in board.towerCellsInHierarchyImages)
+        {
+            Color originalColor = img.color;
+
+            // DOTween ilə rəng animasiyası: qırmızıya və geri, 2 dəfə
+            img.DOColor(flashColor, flashDuration)
+                .SetLoops(3, LoopType.Yoyo)
+                .SetEase(Ease.Linear)
+                .OnComplete(() => img.color = originalColor);
+        }
+    }
     public void KillEnemy(BasePiece piece)
     {
         mAllBlackPieces.Remove(piece);

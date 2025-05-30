@@ -19,7 +19,7 @@ public class Board : MonoBehaviour
     public GameObject mCellPrefab;
     public CellRow[] cellRows;
     public List<Cell> allCellsInHierarchy;
-    public List<Image> allCellsInHierarchyImages;
+    public List<Image> towerCellsInHierarchyImages;
     [SerializeField] private Sprite mCellSpriteX;
     [SerializeField] private Sprite mCellSpriteY;
     [SerializeField] private Sprite mCellSpriteTower;
@@ -51,13 +51,16 @@ public class Board : MonoBehaviour
                 // Setup
                 mAllCells[x, y] = newCell.GetComponent<Cell>();
                 mAllCells[x, y].Setup(new Vector2Int(x, y), this);
-                allCellsInHierarchyImages.Add(newCell.GetComponent<Image>());
 
                 Image img = newCell.GetComponent<Image>();
-                allCellsInHierarchyImages.Add(img);
 
-               
-                if(y==0) img.sprite = mCellSpriteTower;
+
+
+                if (y == 0) {
+                    towerCellsInHierarchyImages.Add(newCell.GetComponent<Image>());
+                    img.sprite = mCellSpriteTower;
+
+                }
                 else if ((x + y) % 2 == 0)
                     img.sprite = mCellSpriteX; 
                 else

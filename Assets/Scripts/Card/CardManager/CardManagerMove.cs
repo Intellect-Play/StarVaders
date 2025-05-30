@@ -84,7 +84,6 @@ public class CardManagerMove : MonoBehaviour
     }
     IEnumerator SpawnCardWithTimeFotTutorial(float _time)
     {
-        Debug.Log("SpawnCardWithTimeFotTutorial");
         int i = 0;
 
         int moveCount = 0;
@@ -94,7 +93,6 @@ public class CardManagerMove : MonoBehaviour
         }
         if (spawnedCards.Count == 0)
         {
-            Debug.Log("SpawnCardWithTimeFotTutorial SpawnCard 0");
             i = 1;
             SpawnCard(0);
             SpawnCard(4);

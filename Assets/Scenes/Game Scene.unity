@@ -2684,6 +2684,26 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
         type: 3}
+      propertyPath: flashColor.b
+      value: 0.5294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: flashColor.g
+      value: 0.5294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: flashColor.r
+      value: 0.8980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
+      propertyPath: flashDuration
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114283005606547992, guid: 54ca9e7c26a99fa44a35d35c9357f73d,
+        type: 3}
       propertyPath: mPiecePrefabs.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -6040,6 +6060,12 @@ PrefabInstance:
       propertyPath: mCellSpriteY
       value: 
       objectReference: {fileID: 21300000, guid: a58f39b9b6a0fed4e946a2f4399417bb,
+        type: 3}
+    - target: {fileID: 5349983628202018111, guid: 0255699fb69360c4fb025bb48f625ee9,
+        type: 3}
+      propertyPath: mCellSpriteTower
+      value: 
+      objectReference: {fileID: 21300000, guid: ebe4e8b38a704ec429113180202ff878,
         type: 3}
     - target: {fileID: 5412294228620324704, guid: 0255699fb69360c4fb025bb48f625ee9,
         type: 3}
