@@ -11,12 +11,11 @@ public class ScrollToLevel : MonoBehaviour
     public List<LevelRoadMapNumber> levelRoadMapNumbers;
 
     public int targetLevel = 5; 
-    public string levelPrefix = "Level_";
     int levelCount;
     void Start()
     {
-        ScrollToTargetLevel(targetLevel);
         GetAndListNumbers();
+        ScrollToTargetLevel(levelCount);
     }
 
     void GetAndListNumbers()

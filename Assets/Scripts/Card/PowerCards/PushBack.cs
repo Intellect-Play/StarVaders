@@ -23,7 +23,7 @@ public class PushBack : CardBase
     }
     public override void UseForAllCards()
     {
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
         CameraShake.Instance.ShakeCardAttack();
 
         UseCard();

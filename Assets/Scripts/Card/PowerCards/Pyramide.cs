@@ -37,7 +37,7 @@ public class Pyramide : CardBase
     }
     public override void UseForAllCards()
     {
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
        
         UseCard();

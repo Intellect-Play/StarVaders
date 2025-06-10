@@ -22,21 +22,21 @@ public class Move : CardBase
     public override void UseForAllCards()
     {
         CardManagerMove.MoveCard = true;
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
         mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);
     }
     public override void UseForMoveCards()
     {
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
         mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);
     }
     public void ExitFormOneTouch()
     {
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
         mCardMoveImage.PlayPopFadeAnimation();
         gameObject.SetActive(false);

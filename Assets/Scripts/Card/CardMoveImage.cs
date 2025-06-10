@@ -147,6 +147,7 @@ public class CardMoveImage : MonoBehaviour
 
     public void CardDestroy()
     {
+        target.GetComponent<CardBase>().ExitCard();
         ActiveCard = false;
     }
     public void ReturnParent()

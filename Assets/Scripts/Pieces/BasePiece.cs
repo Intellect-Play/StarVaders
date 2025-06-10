@@ -52,6 +52,10 @@ public abstract class BasePiece : MonoBehaviour
 
     public virtual void Place(Cell newCell)
     {
+        if(newCell.mCurrentPiece != null)
+        {
+            PieceManager.Instance.KillEnemy(this);
+        }
         mCurrentCell = newCell;
         mOriginalCell = newCell;
         mCurrentCell.mCurrentPiece = this;
@@ -187,7 +191,7 @@ public abstract class BasePiece : MonoBehaviour
     {
         int currentX = mCurrentCell.mBoardPosition.x;
         int currentY = mCurrentCell.mBoardPosition.y;
-
+        
         for (int i = 1; i <= movement; i++)
         {
             currentX += xDirection;
@@ -253,33 +257,80 @@ public abstract class BasePiece : MonoBehaviour
         mIsFirstMove = false;
         if(mTargetCell.mCurrentPiece != null&& mTargetCell.mCurrentPiece.mColor==Color.white)
         {
-            GameManager.Instance.ChangeHealth(1);
-            if (mAnimatorController != null) {
-                AttackPiece = true;
-                StartCoroutine(AttackTime());
-                return;
-            }
-            else { Kill(); return; }
+            Debug.Log("Enemy Piece Killed");
+            EnemyPassKingCehck();
+            return;
+          //  GameManager.Instance.ChangeHealth(1);
+            //if (mAnimatorController != null) {
+            //    Debug.Log("Attack Piece");
+            //    AttackPiece = true;
+            //    StartCoroutine(AttackTime());
+            //    return;
+            //}
+            //else { Kill(); Debug.Log("Kill Else"); return; }
             
         }
         else
         {
-            mTargetCell.RemovePiece();
-            mCurrentCell.mCurrentPiece = null;
+            //mTargetCell.RemovePiece();
+            //mCurrentCell.mCurrentPiece = null;
 
-            mCurrentCell = mTargetCell;
-            mCurrentCell.mCurrentPiece = this;
+            //mCurrentCell = mTargetCell;
+            //mCurrentCell.mCurrentPiece = this;
         }
 
-       
-        if (mAnimatorController != null&&!AttackPiece) mAnimatorController.SetTrigger("Jump");
+
+        EnemyMovePart();
+    }
+
+    public void EnemyPassKingCehck()
+    {
+        ClearCells();
+        int currentX = mCurrentCell.mBoardPosition.x+1;
+        int currentY = mCurrentCell.mBoardPosition.y-1;
+        CellState cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
+        if(cellState == CellState.Free)
+        {
+            Debug.Log("Enemy Piece Killed R");
+            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+            mTargetCell = mHighlightedCells[0];
+
+            EnemyMovePart();
+            return;
+        }
+        currentX = mCurrentCell.mBoardPosition.x - 1;
+        currentY = mCurrentCell.mBoardPosition.y - 1;
+        cellState = mCurrentCell.mBoard.ValidateCell(currentX, currentY, this);
+        if (cellState == CellState.Free)
+        {
+            HasMoveTarget(1);
+
+            Debug.Log("Enemy Piece Killed F");
+            mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
+            mTargetCell = mHighlightedCells[0];
+
+            EnemyMovePart();
+
+           
+            return;
+        }
+        return;
+    }
+    public void EnemyMovePart()
+    {
+        mTargetCell.RemovePiece();
+
+        mCurrentCell.mCurrentPiece = null;
+
+        mCurrentCell = mTargetCell;
+        mCurrentCell.mCurrentPiece = this;
+        if (mAnimatorController != null && !AttackPiece) mAnimatorController.SetTrigger("Jump");
         // DOTween ile pozisyonu yumuşakça taşı
         transform.DOMove(mCurrentCell.transform.position, 0.7f)
                  .SetEase(Ease.OutCubic);
 
         mTargetCell = null;
     }
-
     #endregion
     public virtual void MoveKing(Cell targetCell)
     {

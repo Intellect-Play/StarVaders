@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public CardPowerManager mCardPowerManager;
     public Health mHealth;
     public Coin mCoin;
+    [SerializeField] public EndTurnClick endTurnClick;
     bool cardMove;
     bool isGameOver = false;
     private void Awake()
@@ -42,9 +43,10 @@ public class GameManager : MonoBehaviour
     {
         mPieceManager.SwitchSides(Color.white);
         if(!move) return;
-        WaveManager.Instance.SpawnNextWave();
         //mEnemySpawner.EnemySpawnF();
         mEnemySpawner.EnemyMoveF();
+        WaveManager.Instance.SpawnNextWave();
+
     }
 
     public void ChangeHealth(int heath)
@@ -90,12 +92,12 @@ public class GameManager : MonoBehaviour
     {
         cardMove = false;
         CardManagerMove.Instance.FadeOutCards();
-        yield return new WaitForSeconds(1);
+      //  yield return new WaitForSeconds(1);
         //CardManager.Instance.ExitTurnButton();
-        EndTurn(move);
+       // EndTurn(move);
         //CardManager.Instance.cardManagerMove.ReturnAllCards();
         yield return new WaitForSeconds(1);
-        CardManager.Instance.cardManagerMove.SpawnCards();
+       // CardManager.Instance.cardManagerMove.SpawnCards();
         //yield return new WaitForSeconds(1);
         cardMove = true;
         CardManagerMove.Instance.FadeInCards();

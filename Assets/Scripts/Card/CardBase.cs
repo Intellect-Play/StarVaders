@@ -43,7 +43,7 @@ public abstract class CardBase : BasePiece
 
     public virtual void UseForAllCards()
     {
-        CardManagerMove.Instance.spawnedCards.Remove(this.gameObject);
+        CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
         CameraShake.Instance.ShakeCardAttack();
         UseCard();

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4063128009614328406}
   - component: {fileID: 3915588083297686870}
   - component: {fileID: 1621123022021935207}
+  - component: {fileID: 6488513423886684794}
   m_Layer: 5
   m_Name: Move
   m_TagString: Untagged
@@ -174,8 +175,22 @@ MonoBehaviour:
   moveCard: 0
   Heal: {fileID: 0}
   HealthEnemy: 0
+  targetImage: {fileID: 0}
+  duration: 0.5
   mKing: {fileID: 0}
   mCardSO: {fileID: 11400000, guid: 3517521e452ed69499493fec430dd22a, type: 2}
+--- !u!114 &6488513423886684794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2786916625064461520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b6f892d2678954c986ee2db81b4558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3004087860625872187
 GameObject:
   m_ObjectHideFlags: 0

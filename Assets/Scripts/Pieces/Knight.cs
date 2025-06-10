@@ -9,7 +9,7 @@ public class Knight : BasePiece
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
         // Pawn Stuff
-        mMovement = new Vector3Int(0, 2, 0);
+        mMovement = new Vector3Int(2, 2, 2);
         //GetComponent<Image>().sprite = Resources.Load<Sprite>("Enemy2");
     }
 

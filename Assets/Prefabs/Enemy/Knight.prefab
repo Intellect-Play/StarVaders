@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6a84176ef6b31b14ebef25e271115fa7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5ddb81628bfa7db4a9e655e86d9df8af, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -105,6 +105,8 @@ MonoBehaviour:
   moveCard: 0
   Heal: {fileID: 0}
   HealthEnemy: 2
+  targetImage: {fileID: 0}
+  duration: 0.5
 --- !u!95 &7109151645489300243
 Animator:
   serializedVersion: 5
@@ -113,7 +115,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574190171488166}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 313362722374a434fac2d726c5a86b4d, type: 2}
   m_CullingMode: 0

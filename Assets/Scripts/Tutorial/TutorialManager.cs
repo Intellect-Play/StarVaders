@@ -30,7 +30,7 @@ public class TutorialManager : MonoBehaviour
 
         if(PlayerPrefs.GetInt("Tutorial", 0) == 0)
         {
-            IsTutorialActive = true;
+            IsTutorialActive = false;
             tutorialLevel = 0;
         }
         else
