@@ -211,7 +211,6 @@ public class PieceManager : MonoBehaviour
     public void KillEnemy(BasePiece piece)
     {
         mAllBlackPieces.Remove(piece);
-        Debug.Log("Enemy Piece Killed: " + piece.name);
         if(mAllBlackPieces.Count == 0)
         {
             GameManager.Instance.endTurnClick.EndTurnButton(1);
