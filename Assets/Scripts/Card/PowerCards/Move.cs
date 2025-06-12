@@ -5,7 +5,11 @@ using UnityEngine;
 public class Move : CardBase
 {
     public override CardType _CardType => CardType.Move;
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
 
+    }
     public override void CheckPathing()
     {
         throw new System.NotImplementedException();

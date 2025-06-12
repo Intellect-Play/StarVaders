@@ -87,8 +87,8 @@ public abstract class BasePiece : MonoBehaviour
     }
     public virtual void TakeDamage()
     {
-        
-        mAnimatorController.enabled = false;
+        if(mAnimatorController!=null)
+           mAnimatorController.enabled = false;
         HealthEnemy -=1;
         if (HealthEnemy <= 0)
         {
@@ -120,7 +120,8 @@ public abstract class BasePiece : MonoBehaviour
     }
     IEnumerator KillTime()
     {
-        mAnimatorController.SetTrigger("Die");
+        if (mAnimatorController != null)
+            mAnimatorController.SetTrigger("Die");
         yield return new WaitForSeconds(.3f);
         if (mCurrentCell != null)
             mCurrentCell.mCurrentPiece = null;
@@ -133,7 +134,11 @@ public abstract class BasePiece : MonoBehaviour
         if (mHighlightedCells.Count < moveDistance) mTargetCell = mHighlightedCells[mHighlightedCells.Count-1];
         if (mHighlightedCells.Count >= moveDistance) mTargetCell = mHighlightedCells[moveDistance];
     }
-
+    public virtual void AttackAnimation()
+    {
+        if (mAnimatorController != null)
+            mAnimatorController.SetTrigger("Attack");
+    }
     public void ComputerMove(int moveDistance, bool _down)
     {
         ClearCells();
@@ -152,7 +157,8 @@ public abstract class BasePiece : MonoBehaviour
         {
             if (deadCase >= 1)
             {
-                mAnimatorController.SetTrigger("Attack");
+                if (mAnimatorController != null)
+                    mAnimatorController.SetTrigger("Attack");
                 PieceManager.Instance.DamageTower();
                 GameManager.Instance.ChangeHealth(1);
                 //Kill();
@@ -243,7 +249,8 @@ public abstract class BasePiece : MonoBehaviour
     }
     public IEnumerator  AttackTime()
     {
-        mAnimatorController.SetTrigger("Attack");
+        if (mAnimatorController != null)
+            mAnimatorController.SetTrigger("Attack");
        
         PieceManager.Instance.mWhitePiece.StartColorPulse();
         yield return new WaitForSeconds(.3f);
@@ -257,7 +264,6 @@ public abstract class BasePiece : MonoBehaviour
         mIsFirstMove = false;
         if(mTargetCell.mCurrentPiece != null&& mTargetCell.mCurrentPiece.mColor==Color.white)
         {
-            Debug.Log("Enemy Piece Killed");
             EnemyPassKingCehck();
             return;
           //  GameManager.Instance.ChangeHealth(1);

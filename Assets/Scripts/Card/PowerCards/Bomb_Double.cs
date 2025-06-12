@@ -8,7 +8,11 @@ public class Bomb_Double : CardBase
 
     private List<Cell> BombAreas = new();
 
- 
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+
+    }
     public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         base.CardSetup(basePiece, _cardPowerManager);

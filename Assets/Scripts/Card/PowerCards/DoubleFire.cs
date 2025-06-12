@@ -6,7 +6,11 @@ public class DoubleFire : CardBase
 {
     public override CardType _CardType => CardType.DoubleFire;
 
- 
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+
+    }
     public override void CheckPathing()
     {
         CreateCellPathD(0, 1, mMovement.y);

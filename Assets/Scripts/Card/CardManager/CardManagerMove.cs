@@ -53,6 +53,10 @@ public class CardManagerMove : MonoBehaviour
         imageCards = cardFollowPrefabParent.GetComponent<Image>();
         healthCard = false;
     }
+    public void GetCardPrefabs()
+    {
+
+    }
     public void SpawnCards()
     {
         DestroyAllCards();

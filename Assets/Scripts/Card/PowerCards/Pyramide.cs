@@ -12,13 +12,17 @@ public class Pyramide : CardBase
  
     Cell cell;
 
-  
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+
+    }
     public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
+
+        base.CardSetup(basePiece, _cardPowerManager);
+
         mMovement = mCardSO._CardPoweraArea;  //5.0.0
-        mColor = Color.white;
     }
 
     public override void CreateCellPath(int xDirection, int yDirection, int movement)

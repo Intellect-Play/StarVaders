@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+
 [RequireComponent(typeof(CardClick))]
 
 public abstract class CardBase : BasePiece
@@ -17,12 +20,17 @@ public abstract class CardBase : BasePiece
 
     private bool used;
 
+    [SerializeField] public TextMeshProUGUI mCardPowerText;
+    public int mCardPower;
+
     private void Start()
     {
         GetComponent<Image>().sprite = mCardSO._CardImage;
         used = false;
         cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.SetupThisCard(this);
+        mCardPowerText = GetComponentInChildren<TextMeshProUGUI>();
+        mCardMoveImage.powerText.text = mCardPower.ToString();
     }
 
     public virtual void CardSetup(BasePiece king, CardPowerManager manager)
@@ -43,6 +51,7 @@ public abstract class CardBase : BasePiece
 
     public virtual void UseForAllCards()
     {
+        mKing.AttackAnimation();
         CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 
         CameraShake.Instance.ShakeCardAttack();

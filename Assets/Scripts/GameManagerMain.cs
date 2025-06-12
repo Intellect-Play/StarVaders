@@ -7,6 +7,7 @@ public class GameManagerMain : MonoBehaviour
 
     [SerializeField]private GameObject mMainStage;
     [SerializeField]private GameObject mGameUI;
+    [SerializeField] private GameObject mGameShop;
     private void Awake()
     {
         if (Instance == null)
@@ -23,7 +24,18 @@ public class GameManagerMain : MonoBehaviour
     public void BattleStartInMainMenu(bool start)
     {
         mMainStage.SetActive(!start);
+        mGameShop.SetActive(false);
         mGameUI.SetActive(start);
+    }
+    public void OpenShop()
+    {
+        mGameShop.SetActive(true);
+        mMainStage.SetActive(false);
+    }
+    public void CloseShop()
+    {
+        mGameShop.SetActive(false);
+        mMainStage.SetActive(true);
     }
 }
 

@@ -6,14 +6,17 @@ public class PushBack : CardBase
 {
     public override CardType _CardType => CardType.PushBack;
 
-  
 
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+
+    }
     public override void CardSetup(BasePiece king, CardPowerManager manager)
     {
-        mKing = king;
-        cardPowerManager = manager;
+        base.CardSetup(king, manager);
+
         mMovement = mCardSO._CardPoweraArea;  //0.15.0
-        mColor = Color.white;
     }
 
     public override void SelectedCard(bool moveActive = false)

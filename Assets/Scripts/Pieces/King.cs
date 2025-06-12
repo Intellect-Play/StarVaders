@@ -145,6 +145,11 @@ public class King : BasePiece
         }
     }
 
+    public void AttackAnimation()
+    {
+        if (mAnimatorController != null)
+            mAnimatorController.SetTrigger("Attack");
+    }
     public override void MoveKing(Cell targetCell)
     {
         isDragging = false;

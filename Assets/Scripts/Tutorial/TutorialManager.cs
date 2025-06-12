@@ -111,7 +111,7 @@ public class TutorialManager : MonoBehaviour
     {
         if ((CardManagerMove.Instance.currentCardClick != null && !CardManagerMove.Instance.currentCardClick.MoveCard)|| CardManagerMove.Instance.currentCardClick == null)
         {
-            if (CardManagerMove.Instance.spawnedCards[0] != null)
+            if (CardManagerMove.Instance.spawnedCards.Count>0 && CardManagerMove.Instance.spawnedCards[0] != null)
             {
                 tutorialHandAnimator.ShowMoveHandAnimationUI(CardManagerMove.Instance.spawnedCards[0].GetComponent<RectTransform>(), new Vector3(50, 0, 0));
 

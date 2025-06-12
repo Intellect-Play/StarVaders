@@ -15,7 +15,7 @@ public class ScrollToLevel : MonoBehaviour
     void Start()
     {
         GetAndListNumbers();
-        ScrollToTargetLevel(levelCount);
+        //ScrollToTargetLevel(levelCount);
     }
 
     void GetAndListNumbers()

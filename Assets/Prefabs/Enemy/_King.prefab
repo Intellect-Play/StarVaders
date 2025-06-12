@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 222139883164056802}
   - component: {fileID: 114742050372184844}
   - component: {fileID: -6283098595504087253}
+  - component: {fileID: 3358404998417002127}
   m_Layer: 5
   m_Name: _King
   m_TagString: Untagged
@@ -67,9 +68,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 35d3d17066aa7714b8d25ec1038026e6, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -104,7 +105,31 @@ MonoBehaviour:
   down: 1
   moveCard: 0
   Heal: {fileID: 3662208301526546895}
+  HealthEnemy: 1
+  targetImage: {fileID: 0}
+  duration: 0.5
   isDragging: 0
+--- !u!95 &3358404998417002127
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574190171488166}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25f85e2cee1704d4394c8ba8d0abc1e6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &5235831676741854171
 PrefabInstance:
   m_ObjectHideFlags: 0

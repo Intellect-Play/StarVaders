@@ -13,6 +13,7 @@ public class CardMoveImage : MonoBehaviour
     public GameObject Visual;
     public GameObject Shadow;
     public Transform spawnParent;
+    public TextMeshProUGUI powerText;
 
     //public setting changes to our cards movement
     [Header("Settings")]
@@ -33,6 +34,10 @@ public class CardMoveImage : MonoBehaviour
     private Vector3 originalScale;
     private bool ActiveCard;
 
+    private void Awake()
+    {
+       // powerText = GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     private void Start()
     {

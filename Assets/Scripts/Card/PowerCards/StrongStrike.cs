@@ -12,7 +12,11 @@ public class StrongStrike : CardBase
     Cell cell;
 
 
-  
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+
+    }
 
     public override void CreateCellPath(int xDirection, int yDirection, int movement)
     {

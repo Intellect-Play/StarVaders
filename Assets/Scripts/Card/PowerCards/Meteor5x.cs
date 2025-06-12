@@ -6,7 +6,11 @@ public class Meteor5x : CardBase
 {
     public override CardType _CardType => CardType.Meteor5x;
     List<Cell> randomCells;
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
 
+    }
     public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
         base.CardSetup(basePiece, _cardPowerManager);

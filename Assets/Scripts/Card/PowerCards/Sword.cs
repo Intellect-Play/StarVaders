@@ -11,7 +11,11 @@ public class Sword : CardBase
     {
         CreateCellPathS(0, 1, mMovement.y);
     }
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
 
+    }
     private void CreateCellPathS(int x, int y, int movement)
     {
         int curX = mCurrentCell.mBoardPosition.x;

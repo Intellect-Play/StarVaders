@@ -12,13 +12,16 @@ public class Bomb3x3 : CardBase
     
     Cell cell;
 
+    public void Awake()
+    {
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
 
+    }
     public override void CardSetup(BasePiece basePiece, CardPowerManager _cardPowerManager)
     {
-        mKing = basePiece;
-        cardPowerManager = _cardPowerManager;
+        base.CardSetup(basePiece, _cardPowerManager);
+
         mMovement = mCardSO._CardPoweraArea;  // 0.3.0
-        mColor = Color.white;
     }
     public override void UseCard()
     {
