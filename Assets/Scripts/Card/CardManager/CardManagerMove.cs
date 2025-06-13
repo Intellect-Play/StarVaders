@@ -5,11 +5,14 @@ using DG.Tweening;
 using System.Collections;
 using static Unity.VisualScripting.Member;
 using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting;
 
 public class CardManagerMove : MonoBehaviour
 {
     public static CardManagerMove Instance;
     public List<GameObject> cardPrefabs;
+    public List<GameObject> cardOpenPrefabs = new List<GameObject>();
+
     public Transform spawnParent;
     public Transform spawnButtonTransform;
     public GameObject cardFollowPrefab;
@@ -20,6 +23,7 @@ public class CardManagerMove : MonoBehaviour
     public int cardCount = 5;
     public bool TutorialBool;
     public List<GameObject> spawnedCards = new List<GameObject>();
+
     public CardClick currentCardClick;
     [SerializeField] private Canvas canvas;
     [SerializeField] private CardStartButton cardStartButton;
@@ -55,7 +59,7 @@ public class CardManagerMove : MonoBehaviour
     }
     public void GetCardPrefabs()
     {
-
+        //spawnedOpenCards.Add(spawnedCards.Find(x=>x.name==))
     }
     public void SpawnCards()
     {
@@ -69,6 +73,18 @@ public class CardManagerMove : MonoBehaviour
         //    if(SaveManager.Instance.saveData.playerData.currentLevel==1) StartCoroutine(SpawnCardWithTimeFotTutorial(time));
         //    else StartCoroutine(SpawnCardWithTime(time));
         //}
+    }
+    public void CheckOpenedCards()
+    {
+        cardOpenPrefabs.Clear();
+        foreach(GameObject gameObject in cardPrefabs)
+        {
+            if(SaveManager.Instance.cardDataList.cards.Find(x => x.name == gameObject.name).isUnlocked)
+            {
+                cardOpenPrefabs.Add(gameObject);
+            }
+       
+        }
     }
     IEnumerator SpawnCardWithTime(float _time)
     {
@@ -90,9 +106,9 @@ public class CardManagerMove : MonoBehaviour
         //cardCount = CardLimit - spawnedCards.Count + 1;
         for (int i = j ; i < CardLimit; i++)
         {
-            cardNumber = Random.Range(1, cardPrefabs.Count);
-            if (!healthCard && cardNumber == 5) { 
-                cardPrefabs.RemoveAt(5);
+            cardNumber = Random.Range(1, cardOpenPrefabs.Count);
+            if (!healthCard && cardNumber == 5) {
+                cardOpenPrefabs.RemoveAt(5);
                 healthCard = true;
             }
             SpawnCard(cardNumber);
@@ -124,7 +140,7 @@ public class CardManagerMove : MonoBehaviour
         cardCount = CardLimit - spawnedCards.Count + 1;
         for (i = 1; i < cardCount; i++)
         {
-            cardNumber = Random.Range(1, cardPrefabs.Count);
+            cardNumber = Random.Range(1, cardOpenPrefabs.Count);
             SpawnCard(cardNumber);
             yield return new WaitForSeconds(_time);
         }
@@ -134,7 +150,7 @@ public class CardManagerMove : MonoBehaviour
     private void SpawnCard(int _cardNumber)
     {
        // Debug.Log("SpawnCard: " + _cardNumber);
-        GameObject randomPrefab = cardPrefabs[_cardNumber];
+        GameObject randomPrefab = cardOpenPrefabs[_cardNumber];
         GameObject card = Instantiate(randomPrefab, cardExit.localPosition, Quaternion.identity, spawnParent);
         GameObject cardFollow = Instantiate(cardFollowPrefab, cardExit.localPosition, Quaternion.identity, cardFollowPrefabParent);
         RectTransform cardRect = card.GetComponent<RectTransform>();

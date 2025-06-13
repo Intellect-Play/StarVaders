@@ -145,7 +145,7 @@ public class King : BasePiece
         }
     }
 
-    public void AttackAnimation()
+    public override void AttackAnimation()
     {
         if (mAnimatorController != null)
             mAnimatorController.SetTrigger("Attack");

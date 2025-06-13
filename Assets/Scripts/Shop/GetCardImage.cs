@@ -9,11 +9,9 @@ public class GetcardImage : MonoBehaviour
     public List<CardImages> cardImagesList = new List<CardImages>();
     private void Awake()
     {
-        Debug.Log("Card Prefab: ");
 
         foreach (GameObject cardPrefab in cardManagerMove.cardPrefabs)
         {
-            Debug.Log("Card Prefab: " + cardPrefab.name);
             CardImages card = new CardImages();
             card.cardType = cardPrefab.GetComponent<CardBase>()._CardType;
             card.cardImage = cardPrefab.GetComponent<Image>().sprite;

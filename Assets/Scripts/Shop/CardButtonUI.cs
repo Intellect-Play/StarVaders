@@ -12,6 +12,8 @@ public class CardButtonUI : MonoBehaviour
     public TextMeshProUGUI actionButtonText;
     public Image cardImage;
     public Image cardLockImage;
+    public Image cardUpImage;
+
     public Image cardBuyImage;
     public string nameCard;
     [HideInInspector] public int cardId;
@@ -42,6 +44,8 @@ public class CardButtonUI : MonoBehaviour
     }
     public void SelectCard(bool Active)
     {
+        targetRectTransform.SetAsLastSibling();
+
         SetAnchorPivotToCenterPreservePosition();
         if (Active)
         {
@@ -56,14 +60,14 @@ public class CardButtonUI : MonoBehaviour
     }
     public void BuyCard()
     {
-        BuyUpgradeAnimationCard();
+        BuyUpgradeAnimationCard(false);
     }
     public void UpgradeCard()
     {
-        BuyUpgradeAnimationCard();
+        BuyUpgradeAnimationCard(true);
 
     }
-    public void BuyUpgradeAnimationCard()
+    public void BuyUpgradeAnimationCard(bool Up)
     {
        
         targetRectTransform.SetAsLastSibling();
@@ -83,9 +87,9 @@ public class CardButtonUI : MonoBehaviour
         Vector2 center = Vector2.zero; // merkeze göre
 
         sequence.Append(targetRectTransform.DORotate(Vector3.zero, 0.3f).SetEase(Ease.OutQuad));
-        sequence.Join(targetRectTransform.DOAnchorPos(parentRect.anchoredPosition-new Vector2(0,100), 0.3f).SetEase(Ease.OutQuad));
+        sequence.Join(targetRectTransform.DOAnchorPos(new Vector2(0,400), 0.3f).SetEase(Ease.OutQuad));
         sequence.Join(targetRectTransform.DOScale(2f, 0.3f).SetEase(Ease.OutBack));
-
+        ActiveCard(true);
         // 4. Bekleme
         sequence.AppendInterval(1.5f);
 
@@ -107,5 +111,9 @@ public class CardButtonUI : MonoBehaviour
 
         // 3. Eski dünya pozisyonuna göre anchored position'u yeniden hesapla
         targetRectTransform.position = worldPos;
+    }
+    public void UpBuyAnime(bool Up)
+    {
+
     }
 }

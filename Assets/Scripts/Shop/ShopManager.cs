@@ -105,14 +105,16 @@ public class ShopManager : MonoBehaviour
 
     private void SaveData()
     {
-        string directory = Path.GetDirectoryName(jsonPath);
-        if (!Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
+        SaveManager.Instance.SaveData();
 
-        string json = JsonUtility.ToJson(cardDataList, true);
-        File.WriteAllText(jsonPath, json);
+        //string directory = Path.GetDirectoryName(jsonPath);
+        //if (!Directory.Exists(directory))
+        //{
+        //    Directory.CreateDirectory(directory);
+        //}
+
+        //string json = JsonUtility.ToJson(cardDataList, true);
+        //File.WriteAllText(jsonPath, json);
     }
 
 
@@ -141,8 +143,7 @@ public class ShopManager : MonoBehaviour
         var ui = btn.GetComponent<CardButtonUI>();
         ui.cardId = card.id;
         ui.nameText.text = card.name;
-        ui.powerText.text = "Power: " + card.power;
-        Debug.Log($"Updating UI for card: {card.name} (ID: {card.id})+{cardButtons[card.id].cardButtonUI.nameCard}");
+        ui.powerText.text = card.power.ToString();
 
         ui.actionButton.onClick.RemoveAllListeners();
 
@@ -150,12 +151,12 @@ public class ShopManager : MonoBehaviour
         {
             //cardButtons[card.id].cardButtonUI.UpgradeCard();
 
-            ui.actionButtonText.text = $"Upgrade ({card.upgradeCost})";
+            ui.actionButtonText.text = $"Upgrade";
             ui.actionButton.onClick.AddListener(() => SelectCard(card, CardAction.Upgrade));
         }
         else
         {
-            ui.actionButtonText.text = $"Buy ({card.buyCost})";
+            ui.actionButtonText.text = $"Buy";
             ui.actionButton.onClick.AddListener(() => SelectCard(card,CardAction.Buy));
         }
     }
@@ -172,7 +173,6 @@ public class ShopManager : MonoBehaviour
         coins = SaveManager.Instance.saveData.playerData.coins; // debug amaçlı varsayılan yüksek
         if (coins >= card.buyCost)
         {
-            Debug.Log($"Kart satın alınıyor: {card.name} (ID: {card.id}), Fiyat: {card.buyCost}, Mevcut Para: {coins}");
             cardButtons[cardId].cardButtonUI.BuyCard();
             SaveManager.Instance.saveData.playerData.coins = coins;
 
@@ -185,7 +185,6 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Yetersiz para.");
         }
     }
   
@@ -200,7 +199,6 @@ public class ShopManager : MonoBehaviour
         {
             cardButtons[cardId].cardButtonUI.UpgradeCard();
 
-            Debug.Log($"Kart yükseltiliyor: {card.name} (ID: {card.id}), Fiyat: {card.upgradeCost}, Mevcut Para: {coins}");
             coins -= card.upgradeCost;
             SaveManager.Instance.saveData.playerData.coins = coins;
             PlayerPrefs.SetInt("Coins", coins);
@@ -212,7 +210,6 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Yetersiz para.");
         }
     }
 
@@ -220,7 +217,6 @@ public class ShopManager : MonoBehaviour
     {
         if (selectedCardId != -1) cardButtons[selectedCardId].cardButtonUI.SelectCard(false);
         cardButtons[card.id].cardButtonUI.SelectCard(true);
-        Debug.Log("select Card");
         selectedCardAction = cardAction;
         selectedCardId = card.id;
         int coins = SaveManager.Instance.saveData.playerData.coins;
@@ -237,7 +233,6 @@ public class ShopManager : MonoBehaviour
     {
         if (selectedCardId == -1 || selectedCardAction == CardAction.None)
         {
-            Debug.Log("Lütfen bir kart seçin.");
             return;
         }
         if (selectedCardAction == CardAction.Buy)

@@ -33,7 +33,7 @@ public class GameUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        CardManagerMove.Instance.CheckOpenedCards();
     }
     private void Start()
     {

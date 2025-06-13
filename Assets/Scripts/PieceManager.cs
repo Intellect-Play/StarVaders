@@ -11,6 +11,7 @@ public class PieceManager : MonoBehaviour
     public bool mIsKingAlive = true;
 
     public GameObject mPiecePrefab;
+    public GameObject mKillParticle;
 
     public BasePiece mWhitePiece = null;
     public BasePiece mBlackPiece = null;
@@ -210,6 +211,8 @@ public class PieceManager : MonoBehaviour
     }
     public void KillEnemy(BasePiece piece)
     {
+        //Instantiate(mKillParticle, new Vector3(piece.gameObject.transform.position.x, piece.gameObject.transform.position.y,-180),Quaternion.identity,transform);
+        Debug.Log("Enemy killed: " + piece.name);
         mAllBlackPieces.Remove(piece);
         if(mAllBlackPieces.Count == 0)
         {
