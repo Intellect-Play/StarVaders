@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] BuyUpgradeShopButton BuyorUpgradeButton;
     [SerializeField] TextMeshProUGUI CoinText;
 
+    public static bool ShopActive = true;
     public Transform cardButtonParent;
     public GameObject cardButtonPrefab;
 
@@ -26,6 +27,7 @@ public class ShopManager : MonoBehaviour
     int coins;
     private void Start()
     {
+        ShopActive = true;
         getcardImage = GetComponent<GetcardImage>();
         //DeleteSaveFile();
         cardDataList = SaveManager.Instance.cardDataList;
@@ -43,50 +45,7 @@ public class ShopManager : MonoBehaviour
         BuyorUpgradeButton.button.onClick.AddListener(BuyOrUpgradeFunc);
 
     }
-    #region Data Load/Save
-
-    private void LoadData()
-    {
-        if (File.Exists(jsonPath))
-        {
-            Debug.Log("cards.json yüklendi: " + jsonPath);
-
-            string json = File.ReadAllText(jsonPath);
-            cardDataList = JsonUtility.FromJson<CardDataList>(json);
-        }
-        else
-        {
-            TextAsset jsonAsset = Resources.Load<TextAsset>("Data/cards");
-            Debug.Log("cards.json " + jsonPath);
-         
-            if (jsonAsset != null)
-            {
-                Debug.Log("cards.json bulunamadı, varsayılan veriler yüklenecek: " + jsonPath);
-                cardDataList = JsonUtility.FromJson<CardDataList>(jsonAsset.text);
-                // File.WriteAllText(jsonPath, json);
-            }
-            else
-            {
-                Debug.Log("varsayılan veriler yüklenecek: " + jsonPath);
-
-                // JSON yoksa 6 örnek kart yarat
-                cardDataList = new CardDataList { cards = new List<CardData>() };
-                for (int i = 0; i < 6; i++)
-                {
-                    cardDataList.cards.Add(new CardData
-                    {
-                        id = i,
-                        name = "Card " + (i + 1),
-                        power = 10,
-                        isUnlocked = false,
-                        buyCost = 100 + i * 50,
-                        upgradeCost = 50 + i * 30
-                    });
-                }
-                SaveData();
-            }
-        }
-    }
+    
     public void DeleteSaveFile()
     {
         jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards.json");
@@ -118,7 +77,7 @@ public class ShopManager : MonoBehaviour
     }
 
 
-    #endregion
+
 
     #region UI
 
@@ -215,6 +174,7 @@ public class ShopManager : MonoBehaviour
 
     public void SelectCard(CardData card, CardAction cardAction)
     {
+        if (!ShopActive) return;
         if (selectedCardId != -1) cardButtons[selectedCardId].cardButtonUI.SelectCard(false);
         cardButtons[card.id].cardButtonUI.SelectCard(true);
         selectedCardAction = cardAction;
@@ -231,10 +191,13 @@ public class ShopManager : MonoBehaviour
 
     public void BuyOrUpgradeFunc()
     {
+        if (!ShopActive) return;
+
         if (selectedCardId == -1 || selectedCardAction == CardAction.None)
         {
             return;
         }
+        ShopActive = false; // Disable shop interaction while processing
         if (selectedCardAction == CardAction.Buy)
         {
             BuyCard(selectedCardId);

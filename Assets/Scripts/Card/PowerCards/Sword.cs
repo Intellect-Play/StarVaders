@@ -42,6 +42,8 @@ public class Sword : CardBase
         {
             x += xDir;
             y += yDir;
+            if (mCurrentCell.mBoardPosition == new Vector2Int(x, y))
+                continue;
             var cellState = mCurrentCell.mBoard.ValidateCellforCards(x, y, this);
 
             if (cellState == CellState.Enemy)

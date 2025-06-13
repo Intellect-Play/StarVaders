@@ -44,7 +44,8 @@ public class StrongStrike : CardBase
         {
             currentX += xDirection;
             currentY += yDirection;
-
+            if (mCurrentCell.mBoardPosition == new Vector2Int(currentX, currentY))
+                continue;
             CellState cellState = CellState.None;
             cellState =mCurrentCell.mBoard.ValidateCellforCards(currentX, currentY,this);
 

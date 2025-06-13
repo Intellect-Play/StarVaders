@@ -31,6 +31,8 @@ public class Meteor5x : CardBase
 
         foreach (var cell in randomCells)
         {
+            if (mCurrentCell.mBoardPosition == cell.mBoardPosition)
+                continue;
             var state = mCurrentCell.mBoard.ValidateCellforCards(cell.mBoardPosition.x, cell.mBoardPosition.y, this);
 
             if (state == CellState.Enemy)

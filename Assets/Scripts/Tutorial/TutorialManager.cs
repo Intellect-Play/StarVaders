@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class TutorialManager : MonoBehaviour
     public TutorialHandAnimator tutorialHandAnimator;
 
     [Header("Tutorial Settings")]
-    [SerializeField] private Vector3 ButtonClickOffset = new Vector3(280,70,0); 
-
+    [SerializeField] private Vector3 ButtonClickOffset = new Vector3(280,70,0);
+    [SerializeField] private Button EndTurnButton;
     public bool IsTutorialActive = false;
     int tutorialLevel;
     private void Awake()
@@ -32,6 +33,7 @@ public class TutorialManager : MonoBehaviour
         {
             IsTutorialActive = false;
             tutorialLevel = 0;
+            //EndTurnButton.interactable = false;
         }
         else
         {
@@ -40,10 +42,7 @@ public class TutorialManager : MonoBehaviour
             
         }
     }
-    void Start()
-    {
-        
-    }
+
     public void SelectCard(int currentCardCount)
     {
         if (!IsTutorialActive) return;
@@ -51,7 +50,7 @@ public class TutorialManager : MonoBehaviour
         for (int i = 0;i<CardManagerMove.Instance.spawnedCards.Count; i++)
         {
             CardClick card = CardManagerMove.Instance.spawnedCards[i].GetComponent<CardClick>();
-            if (i == 0)
+            if (i == (tutorialLevel >= 1 ? 0 : 1))
             {
                 if(tutorialLevel<3)
                    tutorialHandAnimator.ShowTapAnimationUI(card.gameObject.GetComponent<RectTransform>(), new Vector3(50,0,0));

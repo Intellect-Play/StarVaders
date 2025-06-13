@@ -96,6 +96,7 @@ MonoBehaviour:
   mIsFirstMove: 1
   mOriginalCell: {fileID: 0}
   mCurrentCell: {fileID: 0}
+  moveAnime: {fileID: 3211708435485389167}
   mRectTransform: {fileID: 0}
   mPieceManager: {fileID: 0}
   mTargetCell: {fileID: 0}

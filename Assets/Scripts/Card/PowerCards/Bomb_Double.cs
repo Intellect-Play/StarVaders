@@ -30,6 +30,8 @@ public class Bomb_Double : CardBase
     {
         foreach (var cell in BombAreas)
         {
+            if (mCurrentCell.mBoardPosition == cell.mBoardPosition)
+                continue;
             var state = mCurrentCell.mBoard.ValidateCellforCards(cell.mBoardPosition.x, cell.mBoardPosition.y, this);
 
             if (state == CellState.Enemy)

@@ -13,7 +13,7 @@ public class CardButtonUI : MonoBehaviour
     public Image cardImage;
     public Image cardLockImage;
     public Image cardUpImage;
-
+    public GameObject UpgradeAnimation;
     public Image cardBuyImage;
     public string nameCard;
     [HideInInspector] public int cardId;
@@ -25,6 +25,7 @@ public class CardButtonUI : MonoBehaviour
     private Vector3 originalRotation;
     private void Awake()
     {
+        UpgradeAnimation.SetActive(false);
         targetRectTransform = GetComponent<RectTransform>();
         // cardImage = GetComponent<Image>();
     }
@@ -44,6 +45,7 @@ public class CardButtonUI : MonoBehaviour
     }
     public void SelectCard(bool Active)
     {
+        Debug.Log("card Select");
         targetRectTransform.SetAsLastSibling();
 
         SetAnchorPivotToCenterPreservePosition();
@@ -69,7 +71,7 @@ public class CardButtonUI : MonoBehaviour
     }
     public void BuyUpgradeAnimationCard(bool Up)
     {
-       
+        UpgradeAnimation.SetActive(true);
         targetRectTransform.SetAsLastSibling();
         // 1. Orijinal konum, dönüş ve ölçek kaydedilir
         originalAnchoredPos = targetRectTransform.anchoredPosition;
@@ -96,7 +98,10 @@ public class CardButtonUI : MonoBehaviour
         // 5. Eski pozisyona, boyuta ve rotasyona geri dönme
         sequence.Append(targetRectTransform.DOAnchorPos(originalAnchoredPos, 0.25f).SetEase(Ease.InOutQuad));
         sequence.Join(targetRectTransform.DOScale(1, 0.25f).SetEase(Ease.InOutQuad));
-        sequence.Join(targetRectTransform.DORotate(originalRotation, 0.25f).SetEase(Ease.InOutQuad));
+        sequence.Join(targetRectTransform.DORotate(originalRotation, 0.25f).SetEase(Ease.InOutQuad)).OnComplete(() => {
+            ShopManager.ShopActive = true;
+            UpgradeAnimation.SetActive(false);
+        });
     }
 
     public void SetAnchorPivotToCenterPreservePosition()

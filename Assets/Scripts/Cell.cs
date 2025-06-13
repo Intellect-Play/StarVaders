@@ -28,11 +28,12 @@ public class Cell : MonoBehaviour
 
     public void CellButtonClick()
     {
-        Debug.Log("Cell Button Clicked");
         if (TutorialManager.Instance.IsTutorialActive) {
             if (mBoardPosition == new Vector2Int(2, 3))
             {
-                TutorialManager.Instance.CardStartClickTutorial();
+                Debug.Log("Cell Button Clicked");
+
+                TutorialManager.Instance.SelectCard(1);
                 PieceManager.Instance.mWhitePiece.MoveKing(this);
             }
         }else PieceManager.Instance.mWhitePiece.MoveKing(this);

@@ -8,11 +8,11 @@
           "enemies": [
             {
               "type": "Sceleton",
-              "column": 4
+              "column": 3
             },
             {
               "type": "Sceleton",
-              "column": 2
+              "column": 1
             }
           ]
         },

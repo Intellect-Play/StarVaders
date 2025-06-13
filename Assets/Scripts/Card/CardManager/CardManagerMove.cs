@@ -67,7 +67,9 @@ public class CardManagerMove : MonoBehaviour
        // Debug.Log("SpawnCards");
         //ClearCards();
         VisualMask(true);
-        StartCoroutine(SpawnCardWithTime(time));
+        if(SaveManager.Instance.saveData.playerData.currentLevel == 1) StartCoroutine(SpawnCardWithTimeFotTutorial(time));
+        else StartCoroutine(SpawnCardWithTime(time));
+
         //if (spawnedCards.Count< CardLimit)
         //{
         //    if(SaveManager.Instance.saveData.playerData.currentLevel==1) StartCoroutine(SpawnCardWithTimeFotTutorial(time));
@@ -129,10 +131,10 @@ public class CardManagerMove : MonoBehaviour
         {
             i = 1;
             SpawnCard(0);
-            SpawnCard(4);
-            SpawnCard(9);
             SpawnCard(1);
-            SpawnCard(9);
+            SpawnCard(1);
+            SpawnCard(2);
+            //SpawnCard(9);
             //SpawnCard(8);
 
         }
@@ -202,6 +204,7 @@ public class CardManagerMove : MonoBehaviour
     {
         if (currentCardClick != null)
         {
+            Debug.Log("UseCurrentCard: " + currentCardClick.card.name);
             currentCardClick.card.UseForAllCards();
             currentCardClick = null;
             cardStartButton.gameObject.SetActive(false);
@@ -209,7 +212,9 @@ public class CardManagerMove : MonoBehaviour
     }
     public void ResetCardPositions(CardClick cardClick)
     {
-        if(currentCardClick != null)
+    
+
+        if (currentCardClick != null)
         {
             currentCardClick.GetComponent<CardClick>().ResetCardPosition();
 
@@ -221,6 +226,8 @@ public class CardManagerMove : MonoBehaviour
 
     public void RemoveSpawnCard(GameObject card)
     {
+
+        TutorialManager.Instance.SelectCard(0);
         if (spawnedCards.Contains(card))
         {
             spawnedCards.Remove(card);

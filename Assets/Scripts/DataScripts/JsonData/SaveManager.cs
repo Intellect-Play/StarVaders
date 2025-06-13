@@ -17,10 +17,10 @@ public class SaveManager : MonoBehaviour
             Instance = this;
             savePath = Application.persistentDataPath + "/saveData.json";
             jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards");
-             File.Delete(jsonPath);
+            // File.Delete(jsonPath);
             LoadData();
             Load();
-           // saveData.playerData.coins = 10000; // Test purposes, remove later
+            //saveData.playerData.coins = 500; // Test purposes, remove later
             //ResetData();
             if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
         }
@@ -121,7 +121,6 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Save file not found. Creating a new one.");
             saveData = new PlayerSaveData(); // Default dəyərlərlə
             saveData.playerData.health = 4;
             saveData.playerData.coins = 0;

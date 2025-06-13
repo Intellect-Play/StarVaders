@@ -61,7 +61,8 @@ public class Bat : CardBase
         {
             _currentX += xDirection;
             _currentY += yDirection;
-
+            if(mCurrentCell.mBoardPosition == new Vector2Int(_currentX, _currentY))
+                continue;
             var cellState = mCurrentCell.mBoard.ValidateCellforCards(_currentX, _currentY, this);
 
             if (cellState == CellState.Enemy)

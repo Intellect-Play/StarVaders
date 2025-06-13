@@ -12,6 +12,7 @@ public abstract class BasePiece : MonoBehaviour
 
     [SerializeField] public Cell mOriginalCell = null;
     [SerializeField] public Cell mCurrentCell = null;
+    [SerializeField] public GameObject moveAnime;
 
     public RectTransform mRectTransform = null;
     public PieceManager mPieceManager;

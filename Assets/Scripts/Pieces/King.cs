@@ -10,7 +10,7 @@ public class King : BasePiece
     {
         // Base setup
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
-
+        moveAnime.SetActive(false);
         // King setup
         mMovement = new Vector3Int(2, 2, 1);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("Player");
