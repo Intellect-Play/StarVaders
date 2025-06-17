@@ -156,14 +156,17 @@ public abstract class BasePiece : MonoBehaviour
     {
         if (mColor == Color.black && mCurrentCell.mBoardPosition.y == 0)
         {
-            if (deadCase >= 1)
-            {
-                if (mAnimatorController != null)
-                    mAnimatorController.SetTrigger("Attack");
-                PieceManager.Instance.DamageTower();
-                GameManager.Instance.ChangeHealth(1);
-                //Kill();
-            }
+            if (mAnimatorController != null)
+                mAnimatorController.SetTrigger("Attack");
+            PieceManager.Instance.DamageTower();
+            GameManager.Instance.ChangeHealth(1);
+            //if (deadCase >= 1)
+            //{
+              
+            //    //Kill();
+            //}
+            //else PieceManager.Instance.DamageTower();
+
             ++deadCase;          
         }else deadCase = 0;
     }

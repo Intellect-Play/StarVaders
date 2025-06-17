@@ -29,6 +29,7 @@ public class CardManagerMove : MonoBehaviour
     [SerializeField] private CardStartButton cardStartButton;
     [SerializeField] public RectTransform rectTransformCardLimit;
     [SerializeField] public float spawnSpace;
+    [SerializeField] public GameObject spawnReturnCoin;
 
     private Mask maskCards;
     private Image imageCards;
@@ -108,7 +109,7 @@ public class CardManagerMove : MonoBehaviour
         //cardCount = CardLimit - spawnedCards.Count + 1;
         for (int i = j ; i < CardLimit; i++)
         {
-            cardNumber = Random.Range(1, cardOpenPrefabs.Count);
+            cardNumber = Random.Range(1, cardOpenPrefabs.Count-1);
             if (!healthCard && cardNumber == 5) {
                 cardOpenPrefabs.RemoveAt(5);
                 healthCard = true;
@@ -139,7 +140,7 @@ public class CardManagerMove : MonoBehaviour
 
         }
         else i = 0;
-        cardCount = CardLimit - spawnedCards.Count + 1;
+        cardCount = CardLimit - spawnedCards.Count ;
         for (i = 1; i < cardCount; i++)
         {
             cardNumber = Random.Range(1, cardOpenPrefabs.Count);
@@ -152,6 +153,7 @@ public class CardManagerMove : MonoBehaviour
     private void SpawnCard(int _cardNumber)
     {
        // Debug.Log("SpawnCard: " + _cardNumber);
+       Debug.Log(_cardNumber);
         GameObject randomPrefab = cardOpenPrefabs[_cardNumber];
         GameObject card = Instantiate(randomPrefab, cardExit.localPosition, Quaternion.identity, spawnParent);
         GameObject cardFollow = Instantiate(cardFollowPrefab, cardExit.localPosition, Quaternion.identity, cardFollowPrefabParent);
@@ -177,8 +179,11 @@ public class CardManagerMove : MonoBehaviour
         foreach (var card in spawnedCards)
         {
             if (card != null) {
+                GameManager.Instance.ChangeCoin(10);
+                CardMoveImage moveimage = card.GetComponent<CardClick>().moveImage; 
+                Instantiate(spawnReturnCoin, card.GetComponent<RectTransform>().position,Quaternion.identity, moveimage.transform.parent);
                 card.transform.parent = cardSpawn;
-                card.GetComponent<CardClick>().moveImage.CardDestroy();
+                moveimage.CardDestroy();
                 card.transform.localPosition = Vector3.zero;
                 //spawnedCards.Remove(card);
             }

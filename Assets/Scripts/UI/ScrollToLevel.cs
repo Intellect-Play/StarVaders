@@ -15,13 +15,14 @@ public class ScrollToLevel : MonoBehaviour
     void Start()
     {
         GetAndListNumbers();
-        //ScrollToTargetLevel(levelCount);
+        ScrollToTargetLevel(levelCount);
     }
 
     void GetAndListNumbers()
     {
         levelRoadMapNumbers = new List<LevelRoadMapNumber>();
-        levelCount = SaveManager.Instance.saveData.playerData.currentLevel;
+        levelCount = SaveManager.Instance.saveData.playerData.currentLevel-1;
+        Debug.Log(levelCount + " Level");
         for (int i = 0; i < LevelImages.Count; i++)
         {
             var levelImage = LevelImages[i];
@@ -43,6 +44,8 @@ public class ScrollToLevel : MonoBehaviour
     }
     public void ScrollToTargetLevel(int level)
     {
+        level -=1;
+        if (level < 0) level = 0;
         var target = LevelImages[LevelImages.Count - level];
         if (target == null)
         {

@@ -33,10 +33,11 @@ public class GameUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        CardManagerMove.Instance.CheckOpenedCards();
     }
     private void Start()
     {
+        CardManagerMove.Instance.CheckOpenedCards();
+
         StartCoroutine(FadeThenLoad());
 
         ActivePanel(UIPanelType.GameUI);
