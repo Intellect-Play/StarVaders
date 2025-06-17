@@ -491,8 +491,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc2cc93475f76427c86a8262bee36b88, type: 2}
-  m_sharedMaterial: {fileID: 2269793554123077917, guid: dc2cc93475f76427c86a8262bee36b88,
+  m_fontAsset: {fileID: 11400000, guid: a6f9b3ad2ec118447995d328530ae9ce, type: 2}
+  m_sharedMaterial: {fileID: 366937923385096600, guid: a6f9b3ad2ec118447995d328530ae9ce,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.4295349, y: 0, z: 7.038788, w: 0}
+  m_margin: {x: 0.4295349, y: 10.785157, z: 7.038788, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -715,9 +715,11 @@ MonoBehaviour:
   cardLockImage: {fileID: 7025109023667110831}
   cardUpImage: {fileID: 0}
   UpgradeAnimation: {fileID: 7673102165014405420}
-  cardBuyImage: {fileID: 0}
+  cardBuyImage: {fileID: 3123015050982706651}
   nameCard: 
   cardId: 0
+  UpdateColor: {r: 0, g: 0.7764706, b: 1, a: 1}
+  BuyColor: {r: 0.19999336, g: 0.990566, b: 0.18222679, a: 1}
   upgrade: 0
   CardPowerObject: {fileID: 5434621956603571395}
   CardBuyObject: {fileID: 5880637091015457832}

@@ -109,7 +109,8 @@ public class ShopManager : MonoBehaviour
         if (card.isUnlocked)
         {
             //cardButtons[card.id].cardButtonUI.UpgradeCard();
-            ui.actionButtonText.text = $"Upgrade";
+            ui.actionButtonText.text = (CardUpdateCosts + card.level * 50).ToString();
+            ui.GetColor(false);
             ui.actionButton.onClick.AddListener(() => SelectCard(card, CardAction.Upgrade));
             if(!card.update||card.level>=7)ui.FalseUpdate();
             else
@@ -127,6 +128,8 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
+            ui.GetColor(true);
+
             ui.actionButtonText.text = $"Buy";
             ui.actionButton.onClick.AddListener(() => SelectCard(card,CardAction.Buy));
         }
@@ -201,7 +204,6 @@ public class ShopManager : MonoBehaviour
 
     public void SelectCard(CardData card, CardAction cardAction)
     {
-        Debug.Log(ShopActive);
         if (!ShopActive) return;
         if (card.isUnlocked && !card.update) return;
         if (selectedCardId != -1) cardButtons[selectedCardId].cardButtonUI.SelectCard(false);

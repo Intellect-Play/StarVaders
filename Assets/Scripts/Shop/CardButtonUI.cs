@@ -18,7 +18,8 @@ public class CardButtonUI : MonoBehaviour
     public string nameCard;
     [HideInInspector] public int cardId;
 
-
+    public Color UpdateColor;
+    public Color BuyColor;
 
     private Vector2 originalAnchoredPos;
     private Vector3 originalScale;
@@ -39,6 +40,10 @@ public class CardButtonUI : MonoBehaviour
         powerText.text = cardData.power.ToString();
         cardImage.sprite = image;
         ActiveCard(cardData.isUnlocked);
+    }
+    public void GetColor(bool Buy)
+    {
+        cardBuyImage.color = Buy ? BuyColor : UpdateColor;
     }
     public void FalseUpdate()
     {
