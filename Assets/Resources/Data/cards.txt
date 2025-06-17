@@ -7,52 +7,58 @@
       "level": 1,
       "isUnlocked": true,
       "buyCost": 100,
-      "upgradeCost": 50
+      "upgradeCost": 150,
+      "update": false
     },
     {
       "id": 1,
       "name": "Bomb3x3",
-      "power": 15,
+      "power": 12,
       "level": 1,
       "isUnlocked": true,
       "buyCost": 120,
-      "upgradeCost": 60
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 2,
       "name": "Bat",
-      "power": 12,
+      "power": 10,
       "level": 1,
       "isUnlocked": true,
       "buyCost": 130,
-      "upgradeCost": 70
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 3,
       "name": "DoubleFire",
-      "power": 14,
+      "power": 10,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 140,
-      "upgradeCost": 80
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 4,
       "name": "LinearFire",
-      "power": 16,
+      "power": 10,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 150,
-      "upgradeCost": 90
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 5,
       "name": "Pyramide",
-      "power": 18,
+      "power": 8,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 160,
-      "upgradeCost": 100
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 6,
@@ -61,34 +67,38 @@
       "level": 1,
       "isUnlocked": false,
       "buyCost": 110,
-      "upgradeCost": 55
+      "upgradeCost": 150,
+      "update": false
     },
     {
       "id": 7,
       "name": "StrongStrike",
-      "power": 20,
+      "power": 12,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 180,
-      "upgradeCost": 110
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 8,
       "name": "BombDouble",
-      "power": 17,
+      "power": 12,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 170,
-      "upgradeCost": 95
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 9,
       "name": "Meteor5x",
-      "power": 25,
+      "power": 15,
       "level": 1,
       "isUnlocked": false,
       "buyCost": 200,
-      "upgradeCost": 120
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 10,
@@ -97,7 +107,8 @@
       "level": 1,
       "isUnlocked": false,
       "buyCost": 90,
-      "upgradeCost": 40
+      "upgradeCost": 150,
+      "update": true
     },
     {
       "id": 11,
@@ -106,7 +117,8 @@
       "level": 1,
       "isUnlocked": false,
       "buyCost": 80,
-      "upgradeCost": 35
+      "upgradeCost": 150,
+      "update": false
     }
   ]
 }

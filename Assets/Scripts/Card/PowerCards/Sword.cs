@@ -13,7 +13,7 @@ public class Sword : CardBase
     }
     public void Awake()
     {
-        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString());
 
     }
     private void CreateCellPathS(int x, int y, int movement)

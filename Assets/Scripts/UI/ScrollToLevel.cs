@@ -22,7 +22,6 @@ public class ScrollToLevel : MonoBehaviour
     {
         levelRoadMapNumbers = new List<LevelRoadMapNumber>();
         levelCount = SaveManager.Instance.saveData.playerData.currentLevel-1;
-        Debug.Log(levelCount + " Level");
         for (int i = 0; i < LevelImages.Count; i++)
         {
             var levelImage = LevelImages[i];

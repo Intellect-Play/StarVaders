@@ -9,7 +9,7 @@ public class PushBack : CardBase
 
     public void Awake()
     {
-        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString()).power;
+        mCardPower = SaveManager.Instance.cardDataList.cards.Find(x => x.name == _CardType.ToString());
 
     }
     public override void CardSetup(BasePiece king, CardPowerManager manager)

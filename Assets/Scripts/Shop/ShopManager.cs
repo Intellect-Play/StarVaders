@@ -23,8 +23,9 @@ public class ShopManager : MonoBehaviour
     private GetcardImage getcardImage;
     private int selectedCardId = -1;
     private CardAction selectedCardAction = CardAction.None;
-    private CardData selectedCardData;
     int coins;
+
+    public int CardUpdateCosts = 150;
     private void Start()
     {
         ShopActive = true;
@@ -105,13 +106,24 @@ public class ShopManager : MonoBehaviour
         ui.powerText.text = card.power.ToString();
 
         ui.actionButton.onClick.RemoveAllListeners();
-
         if (card.isUnlocked)
         {
             //cardButtons[card.id].cardButtonUI.UpgradeCard();
-
             ui.actionButtonText.text = $"Upgrade";
             ui.actionButton.onClick.AddListener(() => SelectCard(card, CardAction.Upgrade));
+            if(!card.update||card.level>=7)ui.FalseUpdate();
+            else
+            {
+                ui.GetColor(card.level);
+                //if (cardDataList.cards[selectedCardId] != null)
+                //{
+                //    int buyOrUpgrade = cardDataList.cards[selectedCardId].upgradeCost;
+                //    bool activeBuy = coins >= cardDataList.cards[selectedCardId].upgradeCost;
+                //    Debug.Log("UpdateCardButtonUI: " + cardDataList.cards[selectedCardId].name + " with cost: " + cardDataList.cards[selectedCardId].upgradeCost);
+                //    BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, CardAction.Upgrade);
+                //}
+
+            }
         }
         else
         {
@@ -141,9 +153,18 @@ public class ShopManager : MonoBehaviour
             card.isUnlocked = true;
             SaveData();
             UpdateCardButtonUI(card);
+            if (cardDataList.cards[cardId].update)
+            {
+                int buyOrUpgrade = CardUpdateCosts + card.level * 50;
+                bool activeBuy = coins >= buyOrUpgrade;
+                BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, CardAction.Upgrade);
+            }
+         
         }
         else
         {
+            ShopActive = true;
+
         }
     }
   
@@ -154,34 +175,42 @@ public class ShopManager : MonoBehaviour
         if (card == null || !card.isUnlocked) return;
 
         coins = SaveManager.Instance.saveData.playerData.coins;
-        if (coins >= card.upgradeCost)
+        int cardCost= CardUpdateCosts+card.level * 50; // Her seviye için 50 ekleniyor
+        if (coins >= cardCost)
         {
             cardButtons[cardId].cardButtonUI.UpgradeCard();
 
-            coins -= card.upgradeCost;
+            coins -= cardCost;
             SaveManager.Instance.saveData.playerData.coins = coins;
             PlayerPrefs.SetInt("Coins", coins);
-
-            card.power += 10;
+            card.level++;
+            card.power += 2;
             card.upgradeCost += 50;
             SaveData();
             UpdateCardButtonUI(card);
+
+            int buyOrUpgrade = CardUpdateCosts + card.level * 50;
+            bool activeBuy = coins >= buyOrUpgrade;
+            BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, CardAction.Upgrade);
         }
         else
         {
+            ShopActive = true;
         }
     }
 
     public void SelectCard(CardData card, CardAction cardAction)
     {
+        Debug.Log(ShopActive);
         if (!ShopActive) return;
+        if (card.isUnlocked && !card.update) return;
         if (selectedCardId != -1) cardButtons[selectedCardId].cardButtonUI.SelectCard(false);
         cardButtons[card.id].cardButtonUI.SelectCard(true);
         selectedCardAction = cardAction;
         selectedCardId = card.id;
         int coins = SaveManager.Instance.saveData.playerData.coins;
-        int buyOrUpgrade = cardAction == CardAction.Buy ? card.buyCost : card.upgradeCost;
-        bool activeBuy = cardAction == CardAction.Buy ? coins >= card.buyCost : coins >= card.upgradeCost;
+        int buyOrUpgrade = cardAction == CardAction.Buy ? card.buyCost : (CardUpdateCosts + card.level * 50);
+        bool activeBuy = cardAction == CardAction.Buy ? coins >= card.buyCost : coins >= buyOrUpgrade;
         BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, cardAction);
     }
 

@@ -23,6 +23,10 @@ public class CardButtonUI : MonoBehaviour
     private Vector2 originalAnchoredPos;
     private Vector3 originalScale;
     private Vector3 originalRotation;
+
+    public bool upgrade;
+    [SerializeField] GameObject CardPowerObject;
+    [SerializeField] GameObject CardBuyObject;
     private void Awake()
     {
         UpgradeAnimation.SetActive(false);
@@ -36,6 +40,12 @@ public class CardButtonUI : MonoBehaviour
         cardImage.sprite = image;
         ActiveCard(cardData.isUnlocked);
     }
+    public void FalseUpdate()
+    {
+        upgrade = false;
+        CardPowerObject.SetActive(false);
+        CardBuyObject.SetActive(false);
+    }
     public void ActiveCard(bool active)
     {
         cardImage.color = active ? Color.white : new Color(1f, 1f, 1f, 0.5f);
@@ -45,7 +55,7 @@ public class CardButtonUI : MonoBehaviour
     }
     public void SelectCard(bool Active)
     {
-        Debug.Log("card Select");
+
         targetRectTransform.SetAsLastSibling();
 
         SetAnchorPivotToCenterPreservePosition();
@@ -59,6 +69,10 @@ public class CardButtonUI : MonoBehaviour
             targetRectTransform.DOScale(1f, 0.25f).SetEase(Ease.OutBack);
         }
        
+    }
+    public void GetColor(int Level)
+    {
+        CardBuyObject.GetComponent<Image>().color = ColorManager.Instance.colors[Level - 1];
     }
     public void BuyCard()
     {

@@ -16,12 +16,11 @@ public class ShopButtons : MonoBehaviour
             StartButton.anchoredPosition = new Vector2(0, 175);
             gameObject.SetActive(false);
         }
-        if(BuyImage != null) 
-        BuyImage.SetActive(CheckBuyCondition());
+        if(BuyImage != null)BuyImage.SetActive(CheckBuyCondition());
     }
     private void OnEnable()
     {
-        if(SaveManager.Instance != null) BuyImage.SetActive(CheckBuyCondition());
+        if(SaveManager.Instance != null&& BuyImage != null) BuyImage.SetActive(CheckBuyCondition());
     }
 
     public bool CheckBuyCondition()

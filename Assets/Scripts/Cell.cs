@@ -53,11 +53,11 @@ public class Cell : MonoBehaviour
         cellButton.interactable = active;
     }
 
-    public void RemovePiece()
+    public void RemovePiece(int damage)
     {
         if (mCurrentPiece != null)
         {
-            mCurrentPiece.TakeDamage();
+            mCurrentPiece.TakeDamage(damage);
         }
     }
 }

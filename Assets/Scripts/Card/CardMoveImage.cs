@@ -94,8 +94,8 @@ public class CardMoveImage : MonoBehaviour
         // Fade out visual and shadow
         Image visualImage = Visual.GetComponent<Image>();
         Image shadowImage = Shadow.GetComponent<Image>();
-        PowerImage.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
-        Powertext.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
+       if(PowerImage!=null) PowerImage.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
+        if (Powertext != null) Powertext.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
         if (visualImage != null)
             visualImage.DOFade(fadeColor, fadeDuration).SetEase(Ease.OutQuad);
         if (shadowImage != null)
@@ -107,8 +107,8 @@ public class CardMoveImage : MonoBehaviour
         // Fade in visual and shadow
         Image visualImage = Visual.GetComponent<Image>();
         Image shadowImage = Shadow.GetComponent<Image>();
-        PowerImage.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
-        Powertext.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+        if (PowerImage != null) PowerImage.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+        if (Powertext != null) Powertext.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
 
         if (visualImage != null)
             visualImage.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
@@ -148,10 +148,10 @@ public class CardMoveImage : MonoBehaviour
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => Visual.SetActive(false));
         }
-        PowerImage.DOFade(0f, 0.6f)
+        if (PowerImage != null) PowerImage.DOFade(0f, 0.6f)
                .SetEase(Ease.OutQuad)
                .OnComplete(() => Visual.SetActive(false));
-        Powertext.DOFade(0f, 0.6f)
+        if (Powertext != null) Powertext.DOFade(0f, 0.6f)
                .SetEase(Ease.OutQuad)
                .OnComplete(() => Visual.SetActive(false));
         if (shadowImage != null)

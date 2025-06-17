@@ -17,10 +17,10 @@ public class SaveManager : MonoBehaviour
             Instance = this;
             savePath = Application.persistentDataPath + "/saveData.json";
             jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards");
-            // File.Delete(jsonPath);
+            //File.Delete(jsonPath);
             LoadData();
             Load();
-            //saveData.playerData.coins = 500; // Test purposes, remove later
+            saveData.playerData.coins = 500; // Test purposes, remove later
             //ResetData();
             if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
         }

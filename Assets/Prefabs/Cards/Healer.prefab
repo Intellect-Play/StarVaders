@@ -163,6 +163,8 @@ MonoBehaviour:
   mIsFirstMove: 1
   mOriginalCell: {fileID: 0}
   mCurrentCell: {fileID: 0}
+  moveAnime: {fileID: 0}
+  PowerText: {fileID: 0}
   mRectTransform: {fileID: 0}
   mPieceManager: {fileID: 0}
   mTargetCell: {fileID: 0}
@@ -178,6 +180,7 @@ MonoBehaviour:
   duration: 0.5
   mKing: {fileID: 0}
   mCardSO: {fileID: 11400000, guid: c6609ea1c3d2d414392e7b111098effe, type: 2}
+  PowerBool: 1
   mCardPowerText: {fileID: 0}
   mCardPower: 0
 --- !u!1001 &1627127857292645599
@@ -188,6 +191,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1741568994723454497}
     m_Modifications:
+    - target: {fileID: 677756964509004072, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 677756964509004072, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3289650
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731566043521137071, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2215209401347208193, guid: f3ee79832cedd344e900bcf2bdf78e3e,
         type: 3}
       propertyPath: m_Name

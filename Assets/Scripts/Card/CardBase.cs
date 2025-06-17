@@ -19,9 +19,9 @@ public abstract class CardBase : BasePiece
     public CardSO mCardSO;
 
     private bool used;
-
+    public bool PowerBool;
     [SerializeField] public TextMeshProUGUI mCardPowerText;
-    public int mCardPower;
+    public CardData mCardPower;
 
     private void Start()
     {
@@ -30,7 +30,12 @@ public abstract class CardBase : BasePiece
         cardPowerManager = GameManager.Instance.mCardPowerManager;
         cardPowerManager.SetupThisCard(this);
         mCardPowerText = GetComponentInChildren<TextMeshProUGUI>();
-        mCardMoveImage.powerText.text = mCardPower.ToString();
+        mCardMoveImage.powerText.text = mCardPower.power.ToString();
+        if(PowerBool)Destroy(mCardMoveImage.PowerImage.gameObject);
+        else
+        {
+            mCardMoveImage.PowerImage.color = ColorManager.Instance.colors[mCardPower.level - 1];
+        }
     }
 
     public virtual void CardSetup(BasePiece king, CardPowerManager manager)
@@ -69,7 +74,7 @@ public abstract class CardBase : BasePiece
     {
         if (used) return;
         foreach (var cell in Enemies)
-            cell.RemovePiece();
+            cell.RemovePiece(mCardPower.power);
         ExitCard();
     }
 

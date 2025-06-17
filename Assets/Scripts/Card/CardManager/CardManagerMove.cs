@@ -109,12 +109,14 @@ public class CardManagerMove : MonoBehaviour
         //cardCount = CardLimit - spawnedCards.Count + 1;
         for (int i = j ; i < CardLimit; i++)
         {
-            cardNumber = Random.Range(1, cardOpenPrefabs.Count-1);
-            if (!healthCard && cardNumber == 5) {
-                cardOpenPrefabs.RemoveAt(5);
+            cardNumber = Random.Range(1, cardOpenPrefabs.Count);
+            
+            SpawnCard(cardNumber); 
+            if (cardOpenPrefabs[cardNumber].GetComponent<Healer>())
+            {
+                cardOpenPrefabs.RemoveAt(cardNumber);
                 healthCard = true;
             }
-            SpawnCard(cardNumber);
             yield return new WaitForSeconds(_time);
         }
         yield return new WaitForSeconds(_time);
@@ -153,7 +155,6 @@ public class CardManagerMove : MonoBehaviour
     private void SpawnCard(int _cardNumber)
     {
        // Debug.Log("SpawnCard: " + _cardNumber);
-       Debug.Log(_cardNumber);
         GameObject randomPrefab = cardOpenPrefabs[_cardNumber];
         GameObject card = Instantiate(randomPrefab, cardExit.localPosition, Quaternion.identity, spawnParent);
         GameObject cardFollow = Instantiate(cardFollowPrefab, cardExit.localPosition, Quaternion.identity, cardFollowPrefabParent);
@@ -209,7 +210,6 @@ public class CardManagerMove : MonoBehaviour
     {
         if (currentCardClick != null)
         {
-            Debug.Log("UseCurrentCard: " + currentCardClick.card.name);
             currentCardClick.card.UseForAllCards();
             currentCardClick = null;
             cardStartButton.gameObject.SetActive(false);

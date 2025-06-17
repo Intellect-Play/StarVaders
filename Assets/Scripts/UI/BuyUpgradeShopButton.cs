@@ -19,8 +19,6 @@ public class BuyUpgradeShopButton : MonoBehaviour
     {
         button.interactable = active;
         buttonText.text = cardAction.ToString();
-        buttonCostText.text = cost.ToString();
-     
-       
+        buttonCostText.text = cost.ToString();      
     }
 }

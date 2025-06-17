@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 
 public abstract class BasePiece : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public abstract class BasePiece : MonoBehaviour
     [SerializeField] public Cell mOriginalCell = null;
     [SerializeField] public Cell mCurrentCell = null;
     [SerializeField] public GameObject moveAnime;
+    [SerializeField] public TextMeshProUGUI PowerText;
+
 
     public RectTransform mRectTransform = null;
     public PieceManager mPieceManager;
@@ -26,7 +29,7 @@ public abstract class BasePiece : MonoBehaviour
 
     public bool moveCard=false;
     public GameObject Heal;
-    public int HealthEnemy=1;
+    public int HealthEnemy=100;
     int deadCase = 0;
     [SerializeField] private Image targetImage;
     [SerializeField] private float duration = 0.5f;
@@ -86,11 +89,12 @@ public abstract class BasePiece : MonoBehaviour
             PieceManager.Instance.KillEnemy(this);
         }       
     }
-    public virtual void TakeDamage()
+    public virtual void TakeDamage(int damage)
     {
         if(mAnimatorController!=null)
            mAnimatorController.enabled = false;
-        HealthEnemy -=1;
+        HealthEnemy -= damage;
+        if(PowerText!=null) PowerText.text = HealthEnemy.ToString();
         if (HealthEnemy <= 0)
         {
             Kill();
@@ -315,7 +319,6 @@ public abstract class BasePiece : MonoBehaviour
         {
             HasMoveTarget(1);
 
-            Debug.Log("Enemy Piece Killed F");
             mHighlightedCells.Add(mCurrentCell.mBoard.mAllCells[currentX, currentY]);
             mTargetCell = mHighlightedCells[0];
 
@@ -328,7 +331,7 @@ public abstract class BasePiece : MonoBehaviour
     }
     public void EnemyMovePart()
     {
-        mTargetCell.RemovePiece();
+        //mTargetCell.RemovePiece();
 
         mCurrentCell.mCurrentPiece = null;
 
