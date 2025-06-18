@@ -10,23 +10,27 @@ public class ShopButtons : MonoBehaviour
     [SerializeField] GameObject BuyImage;
     private void Start()
     {
-        Debug.Log(SaveManager.Instance.saveData.playerData.currentLevel);
         if(StartButton != null)  StartButtonB = StartButton.GetComponent<Button>();
-        if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+       
+
+        if (BuyImage != null)BuyImage.SetActive(CheckBuyCondition());
+    }
+
+    public void ShopTutorial()
+    {
+        if (PlayerPrefs.GetInt("Tutorial2", 0) == 0)
         {
             StartButton.anchorMin = new Vector2(0.5f, 0);
             StartButton.anchorMax = new Vector2(0.5f, 0);
-            StartButton.pivot = new Vector2(0.5f,0);
+            StartButton.pivot = new Vector2(0.5f, 0);
             StartButton.anchoredPosition = new Vector2(0, 175);
             gameObject.SetActive(false);
         }
-        if (StartButton != null &&(PlayerPrefs.GetInt("Tutorial", 0) == 1))
+        if (StartButton != null && (PlayerPrefs.GetInt("Tutorial2", 0) == 1))
         {
             TutorialManager.Instance.TutorialHandClickButtonShop(this.GetComponent<RectTransform>());
 
         }
-
-        if (BuyImage != null)BuyImage.SetActive(CheckBuyCondition());
     }
     private void OnEnable()
     {
@@ -57,9 +61,9 @@ public class ShopButtons : MonoBehaviour
     }
     public void OnClickCloseShopButton()
     {
-        if (PlayerPrefs.GetInt("Tutorial", 0) == 2)
+        if (PlayerPrefs.GetInt("Tutorial2", 0) == 2)
         {
-            PlayerPrefs.SetInt("Tutorial",3);
+            PlayerPrefs.SetInt("Tutorial2",3);
             TutorialManager.Instance.HideTutorialHand();
 
             TutorialManager.Instance.IsTutorialActive=false;

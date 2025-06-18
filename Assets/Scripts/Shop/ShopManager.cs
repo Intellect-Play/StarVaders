@@ -77,7 +77,7 @@ public class ShopManager : MonoBehaviour
         BuyorUpgradeButton.button.onClick.AddListener(BuyOrUpgradeFunc);
         yield return new WaitForSeconds(.1f);
 
-        if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        if (PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
            // PlayerPrefs.SetInt("Tutorial", 2);
             TutorialManager.Instance.TutorialHandClickButton(cardButtons[5].cardObject.GetComponent<RectTransform>());
@@ -89,7 +89,7 @@ public class ShopManager : MonoBehaviour
                 }
             }
             CloseButton.interactable = false;
-        }else if(PlayerPrefs.GetInt("Tutorial", 0) == 2) TutorialManager.Instance.HideTutorialHand();
+        }else if(PlayerPrefs.GetInt("Tutorial2", 0) == 2) TutorialManager.Instance.HideTutorialHand();
 
         else CloseButton.interactable = true;
 
@@ -262,13 +262,13 @@ public class ShopManager : MonoBehaviour
         int buyOrUpgrade = cardAction == CardAction.Buy ? card.buyCost : (CardUpdateCosts + card.level * 50);
         bool activeBuy = cardAction == CardAction.Buy ? coins >= card.buyCost : coins >= buyOrUpgrade;
         BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, cardAction);
-        if(PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        if(PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
             TutorialManager.Instance.TutorialHandClickButton(BuyorUpgradeButton.GetComponent<RectTransform>());
             //PlayerPrefs.GetInt("Tutorial", 1);
 
             Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
-        }else if (PlayerPrefs.GetInt("Tutorial", 0) == 2)
+        }else if (PlayerPrefs.GetInt("Tutorial2", 0) == 2)
         {
             TutorialManager.Instance.HideTutorialHand();
         }
@@ -298,7 +298,7 @@ public class ShopManager : MonoBehaviour
         SaveManager.Instance.saveData.playerData.coins = coins;
         SaveManager.Instance.Save();
         CoinText.text = coins.ToString();
-        if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        if (PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
             TutorialManager.Instance.HideTutorialMoveHand();
 

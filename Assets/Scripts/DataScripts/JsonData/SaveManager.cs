@@ -14,18 +14,20 @@ public class SaveManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            //ResetData();
+
             Instance = this;
-            savePath = Application.persistentDataPath + "/saveData.json";
+            savePath = Application.persistentDataPath + "/saveDatas.json";
             jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards");
-            File.Delete(jsonPath);
+         //PlayerPrefs.DeleteAll(); // Test purposes, remove later
             LoadData();
             Load();
             //saveData.playerData.coins = 500; // Test purposes, remove later
-            if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+            if (PlayerPrefs.GetInt("Tutorial2", 0) == 0)
             {
                 ResetData();
             }
-            ResetData();
+            //ResetData(); File.Delete(jsonPath);
             if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
         }
         else

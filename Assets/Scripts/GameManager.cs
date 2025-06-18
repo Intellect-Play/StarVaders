@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
 
         if (isGameOver) return;
-        if(SaveManager.Instance.saveData.playerData.currentLevel==1) PlayerPrefs.SetInt("Tutorial", 1);
+        if(SaveManager.Instance.saveData.playerData.currentLevel==1) PlayerPrefs.SetInt("Tutorial2", 1);
 
         isGameOver = true;
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayerInPlay;

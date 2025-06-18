@@ -120,9 +120,9 @@ public class CardButtonUI : MonoBehaviour
         sequence.Join(targetRectTransform.DORotate(originalRotation, 0.25f).SetEase(Ease.InOutQuad)).OnComplete(() => {
             ShopManager.ShopActive = true;
             UpgradeAnimation.SetActive(false);
-            if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+            if (PlayerPrefs.GetInt("Tutorial2", 0) == 1)
             {
-                PlayerPrefs.SetInt("Tutorial", 2);
+                PlayerPrefs.SetInt("Tutorial2", 2);
 
                 ShopManager.Instance.CloseTutorial();
                 //PlayerPrefs.GetInt("Tutorial", 1);

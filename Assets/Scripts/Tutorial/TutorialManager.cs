@@ -35,12 +35,16 @@ public class TutorialManager : MonoBehaviour
             Destroy(gameObject);
         }
         HideHandTouchEndTurn();
-        if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+        if (PlayerPrefs.GetInt("Tutorial2", 0) == 0)
         {
             IsTutorialActive = true;
             tutorialLevel = 0;
+            StartButton.interactable = true;
+            ShopButton.interactable = false;
+            ShopButton.GetComponent<ShopButtons>().ShopTutorial();
             //EndTurnButton.interactable = false;
-        }else if(PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        }
+        else if(PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
             IsTutorialActive = true;
 
