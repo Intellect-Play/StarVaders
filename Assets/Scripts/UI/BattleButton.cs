@@ -45,7 +45,7 @@ public class BattleButton : MonoBehaviour
             TutorialManager.Instance.IsTutorialActive = false;
 
         }
-
+        Debug.Log("BattleButton: StartBattle - Starting Battle");
         TutorialManager.Instance.HideTutorialHand();
         StartCoroutine(FadeTime());
         

@@ -46,7 +46,10 @@ public class TutorialManager : MonoBehaviour
         }
         else if(PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
+            tutorialHandAnimator.gameObject.SetActive(true);
+            Debug.Log("TutorialManager: Awake - Tutorial Level 1");
             IsTutorialActive = true;
+            ShopButton.GetComponent<ShopButtons>().ShopTutorial();
 
             StartButton.interactable = false;
             ShopButton.interactable = true;
@@ -186,7 +189,6 @@ public class TutorialManager : MonoBehaviour
     {
         if (!IsTutorialActive) return;
         tutorialHandAnimator.ShowTapAnimationUI(rectTransform, ButtonClickOffset);
-        Debug.Log("TutorialHandClickButton " + rectTransform.name + " " + rectTransform.position);
     }
     public void TutorialHandClickButtonClose(RectTransform rectTransform)
     {
@@ -196,17 +198,14 @@ public class TutorialManager : MonoBehaviour
     {
         if (!IsTutorialActive) return;
         tutorialHandAnimator.ShowTapAnimationUI(rectTransform, new Vector3(200,0,0));
-        Debug.Log("TutorialHandClickButtonShop " + rectTransform.name + " " + rectTransform.position);
     }
     public void HideTutorialMoveHand()
     {
         if (!IsTutorialActive || tutorialLevel == 1 || tutorialLevel==4) return;
         tutorialHandAnimator.HideHandTouch();
-        Debug.Log("HideTutorialMoveHand " + tutorialLevel);
     }
     public void HideTutorialHand()
     {
-       
         if (!IsTutorialActive) return;
         tutorialHandAnimator.HideHandTouch();
     }
@@ -235,6 +234,7 @@ public class TutorialManager : MonoBehaviour
 
     public void EndGameTutorial()
     {
+
         tutorialHandAnimator.HideHandTouch();
     }
 }
