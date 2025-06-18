@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopButtons : MonoBehaviour
 {
     public RectTransform StartButton;
+    Button StartButtonB;
     [SerializeField] GameObject BuyImage;
     private void Start()
     {
-        if ((SaveManager.Instance.saveData.playerData.currentLevel == 1))
+        Debug.Log(SaveManager.Instance.saveData.playerData.currentLevel);
+        if(StartButton != null)  StartButtonB = StartButton.GetComponent<Button>();
+        if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
         {
             StartButton.anchorMin = new Vector2(0.5f, 0);
             StartButton.anchorMax = new Vector2(0.5f, 0);
@@ -16,7 +20,13 @@ public class ShopButtons : MonoBehaviour
             StartButton.anchoredPosition = new Vector2(0, 175);
             gameObject.SetActive(false);
         }
-        if(BuyImage != null)BuyImage.SetActive(CheckBuyCondition());
+        if (StartButton != null &&(PlayerPrefs.GetInt("Tutorial", 0) == 1))
+        {
+            TutorialManager.Instance.TutorialHandClickButtonShop(this.GetComponent<RectTransform>());
+
+        }
+
+        if (BuyImage != null)BuyImage.SetActive(CheckBuyCondition());
     }
     private void OnEnable()
     {
@@ -41,10 +51,21 @@ public class ShopButtons : MonoBehaviour
     }
     public void OnClickShopButton()
     {
+        TutorialManager.Instance.HideTutorialHand();
+        if(StartButton != null) StartButtonB.interactable = true;
         GameManagerMain.Instance.OpenShop();
     }
     public void OnClickCloseShopButton()
     {
+        if (PlayerPrefs.GetInt("Tutorial", 0) == 2)
+        {
+            PlayerPrefs.SetInt("Tutorial",3);
+            TutorialManager.Instance.HideTutorialHand();
+
+            TutorialManager.Instance.IsTutorialActive=false;
+
+            Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
+        }
         GameManagerMain.Instance.CloseShop();
     }
 }

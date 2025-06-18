@@ -21,6 +21,10 @@ public class SaveManager : MonoBehaviour
             LoadData();
             Load();
             //saveData.playerData.coins = 500; // Test purposes, remove later
+            if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+            {
+                ResetData();
+            }
             ResetData();
             if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
         }

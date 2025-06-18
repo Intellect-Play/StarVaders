@@ -155,6 +155,50 @@ public class TutorialHandAnimator : MonoBehaviour
             .SetEase(Ease.OutSine)
             .SetLoops(-1, LoopType.Yoyo);
     }
+
+    public void ShowTapAnimationUIEndTurn(RectTransform uiTarget, Vector2 offset)
+    {
+        if (uiTarget == null)
+        {
+            HideHand();
+            return;
+        }
+
+        TweenPlay = true;
+
+        // 1. Dünyadakı (world space) mövqeni tap
+        Vector3 worldPos = uiTarget.anchoredPosition;
+
+        // 2. Ekran koordinatını al
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            worldPos
+        );
+
+        // 3. UI parent içində lokal mövqe tap
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handImage.parent as RectTransform,
+            screenPos,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            out localPoint
+        );
+
+        // 4. handImage yerləşdir
+        handImage.localPosition = localPoint;
+        handImage.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+
+        // 5. Animasiya təmizlənir və yenidən başlayır
+        currentTween?.Kill();
+        handImage.localScale = Vector3.one;
+
+        currentTween = handImage
+            .DOScale(1.3f, duration * 0.5f)
+            .SetEase(Ease.OutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
     public void HideHandTouch()
     {
         TweenPlay = false;

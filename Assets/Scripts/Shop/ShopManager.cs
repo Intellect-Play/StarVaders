@@ -8,9 +8,11 @@ using System.Collections;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
     [Header("UI")]
     [SerializeField] BuyUpgradeShopButton BuyorUpgradeButton;
     [SerializeField] TextMeshProUGUI CoinText;
+    [SerializeField] public Button CloseButton;
 
     public static bool ShopActive = true;
     public Transform cardButtonParent;
@@ -26,14 +28,43 @@ public class ShopManager : MonoBehaviour
     int coins;
 
     public int CardUpdateCosts = 150;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+       
+    }
     private void Start()
     {
         ShopActive = true;
         getcardImage = GetComponent<GetcardImage>();
         //DeleteSaveFile();
         cardDataList = SaveManager.Instance.cardDataList;
-        StartCoroutine(StartTime());
         CoinText.text= SaveManager.Instance.saveData.playerData.coins.ToString();
+        StartCoroutine(StartTime());
+        Debug.Log("Enable Shop");
+      
+    }
+    private void OnEnable()
+    {
+      
+    }
+    public void CloseTutorial() {
+        CloseButton.interactable = true;
+        TutorialManager.Instance.TutorialHandClickButtonClose(CloseButton.GetComponent<RectTransform>());
+        for (int i = 0; i < cardButtons.Count; i++)
+        {
+            if (i != 5)
+            {
+                cardButtons[i].cardButtonUI.GetComponent<Button>().interactable = true; // Diğer kartları devre dışı bırak
+            }
+        }
     }
 
     IEnumerator StartTime()
@@ -44,9 +75,26 @@ public class ShopManager : MonoBehaviour
 
         cardButtonParent.GetComponent<GridLayoutGroup>().enabled = false; // GridLayoutGroup'u devre dışı bırak
         BuyorUpgradeButton.button.onClick.AddListener(BuyOrUpgradeFunc);
+        yield return new WaitForSeconds(.1f);
+
+        if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        {
+           // PlayerPrefs.SetInt("Tutorial", 2);
+            TutorialManager.Instance.TutorialHandClickButton(cardButtons[5].cardObject.GetComponent<RectTransform>());
+            for (int i = 0; i < cardButtons.Count; i++)
+            {
+                if (i!=5)
+                {
+                    cardButtons[i].cardButtonUI.GetComponent<Button>().interactable = false; // Diğer kartları devre dışı bırak
+                }
+            }
+            CloseButton.interactable = false;
+        }else if(PlayerPrefs.GetInt("Tutorial", 0) == 2) TutorialManager.Instance.HideTutorialHand();
+
+        else CloseButton.interactable = true;
 
     }
-    
+
     public void DeleteSaveFile()
     {
         jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards.json");
@@ -214,6 +262,16 @@ public class ShopManager : MonoBehaviour
         int buyOrUpgrade = cardAction == CardAction.Buy ? card.buyCost : (CardUpdateCosts + card.level * 50);
         bool activeBuy = cardAction == CardAction.Buy ? coins >= card.buyCost : coins >= buyOrUpgrade;
         BuyorUpgradeButton.SetButtonText(activeBuy, buyOrUpgrade, cardAction);
+        if(PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        {
+            TutorialManager.Instance.TutorialHandClickButton(BuyorUpgradeButton.GetComponent<RectTransform>());
+            //PlayerPrefs.GetInt("Tutorial", 1);
+
+            Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
+        }else if (PlayerPrefs.GetInt("Tutorial", 0) == 2)
+        {
+            TutorialManager.Instance.HideTutorialHand();
+        }
     }
 
 
@@ -240,7 +298,13 @@ public class ShopManager : MonoBehaviour
         SaveManager.Instance.saveData.playerData.coins = coins;
         SaveManager.Instance.Save();
         CoinText.text = coins.ToString();
-       // UpdateCardButtonUI(selectedCardData);
+        if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+        {
+            TutorialManager.Instance.HideTutorialMoveHand();
+
+            Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
+        }
+        // UpdateCardButtonUI(selectedCardData);
     }
 }
 public enum CardAction

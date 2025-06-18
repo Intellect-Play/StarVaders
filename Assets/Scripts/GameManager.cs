@@ -63,12 +63,15 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        PlayerPrefs.SetInt("Tutorial", 1);
+
 
         if (isGameOver) return;
+        if(SaveManager.Instance.saveData.playerData.currentLevel==1) PlayerPrefs.SetInt("Tutorial", 1);
+
         isGameOver = true;
         SaveManager.Instance.saveData.playerData.coins += mCoin.CoinPlayerInPlay;
         SaveManager.Instance.saveData.playerData.currentLevel += 1;
+
         SaveManager.Instance.Save();
         GameUI.Instance.WinGame();
     }
@@ -101,7 +104,12 @@ public class GameManager : MonoBehaviour
         //yield return new WaitForSeconds(1);
         cardMove = true;
         CardManagerMove.Instance.FadeInCards();
+        if(TutorialManager.Instance.IsTutorialActive)
+        {
+            yield return new WaitForSeconds(.3f);
+            TutorialManager.Instance.AddTutorial();
 
+        }
 
     }
 }

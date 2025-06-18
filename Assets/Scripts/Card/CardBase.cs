@@ -56,6 +56,8 @@ public abstract class CardBase : BasePiece
 
     public virtual void UseForAllCards()
     {
+        GetComponent<CardClick>().Used = true;
+        Debug.Log("UseForAllCards: " + gameObject.name);
         mKing.AttackAnimation();
         CardManagerMove.Instance.RemoveSpawnCard(this.gameObject);
 

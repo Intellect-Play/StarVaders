@@ -146,6 +146,7 @@ MonoBehaviour:
   CanDrag: 0
   onDragBool: 0
   MoveCard: 0
+  Used: 0
 --- !u!114 &4656018760547275168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,8 @@ MonoBehaviour:
   mIsFirstMove: 1
   mOriginalCell: {fileID: 0}
   mCurrentCell: {fileID: 0}
+  moveAnime: {fileID: 0}
+  PowerText: {fileID: 0}
   mRectTransform: {fileID: 0}
   mPieceManager: {fileID: 0}
   mTargetCell: {fileID: 0}
@@ -178,8 +181,17 @@ MonoBehaviour:
   duration: 0.5
   mKing: {fileID: 0}
   mCardSO: {fileID: 11400000, guid: d2e8399104acc9748a10753ea54b0451, type: 2}
+  PowerBool: 0
   mCardPowerText: {fileID: 0}
-  mCardPower: 0
+  mCardPower:
+    id: 0
+    name: 
+    power: 0
+    level: 0
+    isUnlocked: 0
+    buyCost: 0
+    upgradeCost: 0
+    update: 0
 --- !u!1001 &5111413185766794654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,6 +204,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: _CardPower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215209401347208193, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3171275880894100928, guid: f3ee79832cedd344e900bcf2bdf78e3e,
         type: 3}
@@ -291,6 +308,11 @@ PrefabInstance:
     - target: {fileID: 3171275880894100928, guid: f3ee79832cedd344e900bcf2bdf78e3e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974180423649037612, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -120,6 +120,14 @@ public class CardButtonUI : MonoBehaviour
         sequence.Join(targetRectTransform.DORotate(originalRotation, 0.25f).SetEase(Ease.InOutQuad)).OnComplete(() => {
             ShopManager.ShopActive = true;
             UpgradeAnimation.SetActive(false);
+            if (PlayerPrefs.GetInt("Tutorial", 0) == 1)
+            {
+                PlayerPrefs.SetInt("Tutorial", 2);
+
+                ShopManager.Instance.CloseTutorial();
+                //PlayerPrefs.GetInt("Tutorial", 1);
+                Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
+            }
         });
     }
 

@@ -147,6 +147,7 @@ MonoBehaviour:
   CanDrag: 0
   onDragBool: 0
   MoveCard: 1
+  Used: 0
 --- !u!114 &1621123022021935207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +184,15 @@ MonoBehaviour:
   mCardSO: {fileID: 11400000, guid: 3517521e452ed69499493fec430dd22a, type: 2}
   PowerBool: 1
   mCardPowerText: {fileID: 0}
-  mCardPower: 0
+  mCardPower:
+    id: 0
+    name: 
+    power: 0
+    level: 0
+    isUnlocked: 0
+    buyCost: 0
+    upgradeCost: 0
+    update: 0
 --- !u!114 &6488513423886684794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +227,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: _CardPower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215209401347208193, guid: f3ee79832cedd344e900bcf2bdf78e3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3171275880894100928, guid: f3ee79832cedd344e900bcf2bdf78e3e,
         type: 3}

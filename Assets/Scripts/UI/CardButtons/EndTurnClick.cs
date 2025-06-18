@@ -19,9 +19,26 @@ public class EndTurnClick : MonoBehaviour
         //rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, CardManagerMove.Instance.rectTransformCardLimit.GetComponent<RectTransform>().rect.width / CardManagerMove.Instance.CardLimit - CardManagerMove.Instance.spawnSpace);
         rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTransform.rect.height);
     }
+    private void Start()
+    {
+        if(SaveManager.Instance.saveData.playerData.currentLevel == 1)
+        {
+            endTurnButton.interactable = false;
+        }
+    }
     public void EndTurnButton(int t)
     {
         StartCoroutine(WaitForEndTurn(t));
+        if (!TutorialManager.Instance.IsTutorialActive)
+        {
+            endTurnButton.interactable = true;
+
+        }
+        else
+        {
+            Debug.Log("EndTurnButton Tutorial");
+            TutorialManager.Instance.HideHandTouchEndTurn();
+        }
     }
 
     IEnumerator WaitForEndTurn(int timeStart)
@@ -38,10 +55,9 @@ public class EndTurnClick : MonoBehaviour
             CardManager.Instance.cardManagerMove.SpawnCards();
             yield return new WaitForSeconds(1);
             ActiveEndTurn = true;
-            if (!TutorialManager.Instance.IsTutorialActive)
+            if (SaveManager.Instance.saveData.playerData.currentLevel != 1)
             {
                 endTurnButton.interactable = true;
-
             }
 
         }

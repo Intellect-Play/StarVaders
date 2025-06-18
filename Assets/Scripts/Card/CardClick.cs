@@ -34,9 +34,10 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     public CardState _CardState { get; private set; }
 
     public enum CardState { Idle, IsDragging, Played }
-
+    public bool Used = false;
     public void Initialize(Transform parent, Canvas canvasRef, GameObject moveImageObj)
     {
+        Used = false;
         canvas = canvasRef;
         spawnParent = parent;
         moveImage = moveImageObj.GetComponent<CardMoveImage>();
@@ -56,6 +57,7 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(Used)return;
         if (CardManagerMove.MoveCard) return;
         card.mKing.MoveCardCick(this);
         onDragBool = false;
@@ -71,15 +73,20 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (Used) return;
 
         if (TutorialManager.Instance.IsTutorialActive)
         {
-            TutorialManager.Instance.TutorialCardSelected(this);
+            Debug.Log("OnPointerUp " + gameObject.name);
+            TutorialManager.Instance.TutorialCardSelected();
         }
         if (!CanDrag||!onDragBool) return;
         TutorialManager.Instance.HideTutorialMoveHand();
+
+        Debug.Log("OnPointerUp 2" + gameObject.name);
         if (transform.position.y - startPosY > triggerHeight)
         {
+            Used = true;
             card.UseForAllCards();
             return;
         }
@@ -91,6 +98,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (Used) return;
+
         if (!CanDrag || canvas == null) return;
         onDragBool = true;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
@@ -98,6 +107,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (Used) return;
+
         if (!CanDrag || CardManagerMove.MoveCard) return;
 
         _CardState = CardState.IsDragging;
@@ -105,6 +116,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Used) return;
+
         if (!CanDrag) return;
 
         _CardState = CardState.Idle;
@@ -112,6 +125,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (Used) return;
+
         if (CardManagerMove.MoveCard) return;
 
         Hovering = true;
@@ -119,6 +134,8 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (Used) return;
+
         if (!CanDrag) return;
 
         Hovering = false;
@@ -126,7 +143,9 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void ResetCardPosition()
     {
-     
+        if (Used) return;
+
+
         CanDrag = false;
       
         transform.position = GetPos;

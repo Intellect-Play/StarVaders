@@ -8,12 +8,12 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: StarVaders
+  companyName: BGAI Tech
+  productName: Card Clash
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -139,8 +139,11 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0.2
-  preloadedAssets: []
+  bundleVersion: 1.0.1
+  preloadedAssets:
+  - {fileID: 8095413816686185566, guid: 0f4f57b8fe583b14f92393abd60cfecf, type: 2}
+  - {fileID: 11400000, guid: c50b25a42bb12d8478708a40743609f9, type: 2}
+  - {fileID: 11400000, guid: acd03c5568c8fbb4a9dab6a4c08d6180, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

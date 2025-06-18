@@ -150,7 +150,8 @@ public class CardManagerMove : MonoBehaviour
             yield return new WaitForSeconds(_time);
         }
         yield return new WaitForSeconds(_time);
-        TutorialManager.Instance.SelectCard(spawnedCards.Count);
+        FadeOutCards();
+        TutorialManager.Instance.AddTutorial();
     }
     private void SpawnCard(int _cardNumber)
     {
@@ -232,9 +233,10 @@ public class CardManagerMove : MonoBehaviour
     public void RemoveSpawnCard(GameObject card)
     {
 
-        TutorialManager.Instance.SelectCard(0);
+        //TutorialManager.Instance.AddTutorial();
         if (spawnedCards.Contains(card))
         {
+            currentCardClick = null;
             spawnedCards.Remove(card);
             if (spawnedCards.Count == 0)
             {
@@ -246,7 +248,7 @@ public class CardManagerMove : MonoBehaviour
     {
         foreach (var card in spawnedCards)
         {
-            if (card != null)
+            if ( card != null)
             {
                 card.GetComponent<CardClick>().moveImage.FadeOutCard();
                 card.GetComponent<CardClick>().enabled = false;
@@ -255,6 +257,7 @@ public class CardManagerMove : MonoBehaviour
     }
     public void FadeInCards()
     {
+        if (TutorialManager.Instance.IsTutorialActive) return;
         foreach (var card in spawnedCards)
         {
             if (card != null)
