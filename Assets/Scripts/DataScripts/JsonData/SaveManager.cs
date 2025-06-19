@@ -17,7 +17,7 @@ public class SaveManager : MonoBehaviour
             //ResetData();
 
             Instance = this;
-            savePath = Application.persistentDataPath + "/saveDatas2.json";
+            savePath = Application.persistentDataPath + "/saveDatas3.json";
             jsonPath = Path.Combine(Application.persistentDataPath, "Data/cards");
          //PlayerPrefs.DeleteAll(); // Test purposes, remove later
             LoadData();
@@ -28,7 +28,7 @@ public class SaveManager : MonoBehaviour
                 ResetData();
             }
             //ResetData(); File.Delete(jsonPath);
-            if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 1;
+            if (saveData.playerData.currentLevel>30) saveData.playerData.currentLevel = 2;
         }
         else
         {
