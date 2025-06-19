@@ -47,7 +47,6 @@ public class TutorialManager : MonoBehaviour
         else if(PlayerPrefs.GetInt("Tutorial2", 0) == 1)
         {
             tutorialHandAnimator.gameObject.SetActive(true);
-            Debug.Log("TutorialManager: Awake - Tutorial Level 1");
             IsTutorialActive = true;
             ShopButton.GetComponent<ShopButtons>().ShopTutorial();
 
@@ -71,7 +70,6 @@ public class TutorialManager : MonoBehaviour
     public void AddTutorial()
     {
         tutorialLevel++;
-        Debug.Log("AddTutorial " + tutorialLevel);
         switch (tutorialLevel)
         {
             case 0:
@@ -143,7 +141,6 @@ public class TutorialManager : MonoBehaviour
         if (!IsTutorialActive) return;
         if ( tutorialLevel < 9)
         {
-            Debug.Log("TutorialCardSelected " + tutorialLevel);
             if (tutorialLevel == 1)
                 tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), new Vector3(3, -3, 0));
             else if (tutorialLevel == 4)

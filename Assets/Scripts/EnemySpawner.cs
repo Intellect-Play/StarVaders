@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     public PieceManager mPieceManager;
     public Board mBoard;
-    Enemies[] values;
+   // Enemies[] values;
     private void Awake()
     {
         if (Instance == null)
@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        values = (Enemies[])System.Enum.GetValues(typeof(Enemies));
+        //values = (Enemies[])System.Enum.GetValues(typeof(Enemies));
 
     }
     public void GetBP(PieceManager pieceManager, Board board)
@@ -38,11 +38,11 @@ public class EnemySpawner : MonoBehaviour
         mPieceManager.EnemyMove(0, false);
 
     }
-    public void EnemySpawnF()
-    {
-        //WaveManager.Instance.StartLevel(1);
-        mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1,5));
-    }
+    //public void EnemySpawnF()
+    //{
+    //    //WaveManager.Instance.StartLevel(1);
+    //    mPieceManager.SetupNewEnemies(GetRandomPieceType(), Random.Range(1,5));
+    //}
     public void SpawnEnemy(string type, int column)
     {
         mPieceManager.SetupNewEnemies(type, column);
@@ -54,18 +54,18 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy(enemy.type, enemy.column);
         }
     }
-    string GetRandomPieceType()
-    {
-        Enemies randomEnemy = values[Random.Range(0, values.Length)];
-        return randomEnemy.ToString();
-    }
+    //string GetRandomPieceType()
+    //{
+    //    Enemies randomEnemy = values[Random.Range(0, values.Length)];
+    //    return randomEnemy.ToString();
+    //}
 
 }
-enum Enemies
-{
-    Sceleton,
-    Goblin,
-    Green_boss,
-    Rock,
-    Knight
-}
+//enum Enemies
+//{
+//    Sceleton,
+//    Goblin,
+//    Green_boss,
+//    Rock,
+//    Knight
+//}

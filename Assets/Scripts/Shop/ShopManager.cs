@@ -160,7 +160,7 @@ public class ShopManager : MonoBehaviour
             ui.actionButtonText.text = (CardUpdateCosts + card.level * 50).ToString();
             ui.GetColor(false);
             ui.actionButton.onClick.AddListener(() => SelectCard(card, CardAction.Upgrade));
-            if(!card.update||card.level>=7)ui.FalseUpdate();
+            if(!card.update||card.level>=10)ui.FalseUpdate();
             else
             {
                 ui.GetColor(card.level);

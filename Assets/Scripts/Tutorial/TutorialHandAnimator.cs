@@ -22,14 +22,7 @@ public class TutorialHandAnimator : MonoBehaviour
         canvas = handImage.GetComponentInParent<Canvas>();
         handImage.gameObject.SetActive(false); // başlanğıcda gizli olsun
     }
-    private void OnEnable()
-    {
-        Debug.Log("TutorialHandAnimator: OnEnable - Hand Animator Enabled");
-    }
-    private void OnDisable()
-    {
-        Debug.Log("TutorialHandAnimator: OnDisable - Hand Animator Disabled");
-    }
+
     public void ShowMoveHandAnimationUI(RectTransform uiTarget, Vector3 offset)
     {
         if (uiTarget == null)

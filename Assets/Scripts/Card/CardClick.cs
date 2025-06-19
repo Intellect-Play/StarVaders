@@ -77,13 +77,11 @@ public class CardClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
         if (TutorialManager.Instance.IsTutorialActive)
         {
-            Debug.Log("OnPointerUp " + gameObject.name);
             TutorialManager.Instance.TutorialCardSelected();
         }
         if (!CanDrag||!onDragBool) return;
         TutorialManager.Instance.HideTutorialMoveHand();
 
-        Debug.Log("OnPointerUp 2" + gameObject.name);
         if (transform.position.y - startPosY > triggerHeight)
         {
             Used = true;

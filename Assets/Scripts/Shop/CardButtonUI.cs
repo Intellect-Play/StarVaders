@@ -76,7 +76,11 @@ public class CardButtonUI : MonoBehaviour
        
     }
     public void GetColor(int Level)
-    {
+    {Debug.Log(Level);
+        if (Level > ColorManager.Instance.colors.Count)
+        {
+            Level = ColorManager.Instance.colors.Count;
+        }
         CardBuyObject.GetComponent<Image>().color = ColorManager.Instance.colors[Level - 1];
     }
     public void BuyCard()
