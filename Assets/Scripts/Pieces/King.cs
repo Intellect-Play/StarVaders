@@ -65,7 +65,7 @@ public class King : BasePiece
     void Update()
     {
         if (!moveCard) return;
-
+        
         Vector2 pointerPosition = Vector2.zero;
         bool begin = false, move = false, end = false;
 
@@ -129,7 +129,14 @@ public class King : BasePiece
 
         if (end && isDragging)
         {
-           // ClearCells();
+            if(TutorialManager.Instance.IsTutorialActive)
+            {
+                if(mTargetCell!=TutorialManager.Instance.cell)
+                {
+                    mTargetCell = null;
+                }else TutorialManager.Instance.HideTutorialHand();
+            }
+            // ClearCells();
             isDragging = false;
 
             if (mTargetCell != null)

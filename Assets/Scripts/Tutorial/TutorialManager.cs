@@ -21,7 +21,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Button ShopButton;
     [SerializeField] private RectTransform EndTurnImage;
     private Tweener currentTween;
-
+    public Cell cell;
     public bool IsTutorialActive = false;
     int tutorialLevel;
     private void Awake()
@@ -141,15 +141,23 @@ public class TutorialManager : MonoBehaviour
         if (!IsTutorialActive) return;
         if ( tutorialLevel < 9)
         {
+
             if (tutorialLevel == 1)
-                tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), new Vector3(3, -3, 0));
+            {
+                cell = GameManager.Instance.mBoard.mAllCells[2, 3];
+                tutorialHandAnimator.ShowTapAnimationWorldUI(cell.GetComponent<RectTransform>(), new Vector3(3, -3, 0));
+
+            }
             else if (tutorialLevel == 4)
-                tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 4].GetComponent<RectTransform>(), new Vector3(3, -3, 0));
+            {
+                cell = GameManager.Instance.mBoard.mAllCells[2, 4];
+                tutorialHandAnimator.ShowTapAnimationWorldUI(cell.GetComponent<RectTransform>(), new Vector3(3, -3, 0));
+
+            }
             else if (tutorialLevel == 8)
                 ShowTapAnimationUIEndTurn();
 
             else tutorialHandAnimator.ShowTapAnimationWorldUI(GameManager.Instance.mBoard.mAllCells[2, 3].GetComponent<RectTransform>(), Vector3.zero);
-
         }
     }
     public void CardStartClickTutorial()

@@ -267,7 +267,6 @@ public class ShopManager : MonoBehaviour
             TutorialManager.Instance.TutorialHandClickButton(BuyorUpgradeButton.GetComponent<RectTransform>());
             //PlayerPrefs.GetInt("Tutorial", 1);
 
-            Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
         }else if (PlayerPrefs.GetInt("Tutorial2", 0) == 2)
         {
             TutorialManager.Instance.HideTutorialHand();
@@ -302,7 +301,6 @@ public class ShopManager : MonoBehaviour
         {
             TutorialManager.Instance.HideTutorialMoveHand();
 
-            Debug.Log("ShopManager: SelectCard - Tutorial Hand Click");
         }
         // UpdateCardButtonUI(selectedCardData);
     }

@@ -76,7 +76,7 @@ public class CardButtonUI : MonoBehaviour
        
     }
     public void GetColor(int Level)
-    {Debug.Log(Level);
+    {
         if (Level > ColorManager.Instance.colors.Count)
         {
             Level = ColorManager.Instance.colors.Count;
